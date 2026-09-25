@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Year 10 Science Practice Exam (36 Brand New Scenarios) | NSW Stage 5</title>
+<style>
+  :root {
+    --primary: #047857;
+    --primary-light: #10B981;
+    --primary-dark: #065F46;
+    --bg: #F8FAFC;
+    --card-bg: #FFFFFF;
+    --text-main: #0F172A;
+    --text-muted: #64748B;
+    --border: #E2E8F0;
+    --extract-bg: #F0FDF4;
+    --correct: #10B981;
+    --correct-bg: #ECFDF5;
+    --incorrect: #EF4444;
+    --incorrect-bg: #FEF2F2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  body { background-color: var(--bg); color: var(--text-main); line-height: 1.5; padding-bottom: 70px; }
+  
+  header {
+    background: linear-gradient(135deg, #065F46 0%, #047857 100%);
+    color: white; padding: 30px 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  }
+  .header-content { max-width: 920px; margin: 0 auto; }
+  .badge { background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; margin-bottom: 8px; }
+  h1 { font-size: 1.85rem; font-weight: 800; margin-bottom: 6px; }
+  p.subtitle { color: #A7F3D0; font-size: 0.95rem; }
+
+  /* Dashboard */
+  .score-sticky {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.96); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border); padding: 12px 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  .score-container {
+    max-width: 920px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+  }
+  .score-stat { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
+  .score-stat span { color: var(--primary); font-size: 1.15rem; font-weight: 800; }
+  .progress-bar-bg { width: 100%; height: 8px; background: #E2E8F0; border-radius: 4px; overflow: hidden; margin-top: 6px; }
+  .progress-bar-fill { height: 100%; background: var(--primary-light); width: 0%; transition: width 0.3s ease; }
+
+  /* Filters */
+  .filter-nav { max-width: 920px; margin: 20px auto; padding: 0 20px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .filter-btn {
+    background: white; border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px;
+    font-size: 0.85rem; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+  }
+  .filter-btn.active, .filter-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+  /* Main Container */
+  .quiz-container { max-width: 920px; margin: 0 auto; padding: 0 20px; display: flex; flex-direction: column; gap: 22px; }
+
+  /* Card */
+  .q-card {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 22px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .q-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .q-num { font-size: 0.85rem; font-weight: 700; color: var(--primary); background: #ECFDF5; padding: 3px 8px; border-radius: 6px; }
+  .q-module { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+
+  /* Extract Box */
+  .extract-box {
+    background: var(--extract-bg);
+    border-left: 4px solid var(--primary);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    font-size: 0.95rem;
+    color: #1E293B;
+    line-height: 1.6;
+  }
+  .extract-header {
+    font-weight: 800; font-size: 0.78rem; text-transform: uppercase; color: var(--primary);
+    margin-bottom: 6px; display: flex; align-items: center; gap: 6px; letter-spacing: 0.05em;
+  }
+
+  .q-text { font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 14px; }
+  .options-grid { display: flex; flex-direction: column; gap: 9px; }
+
+  .option-btn {
+    display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px;
+    background: #F8FAFC; border: 1.5px solid var(--border); border-radius: 8px;
+    cursor: pointer; text-align: left; font-size: 0.92rem; color: var(--text-main);
+    transition: all 0.2s;
+  }
+  .option-btn:hover:not(.disabled) { background: #F1F5F9; border-color: #94A3B8; }
+  .option-letter {
+    font-weight: 800; font-size: 0.82rem; min-width: 24px; height: 24px;
+    border-radius: 50%; background: #E2E8F0; display: flex; align-items: center;
+    justify-content: center; flex-shrink: 0; color: var(--text-main);
+  }
+
+  .option-btn.selected-correct {
+    background: var(--correct-bg) !important; border-color: var(--correct) !important; color: #065F46 !important;
+  }
+  .option-btn.selected-correct .option-letter { background: var(--correct); color: white; border-color: var(--correct); }
+
+  .option-btn.selected-wrong {
+    background: var(--incorrect-bg) !important; border-color: var(--incorrect) !important; color: #991B1B !important;
+  }
+  .option-btn.selected-wrong .option-letter { background: var(--incorrect); color: white; border-color: var(--incorrect); }
+
+  .option-btn.reveal-correct {
+    border-color: var(--correct) !important; background: var(--correct-bg) !important;
+  }
+
+  .explanation-box {
+    margin-top: 14px; padding: 12px 15px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.45;
+  }
+  .explanation-box.show { display: block; }
+  .explanation-box.correct { background: #ECFDF5; border-left: 4px solid var(--correct); color: #065F46; }
+  .explanation-box.wrong { background: #FEF2F2; border-left: 4px solid var(--incorrect); color: #991B1B; }
+  .exp-title { font-weight: 700; margin-bottom: 3px; }
+
+  .reset-btn {
+    background: white; border: 1px solid var(--border); padding: 6px 14px; border-radius: 6px;
+    font-size: 0.85rem; font-weight: 700; color: var(--text-main); cursor: pointer; transition: all 0.2s;
+  }
+  .reset-btn:hover { background: #F1F5F9; border-color: #94A3B8; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <div class="badge">NSW Stage 5 Science &bull; Task 3 Exam: Term 4, Week 1&ndash;2 (13&ndash;23 Oct 2026)</div>
+    <h1>Year 10 Science Practice Examination</h1>
+    <p class="subtitle">36 Scenario-Based Questions &bull; Biotechnology, Chemical Earth, Time Traveller &amp; Working Scientifically</p>
+  </div>
+</header>
+
+<div class="score-sticky">
+  <div class="score-container">
+    <div class="score-stat">Answered: <span id="answered-count">0</span> / 36</div>
+    <div class="score-stat">Score: <span id="score-count">0</span> (<span id="score-pct">0%</span>)</div>
+    <div class="score-stat">Accuracy: <span id="accuracy-pct">--</span></div>
+    <button class="reset-btn" onclick="resetQuiz()">Reset Test</button>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-fill"></div>
+    </div>
+  </div>
+</div>
+
+<div class="filter-nav">
+  <button class="filter-btn active" onclick="filterQuestions('all', this)">All Scenarios (36)</button>
+  <button class="filter-btn" onclick="filterQuestions('Biotechnology', this)">Biotechnology &amp; Genetics (9)</button>
+  <button class="filter-btn" onclick="filterQuestions('Chemical Earth', this)">Chemical Earth &amp; Reactions (9)</button>
+  <button class="filter-btn" onclick="filterQuestions('Time Traveller', this)">Time Traveller (Space &amp; Earth) (9)</button>
+  <button class="filter-btn" onclick="filterQuestions('Working Scientifically', this)">Working Scientifically (9)</button>
+</div>
+
+<main class="quiz-container" id="quiz-container">
+  <!-- Generated via JavaScript -->
+</main>
+
+<script>
+const questions = [
+  // ================= MODULE 1: BIOTECHNOLOGY & GENETICS (9) =================
+  {
+    module: "Biotechnology",
+    extractTitle: "SCENARIO 1: FORENSIC DNA GEL ELECTROPHORESIS",
+    extract: "Forensic scientists analyze a DNA sample collected from a crime scene alongside DNA from three suspects. The DNA is cut using restriction enzymes and loaded into an agarose gel submerged in a buffer solution. A direct electric current is applied. Because DNA molecules carry a net negative electrical charge on their phosphate backbones, fragments migrate toward the positive anode (+). Smaller DNA fragments navigate through the microscopic gel matrix pores faster and travel farther than larger fragments. At the end of the run, Fragment A has traveled 48 mm from the well, whereas Fragment B has traveled only 19 mm.",
+    q: "Based on the principles of gel electrophoresis, which deduction regarding Fragment A and Fragment B is scientifically valid?",
+    options: [
+      "Fragment A is shorter in base-pair length than Fragment B because shorter fragments experience less resistance moving through the gel matrix.",
+      "Fragment A is longer in base-pair length because greater molecular mass allows gravity to pull it farther down the gel.",
+      "Fragment B carries a much higher negative charge, causing it to be strongly repelled back toward the starting well.",
+      "Fragment A and Fragment B must have identical molecular weights because restriction enzymes cut all DNA into equal lengths."
+    ],
+    answer: 0,
+    exp: "In gel electrophoresis, smaller/shorter DNA fragments navigate through the porous agarose gel matrix with less physical resistance, traveling significantly farther toward the positive electrode in a given time than larger, heavier fragments."
+  },
+  {
+    module: "Biotechnology",
+    extractTitle: "SCENARIO 2: HUNTINGTON'S DISEASE PEDIGREE",
+    extract: "Huntington's disease is an inherited neurodegenerative disorder caused by an autosomal dominant allele (H). The normal, unaffected allele is recessive (h). A genetic counselor examines a family pedigree: a father is heterozygous for Huntington's disease (Hh) and shows late-onset symptoms, while the mother is homozygous recessive and unaffected (hh). They are expecting their first child.",
+    q: "Using a standard Mendelian monohybrid cross, what is the probability that their child will inherit Huntington's disease?",
+    options: [
+      "0% (0.00), because mothers always transmit the dominant allele to offspring.",
+      "25% (0.25), following the standard 3:1 recessive inheritance ratio.",
+      "50% (0.50), because there is a 1 in 2 chance of inheriting the single dominant H allele from the father.",
+      "75% (0.75), because the dominant allele always overrides both maternal alleles."
+    ],
+    answer: 2,
+    exp: "A cross between a heterozygous parent (Hh) and a homozygous recessive parent (hh) yields gamete pairings: Hh, Hh, hh, hh. Exactly 2 out of 4 (50%) will carry the dominant H allele and develop the disease."
+  },
+  {
+    module: "Biotechnology",
+    extractTitle: "SCENARIO 3: POINT MUTATION & SICKLE CELL TRANSLATION",
+    extract: "The normal human beta-globin gene contains the DNA triplet CTC on the coding template strand, which is transcribed into the mRNA codon GAG. During translation at the ribosome, GAG codes for the hydrophilic amino acid glutamic acid. In individuals with sickle cell anemia, a single base substitution replaces the central thymine (T) with adenine (A), producing the DNA triplet CAC. This transcribes into the mRNA codon GUG, which codes for valine (a hydrophobic amino acid). As a result, deoxygenated hemoglobin forms rigid fibrous polymers that distort red blood cells into crescent sickles.",
+    q: "What type of mutation occurred at the molecular level, and how did it alter the resulting polypeptide?",
+    options: [
+      "A frameshift deletion that shifted every subsequent codon downstream.",
+      "A base substitution point mutation that changed a single codon, substituting one amino acid in the polypeptide chain.",
+      "A chromosomal translocation where an entire gene was swapped onto a non-homologous chromosome.",
+      "A silent mutation that had no effect on the primary structure of the protein."
+    ],
+    answer: 1,
+    exp: "Replacing a single nucleotide base (T &rarr; A) is a base substitution point mutation (missense mutation). It altered only one codon (GAG &rarr; GUG), substituting a single amino acid (glutamic acid &rarr; valine)."
+  },
+  {
+    module: "Biotechnology",
+    extractTitle: "SCENARIO 4: CYTOGENETIC KARYOTYPING & MEIOTIC NON-DISJUNCTION",
+    extract: "A hospital laboratory prepares a fetal karyotype by arresting dividing cells in metaphase, staining the condensed chromosomes, and arranging homologous pairs by size and banding pattern. The technician counts 47 total chromosomes. Autosomal pairs 1 through 20 and 22 appear as normal duplicates. However, chromosome pair 21 has three distinct copies (Trisomy 21). The sex chromosome pair shows one large X chromosome and one smaller Y chromosome.",
+    q: "What cellular error during meiosis produced this chromosomal condition, and what is the biological sex of the individual?",
+    options: [
+      "Non-disjunction (failure of homologous chromosomes or sister chromatids to separate); biological male (XY).",
+      "Crossing over failure during prophase I; biological female (XX).",
+      "Random gene duplication during DNA replication; biological male (XY).",
+      "Cytokinesis failure producing polyploidy; biological female (XY)."
+    ],
+    answer: 0,
+    exp: "Non-disjunction is the failure of chromosome pairs or sister chromatids to separate properly during meiosis, resulting in gametes with an extra chromosome (n+1), leading to Trisomy 21 upon fertilisation. The presence of one X and one Y chromosome confirms biological male."
+  },
+  {
+    module: "Biotechnology",
+    extractTitle: "SCENARIO 5: GOLDEN RICE & RECOMBINANT DNA ETHICS",
+    extract: "Golden Rice is a genetically modified variety of Oryza sativa developed to synthesize beta-carotene, a biochemical precursor to Vitamin A, in the edible endosperm of the grain. Scientists introduced two foreign genes: a phytoene synthase gene from daffodil and a phytoene desaturase gene from the soil bacterium Erwinia uredovora. The crop was engineered to combat childhood blindness and immune deficiency in regions where white rice is the primary dietary staple.",
+    q: "Which argument represents a valid ecological or ethical concern raised by critics regarding the widespread agricultural planting of this transgenic crop?",
+    options: [
+      "Beta-carotene is toxic to humans and cannot be converted into Vitamin A by the human digestive system.",
+      "Cross-pollination (gene flow) could transfer the engineered traits to wild rice relatives, potentially altering local biodiversity and ecosystem dynamics.",
+      "Transgenic plants are entirely incapable of undergoing photosynthesis without artificial chemical fertilizers.",
+      "Bacteria used to provide genes will spontaneously infect consumers who eat the cooked rice."
+    ],
+    answer: 1,
+    exp: "A major ecological concern with genetically modified crops is horizontal gene flow via pollen transfer (cross-pollination) to wild weed relatives, which could create competitive 'super-weeds' or reduce genetic biodiversity in native ecosystems."
+  },
+  {
+    module: "Biotechnology",
+    extractTitle: "SCENARIO 6: MENDELIAN DIHYBRID INHERITANCE",
+    extract: "In garden peas, seed shape is controlled by a gene where Round (R) is dominant to Wrinkled (r). Seed color is controlled by an independent gene on a separate chromosome where Yellow (Y) is dominant to Green (y). A botanist crosses two dihybrid pea plants that are both heterozygous for both traits (RrYy &times; RrYy).",
+    q: "According to Mendel's Law of Independent Assortment, what is the expected phenotypic ratio of the resulting offspring?",
+    options: [
+      "3 Round Yellow : 1 Wrinkled Green",
+      "1 Round Yellow : 1 Round Green : 1 Wrinkled Yellow : 1 Wrinkled Green",
+      "9 Round Yellow : 3 Round Green : 3 Wrinkled Yellow : 1 Wrinkled Green",
+      "12 Round Yellow : 4 Wrinkled Green"
+    ],
+    answer: 2,
+    exp: "The classic phenotypic ratio resulting from a dihybrid cross of two heterozygous individuals (RrYy &times; RrYy) where genes assort independently is 9:3:3:1 (9 double dominant, 3 dominant/recessive, 3 recessive/dominant, 1 double recessive)."
+  },
+  {
+    module: "Biotechnology",
+    extractTitle: "SCENARIO 7: BACTERIAL PLASMID TRANSFORMATION",
+    extract: "Students perform a recombinant DNA transformation experiment with Escherichia coli. They incubate competent bacterial cells with a circular plasmid containing two key genetic sequences: the Green Fluorescent Protein (GFP) gene from jellyfish and a beta-lactamase gene (ampR) conferring resistance to the antibiotic ampicillin. The bacteria are subjected to heat shock at 42&deg;C for 45 seconds and plated onto nutrient agar plates containing ampicillin.",
+    q: "Why is the inclusion of the antibiotic resistance gene (ampR) essential in this genetic engineering protocol?",
+    options: [
+      "It acts as a selective marker, allowing only the rare bacteria that successfully took up the plasmid to survive and grow on the ampicillin medium.",
+      "It acts as an enzyme that physically splices the GFP gene into the bacterial chromosome.",
+      "It makes the bacteria glow green without requiring UV light excitation.",
+      "It prevents the transformed bacteria from ever dividing or multiplying."
+    ],
+    answer: 0,
+    exp: "The antibiotic resistance gene (ampR) serves as a selective marker. Only bacteria that have successfully incorporated the plasmid can survive in the presence of ampicillin; untransformed bacteria are killed, isolating the desired clones."
+  },
+  {
+    module: "Biotechnology",
+    extractTitle: "SCENARIO 8: MITOSIS VS. MEIOSIS COMPARISON",
+    extract: "In sexually reproducing mammals, gametogenesis requires reduction division so that chromosome numbers do not double every generation. A Year 10 biology class models chromosome behavior during cell division. Somatic skin cells divide by mitosis for growth and tissue repair, starting with 46 chromosomes (2n). Germline precursor cells in reproductive organs divide by meiosis to produce gametes (sperm or egg cells).",
+    q: "Which row correctly contrasts the number of daughter cells, chromosome ploidy, and genetic variation produced by meiosis compared to mitosis?",
+    options: [
+      "Meiosis: 2 diploid cells, genetically identical; Mitosis: 4 haploid cells, genetically diverse.",
+      "Meiosis: 4 haploid cells (n=23), genetically unique; Mitosis: 2 diploid cells (2n=46), genetically identical.",
+      "Meiosis: 4 diploid cells (2n=46), genetically identical; Mitosis: 2 haploid cells (n=23), genetically unique.",
+      "Meiosis: 2 haploid cells (n=23), genetically identical; Mitosis: 4 diploid cells (2n=46), genetically diverse."
+    ],
+    answer: 1,
+    exp: "Meiosis involves two successive cell divisions yielding 4 haploid daughter cells (each with half the original chromosome count, n=23) that are genetically unique due to crossing over and independent assortment. Mitosis produces 2 identical diploid daughter cells (2n=46)."
+  },
+  {
+    module: "Biotechnology",
+    extractTitle: "SCENARIO 9: CRISPR-CAS9 TARGET SPECIFICITY",
+    extract: "The CRISPR-Cas9 genome editing tool was adapted from a natural antiviral defense system found in bacteria. It consists of two essential components: the Cas9 endonuclease enzyme, which acts like molecular scissors to cut both strands of the DNA double helix, and a synthetic single guide RNA (sgRNA). The sgRNA contains a customized 20-nucleotide sequence designed by scientists to match a specific gene.",
+    q: "What biological mechanism provides the precise targeting accuracy that directs Cas9 to cut only the desired gene in a patient's genome?",
+    options: [
+      "Electrical attraction between positive Cas9 protein charges and negative nuclear histones.",
+      "Complementary base pairing (A-U, C-G) between the 20-nucleotide guide RNA sequence and the specific target DNA sequence.",
+      "Random cutting at all thymine bases throughout the entire genome.",
+      "Antibodies that physically bind to the surface of the cell membrane."
+    ],
+    answer: 1,
+    exp: "The targeting accuracy of CRISPR-Cas9 comes from Watson-Crick complementary base pairing between the custom 20-nucleotide single guide RNA (sgRNA) and the matching target sequence on the genomic DNA strand."
+  },
+
+  // ================= MODULE 2: CHEMICAL EARTH & REACTIONS (9) =================
+  {
+    module: "Chemical Earth",
+    extractTitle: "SCENARIO 10: REACTION RATES & SURFACE AREA",
+    extract: "A science student investigates how surface area affects the reaction rate between solid calcium carbonate and hydrochloric acid: CaCO3(s) + 2HCl(aq) &rarr; CaCl2(aq) + H2O(l) + CO2(g). In Experiment 1, they add 5.0 g of large marble chips into a conical flask containing 50 mL of 1.0 M HCl placed on a digital balance, recording mass loss every 10 seconds as CO2 escapes. In Experiment 2, they repeat the test using 5.0 g of finely crushed marble powder under identical temperature, volume, and acid concentration.",
+    q: "Why does the marble powder produce CO2 gas at a much faster initial rate than the large marble chips?",
+    options: [
+      "The powder has a greater total surface area, exposing more CaCO3 particles simultaneously to acid collisions per second.",
+      "Crushing the marble alters its chemical bonds, turning it into a completely different, highly reactive compound.",
+      "The powder lowers the activation energy of the reaction in the same manner as an enzyme.",
+      "The powder increases the temperature of the acid solution by absorbing heat from the room."
+    ],
+    answer: 0,
+    exp: "Finely crushing a solid dramatically increases its total surface-area-to-volume ratio. More reactant particles are exposed on the surface at any moment, leading to a higher frequency of effective collisions with acid ions per unit time."
+  },
+  {
+    module: "Chemical Earth",
+    extractTitle: "SCENARIO 11: CALORIMETRY & ENDOTHERMIC DISSOLUTION",
+    extract: "A student dissolves 12.0 g of solid ammonium nitrate (NH4NO3) in 100 mL of room temperature water (22.0&deg;C) inside an insulated polystyrene cup calorimeter. As the crystals dissolve, a digital temperature probe records a steady temperature decrease down to a minimum of 13.8&deg;C before slowly returning to room temperature.",
+    q: "Which statement correctly classifies this chemical dissolution and explains the energy changes occurring at the particle level?",
+    options: [
+      "It is an exothermic process because the solution lost heat, destroying kinetic energy.",
+      "It is an endothermic process because thermal energy was absorbed from the surrounding water to break crystal lattice bonds, raising the potential energy of the products.",
+      "It is a combustion process because gas was released into the air.",
+      "It is a physical phase change that does not involve any energy exchange with the solvent."
+    ],
+    answer: 1,
+    exp: "A decrease in solvent temperature indicates an endothermic process (&Delta;H > 0). Thermal kinetic energy is absorbed from the surroundings (the water) to overcome ionic lattice bonds, causing the thermometer reading to drop."
+  },
+  {
+    module: "Chemical Earth",
+    extractTitle: "SCENARIO 12: THERMAL DECOMPOSITION & MASS CONSERVATION",
+    extract: "A student heats 10.00 g of bright green copper(II) carbonate powder (CuCO3) in an open porcelain crucible over a Bunsen burner flame. During heating, the green powder effervesces and turns completely into a dull black powder (copper(II) oxide, CuO). The reaction is: CuCO3(s) &rarr; CuO(s) + CO2(g). When the crucible cools, the student reweighs the solid residue and finds it weighs only 6.44 g.",
+    q: "Why did the measured solid mass decrease by 3.56 g, and does this outcome violate the Law of Conservation of Mass?",
+    options: [
+      "Yes, 3.56 g of matter was destroyed by the extreme heat of the Bunsen burner flame.",
+      "No, because carbon dioxide gas (CO2) weighing exactly 3.56 g escaped into the surrounding atmosphere in an open system.",
+      "Yes, because copper atoms decomposed into lighter hydrogen atoms during thermal breakdown.",
+      "No, because the black copper oxide became less dense, which reduces its gravitational mass."
+    ],
+    answer: 1,
+    exp: "The Law of Conservation of Mass states matter cannot be created or destroyed. In an open crucible, 3.56 g of gaseous CO2 escaped into the room. If captured in a sealed container, the total mass would remain exactly 10.00 g."
+  },
+  {
+    module: "Chemical Earth",
+    extractTitle: "SCENARIO 13: ACID-BASE TITRATION & PH NEUTRALISATION",
+    extract: "In a chemistry titration, a student adds 0.1 M sodium hydroxide solution (NaOH, a strong alkaline base) dropwise from a graduated burette into a beaker containing 25.0 mL of 0.1 M hydrochloric acid (HCl, a strong acid) mixed with 3 drops of universal indicator. Initially, the solution is vibrant red (pH &approx; 1). As the equivalence point is reached, the addition of a single drop causes the indicator to turn green (pH = 7.0).",
+    q: "What chemical reaction occurred at the molecular level to bring the solution to neutral pH 7?",
+    options: [
+      "Hydrogen ions (H+) from the acid reacted with hydroxide ions (OH-) from the base to form neutral water molecules (H2O).",
+      "Sodium ions bonded with hydroxide ions to form insoluble sodium precipitate crystals.",
+      "Hydrochloric acid completely evaporated into hydrogen gas, leaving only water.",
+      "The indicator chemically destroyed the acid molecules to protect the glassware."
+    ],
+    answer: 0,
+    exp: "Neutralisation between a strong acid and strong base is represented by the net ionic equation: H+(aq) + OH-(aq) &rarr; H2O(l). When moles of H+ equal moles of OH-, the resulting solution of NaCl and water is neutral (pH 7)."
+  },
+  {
+    module: "Chemical Earth",
+    extractTitle: "SCENARIO 14: IDENTIFYING UNKNOWN GASES IN THE LAB",
+    extract: "A Year 10 student is given three unlabelled test tubes containing clear, colorless gases produced from three different reactions. They carry out three diagnostic tests:\n1. A burning wooden splint held at the mouth of Tube 1 causes a distinct high-pitched 'squeaky pop'.\n2. Gas from Tube 2 is bubbled through clear limewater [Ca(OH)2], causing the limewater to turn distinctly milky/cloudy.\n3. A glowing wooden splint inserted into Tube 3 immediately bursts into bright flame (relights).",
+    q: "Which gases are contained in Tube 1, Tube 2, and Tube 3 respectively?",
+    options: [
+      "Tube 1: Carbon dioxide; Tube 2: Hydrogen; Tube 3: Oxygen",
+      "Tube 1: Hydrogen (H2); Tube 2: Carbon dioxide (CO2); Tube 3: Oxygen (O2)",
+      "Tube 1: Oxygen; Tube 2: Nitrogen; Tube 3: Hydrogen",
+      "Tube 1: Hydrogen; Tube 2: Oxygen; Tube 3: Carbon dioxide"
+    ],
+    answer: 1,
+    exp: "Standard laboratory diagnostic gas tests: The 'pop test' confirms Hydrogen gas (H2); turning limewater milky due to calcium carbonate precipitate confirms Carbon Dioxide (CO2); relighting a glowing splint confirms Oxygen gas (O2)."
+  },
+  {
+    module: "Chemical Earth",
+    extractTitle: "SCENARIO 15: CATALYTIC DECOMPOSITION OF HYDROGEN PEROXIDE",
+    extract: "Hydrogen peroxide decomposes very slowly at room temperature: 2H2O2(aq) &rarr; 2H2O(l) + O2(g). A student adds 0.50 g of black manganese dioxide powder (MnO2) to 50 mL of 3% hydrogen peroxide solution. Rapid, vigorous effervescence of oxygen gas occurs immediately, filling a 100 mL gas syringe in 8 seconds. After the reaction stops, the student filters the mixture through pre-weighed filter paper, dries it completely, and measures the remaining black powder: exactly 0.50 g of MnO2 is recovered.",
+    q: "How did the manganese dioxide accelerate the reaction without being consumed?",
+    options: [
+      "It acted as a chemical reactant that provided all the oxygen atoms in the gas syringe.",
+      "It acted as a catalyst, providing an alternate reaction pathway with a lower activation energy (Ea).",
+      "It increased the concentration of hydrogen peroxide molecules in the solution.",
+      "It heated the water to boiling point through nuclear decay."
+    ],
+    answer: 1,
+    exp: "A catalyst speeds up the rate of a chemical reaction by providing an alternative reaction pathway that requires a lower activation energy (Ea). Catalysts take part in the mechanism but are chemically unchanged and unconsumed at the end."
+  },
+  {
+    module: "Chemical Earth",
+    extractTitle: "SCENARIO 16: BALANCING MAGNESIUM COMBUSTION",
+    extract: "When shiny magnesium metal ribbon (Mg) is ignited with a Bunsen burner in the presence of atmospheric oxygen gas (O2), it undergoes a violent synthesis combustion reaction, emitting a blinding white light and producing fine white magnesium oxide powder (MgO). A student writes the skeleton chemical equation:\nMg(s) + O2(g) &rarr; MgO(s).",
+    q: "Which set of stoichiometric coefficients balances this chemical equation in accordance with the Law of Conservation of Mass?",
+    options: [
+      "1 Mg + 1 O2 &rarr; 1 MgO",
+      "2 Mg + 1 O2 &rarr; 2 MgO",
+      "1 Mg + 2 O2 &rarr; 2 MgO",
+      "2 Mg + 2 O2 &rarr; 4 MgO"
+    ],
+    answer: 1,
+    exp: "Oxygen exists as a diatomic gas molecule (O2), carrying 2 oxygen atoms. To balance the oxygen atoms, 2 MgO units are needed on the right, which in turn requires 2 Mg atoms on the left: 2Mg + O2 &rarr; 2MgO."
+  },
+  {
+    module: "Chemical Earth",
+    extractTitle: "SCENARIO 17: TEMPERATURE & COLLISION ENERGY (MAXWELL-BOLTZMANN)",
+    extract: "Students investigate the reaction between sodium thiosulfate and hydrochloric acid: Na2S2O3 + 2HCl &rarr; 2NaCl + SO2 + S + H2O. Solid yellow sulfur precipitate forms, eventually obscuring a black cross drawn beneath the beaker. At 20&deg;C, the cross disappears in 58 seconds. At 40&deg;C (a 20&deg;C increase), the cross disappears in just 14 seconds. According to kinetic molecular theory, particle velocity only increases by about 3-5% with this temperature change.",
+    q: "Why does a moderate 20&deg;C temperature increase produce an almost four-fold increase in the speed of the reaction?",
+    options: [
+      "Because particle collisions become 400% more frequent in the liquid.",
+      "Because a significantly larger fraction of the reactant particles now possess kinetic energy equal to or greater than the activation energy (E &ge; Ea).",
+      "Because water molecules expand and pull acid molecules closer together.",
+      "Because heating reverses the reaction and turns sulfur back into thiosulfate ions."
+    ],
+    answer: 1,
+    exp: "While temperature slightly increases collision frequency, the primary driver of reaction rate acceleration is that temperature shifts the Maxwell-Boltzmann distribution, exponentially increasing the fraction of particles possessing kinetic energy &ge; Ea."
+  },
+  {
+    module: "Chemical Earth",
+    extractTitle: "SCENARIO 18: PRECIPITATION & DOUBLE DISPLACEMENT",
+    extract: "In an aqueous chemistry investigation, a student pours 10 mL of clear, colorless lead(II) nitrate solution [Pb(NO3)2] into a test tube containing 10 mL of clear, colorless potassium iodide solution [KI]. Instantly upon mixing, the liquid turns brilliant opaque yellow as a heavy precipitate forms and settles to the bottom of the tube. The chemical equation is:\nPb(NO3)2(aq) + 2KI(aq) &rarr; PbI2(s) + 2KNO3(aq).",
+    q: "What type of chemical reaction occurred, and which compound is the brilliant yellow solid?",
+    options: [
+      "A decomposition reaction; potassium nitrate (KNO3) is the yellow solid.",
+      "A precipitation (double displacement) reaction; lead(II) iodide (PbI2) is the insoluble yellow precipitate.",
+      "A single displacement reaction; pure metallic lead (Pb) is the yellow solid.",
+      "A neutralisation reaction; potassium hydroxide is the yellow precipitate."
+    ],
+    answer: 1,
+    exp: "This is a double displacement precipitation reaction. The cations and anions exchange partners. All nitrates are soluble, but lead(II) iodide (PbI2) is insoluble in water, precipitating as an intense bright yellow solid."
+  },
+
+  // ================= MODULE 3: TIME TRAVELLER (SPACE & EARTH) (9) =================
+  {
+    module: "Time Traveller",
+    extractTitle: "SCENARIO 19: GALAXY REDSHIFT & DOPPLER EXPANSION",
+    extract: "An astrophysicist at the Siding Spring Observatory in NSW observes light emitted from distant galaxy cluster Abell 1689. In a terrestrial physics laboratory, the prominent hydrogen-alpha absorption line appears at a wavelength of exactly 656.3 nanometers (nm). When measuring the same hydrogen line in the spectrum received from Abell 1689, the line is detected at 774.4 nm, shifted toward the longer-wavelength red end of the visible spectrum.",
+    q: "What does this spectroscopic redshift demonstrate about the motion of Abell 1689 and the nature of the universe?",
+    options: [
+      "The galaxy is moving rapidly toward Earth, proving that gravitational attraction is causing the universe to contract.",
+      "The galaxy is stationary, but its light is losing energy due to friction with intergalactic gas clouds.",
+      "The galaxy is receding (moving away from Earth) as the metric fabric of space between galaxies expands.",
+      "The stars in that galaxy are made of red burning hydrogen rather than normal yellow hydrogen."
+    ],
+    answer: 2,
+    exp: "A spectral shift toward longer wavelengths (redshift) occurs when the light source is moving away from the observer (or space is expanding between them). Edwin Hubble used galactic redshift to prove that the universe is continually expanding."
+  },
+  {
+    module: "Time Traveller",
+    extractTitle: "SCENARIO 20: COSMIC MICROWAVE BACKGROUND RADIATION (CMBR)",
+    extract: "In 1964, Arno Penzias and Robert Wilson tested an ultra-sensitive horn antenna at Bell Laboratories. They detected a persistent, uniform low-level radio static that came equally from every direction in the night sky, unaffected by the Sun, day, or night. Subsequent satellite measurements (COBE and Planck) confirmed this radiation matches a near-perfect blackbody temperature of 2.725 Kelvin (-270.4&deg;C) across the entire celestial sphere.",
+    q: "Why is the discovery of the CMBR considered compelling evidence confirming the Big Bang theory over the competing Steady State model?",
+    options: [
+      "It represents the cooled, redshifted electromagnetic afterglow released when the hot, dense early universe first recombined into neutral atoms (~380,000 years after the Big Bang).",
+      "It proves that stars are continuously created in empty space at a constant rate.",
+      "It proves that microwave energy is emitted by alien communication satellites outside our solar system.",
+      "It shows that the universe has existed for an infinite amount of time without any beginning."
+    ],
+    answer: 0,
+    exp: "The Big Bang theory predicted that the extremely hot, dense early universe would leave behind a residual glow. As the universe expanded over 13.8 billion years, this radiation stretched from high-energy light into the microwave spectrum, matching the CMBR exactly."
+  },
+  {
+    module: "Time Traveller",
+    extractTitle: "SCENARIO 21: H-R DIAGRAM & STELLAR CLASSIFICATION",
+    extract: "Astronomers classify stars using the Hertzsprung-Russell (H-R) diagram, plotting stellar Luminosity (brightness relative to the Sun, L/L&sun;) on the vertical axis against Surface Temperature (Kelvin) on the horizontal axis (which runs backwards from hot blue stars on the left at 30,000 K to cool red stars on the right at 3,000 K). Star Rigel has a surface temperature of 12,000 K and a luminosity of 120,000 L&sun;. Star Betelgeuse has a surface temperature of 3,500 K and a luminosity of 100,000 L&sun;.",
+    q: "To which stellar evolutionary groups on the H-R diagram do Rigel and Betelgeuse belong?",
+    options: [
+      "Rigel is a White Dwarf; Betelgeuse is a Main Sequence star.",
+      "Rigel is a hot Blue Supergiant; Betelgeuse is a cool Red Supergiant.",
+      "Both stars are Main Sequence yellow dwarf stars identical to our Sun.",
+      "Rigel is a Red Giant; Betelgeuse is a Blue Giant."
+    ],
+    answer: 1,
+    exp: "Rigel has high surface temperature (12,000 K, blue) and massive luminosity (120,000 L&sun;), placing it in the Blue Supergiant region (top-left). Betelgeuse is cool (3,500 K, red) but possesses huge surface area giving high luminosity, placing it as a Red Supergiant (top-right)."
+  },
+  {
+    module: "Time Traveller",
+    extractTitle: "SCENARIO 22: HYDROSTATIC EQUILIBRIUM IN THE SUN",
+    extract: "Our Sun has existed in a remarkably stable state for roughly 4.6 billion years and is expected to remain so for another 5 billion years. In its scorching core (15 million Kelvin), 600 million tons of hydrogen are converted into helium every second through nuclear fusion, releasing immense energy. Despite this ongoing thermonuclear detonation, the Sun neither explodes outward nor collapses inward.",
+    q: "What opposing forces maintain this state of hydrostatic equilibrium in a stable Main Sequence star?",
+    options: [
+      "Magnetic repulsion between electrons balancing the gravitational attraction of the orbiting planets.",
+      "Outward thermal and radiation pressure produced by nuclear fusion balancing the inward gravitational pull of the star's immense mass.",
+      "Atmospheric friction from solar wind balancing the centripetal force of solar rotation.",
+      "Electrostatic repulsion between neutral neutrons balancing the nuclear strong force."
+    ],
+    answer: 1,
+    exp: "A star remains on the Main Sequence in hydrostatic equilibrium because the inward crushing force of gravity is precisely balanced by the outward radiation and gas pressure generated by core nuclear fusion."
+  },
+  {
+    module: "Time Traveller",
+    extractTitle: "SCENARIO 23: STELLAR EVOLUTION OF MASSIVE STARS",
+    extract: "The ultimate fate of a star is determined primarily by its initial mass at birth. An average star like our Sun (1 Solar Mass, 1 M&sun;) will swell into a Red Giant, gently shed its outer layers as a glowing planetary nebula, and leave behind a dense, Earth-sized White Dwarf core. In contrast, massive stars with initial masses greater than 8 to 10 M&sun; burn through their nuclear fuel rapidly, fusing progressively heavier elements (carbon, neon, oxygen, silicon) until forming an iron core.",
+    q: "What sequence of catastrophic events occurs when a massive star can no longer generate fusion energy in its iron core?",
+    options: [
+      "The star immediately evaporates into a diffuse cloud of hydrogen gas without any explosion.",
+      "The core collapses under gravity, triggering a violent Supernova explosion that leaves behind either a Neutron Star or a Black Hole.",
+      "The star cools down instantly and becomes an inert rocky asteroid.",
+      "The star reverses its rotation and turns into a yellow Main Sequence star."
+    ],
+    answer: 1,
+    exp: "Iron fusion consumes energy rather than releasing it. When an iron core forms, radiation pressure vanishes, causing catastrophic gravitational collapse. The outer layers bounce off the rigid core in a supernova, leaving a neutron star (or black hole for >20 M&sun;)."
+  },
+  {
+    module: "Time Traveller",
+    extractTitle: "SCENARIO 24: EDWIN HUBBLE'S LAW & VELOCITY RELATION",
+    extract: "In 1929, American astronomer Edwin Hubble combined galaxy distance measurements (calculated using pulsating Cepheid variable stars) with spectral redshift velocities. When he plotted recessional velocity (v, in km/s) against distance (d, in Megaparsecs, Mpc), he discovered a clear positive linear trend passing through the origin: v = H0 &times; d, where H0 is Hubble's constant.",
+    q: "What does this linear relationship directly imply about the structure of the cosmos?",
+    options: [
+      "Galaxies are physically flying through static, empty space away from a central explosion point in the Milky Way.",
+      "The more distant a galaxy is from Earth, the faster it appears to recede, demonstrating uniform metric expansion of space itself.",
+      "Galaxies closest to Earth are moving faster than galaxies far away.",
+      "The Milky Way is located at the absolute geometric center of the universe."
+    ],
+    answer: 1,
+    exp: "Hubble's Law (v = H0 &times; d) shows that velocity is directly proportional to distance: a galaxy twice as far away moves away twice as fast. This proves that space itself is expanding uniformly everywhere, rather than galaxies flying away from a single focal center."
+  },
+  {
+    module: "Time Traveller",
+    extractTitle: "SCENARIO 25: STELLAR PARALLAX & DISTANCE LIMITATIONS",
+    extract: "To measure the distance to nearby stars, astronomers use trigonometric parallax. As Earth orbits the Sun from one side of its orbit to the other over 6 months (a baseline baseline of 2 Astronomical Units, ~300 million km), nearby stars appear to shift slightly against the distant, unmoving background stars. The star Proxima Centauri shows a parallax angle (p) of 0.768 arcseconds. Distance in parsecs is calculated via d = 1 / p.",
+    q: "Why can the stellar parallax method only be used to measure distances to stars relatively close to our Solar System?",
+    options: [
+      "Because distant stars do not emit light in the visible spectrum.",
+      "Because as distance increases, the parallax angle becomes so infinitesimally tiny that it cannot be accurately distinguished from atmospheric distortion or instrument noise.",
+      "Because Earth's orbit shrinks as it moves through space, eliminating the baseline.",
+      "Because interstellar dust clouds completely block all geometric measurements beyond 10 light years."
+    ],
+    answer: 1,
+    exp: "As stars get farther away, their apparent parallax shift angle becomes vanishingly small (fractions of a milliarcsecond). Beyond several hundred parsecs, ground-based and standard telescopes cannot resolve the angle accurately."
+  },
+  {
+    module: "Time Traveller",
+    extractTitle: "SCENARIO 26: NUCLEOSYNTHESIS & ORIGIN OF HEAVY ELEMENTS",
+    extract: "Standard nuclear fusion during a star's normal life cycle can synthesize elements up to iron (Fe, atomic number 26). Fusing nuclei heavier than iron is endothermic (requires an input of energy rather than releasing it), meaning normal stellar cores cannot produce gold, platinum, or uranium. Yet these heavy elements are found in Earth's crust and across our solar system.",
+    q: "How were elements heavier than iron forged and dispersed throughout the universe?",
+    options: [
+      "They were formed on the surfaces of cold rocky planets through chemical weathering over billions of years.",
+      "They were formed through rapid neutron capture during catastrophic energetic events, specifically core-collapse supernovae and colliding neutron star mergers (kilonovae).",
+      "They were created directly during the first 3 seconds of the Big Bang alongside hydrogen and helium.",
+      "They are synthetic elements created solely by human nuclear power plants."
+    ],
+    answer: 1,
+    exp: "Elements heavier than iron are forged through rapid neutron capture (r-process nucleosynthesis) during extremely energetic astrophysical cataclysms: core-collapse supernovae explosions and colliding binary neutron star mergers (kilonovae)."
+  },
+  {
+    module: "Time Traveller",
+    extractTitle: "SCENARIO 27: PRIMORDIAL BIG BANG NUCLEOSYNTHESIS RATIOS",
+    extract: "Theoretical calculations based on the standard Big Bang model predict that as the newborn universe expanded and cooled during the first three to twenty minutes, protons and neutrons fused to produce atomic nuclei. The physics of particle decay during this epoch predicts that the universe should have emerged with a primordial mass ratio of approximately 75% Hydrogen-1, 24% Helium-4, and trace amounts of Deuterium and Lithium-7.",
+    q: "When astronomers analyze ancient, pristine gas clouds located billions of light-years away that have never formed stars, what do their spectroscopic observations reveal?",
+    options: [
+      "The gas clouds are composed of 100% pure heavy metals like iron and carbon.",
+      "The gas clouds exhibit exactly the predicted 75% Hydrogen to 25% Helium mass ratio, providing independent empirical validation for Big Bang nucleosynthesis.",
+      "The gas clouds contain no hydrogen, proving that hydrogen was created by stars later.",
+      "The gas clouds are completely solid ice crystals with no gaseous elements."
+    ],
+    answer: 1,
+    exp: "Observations of ancient, unpolluted intergalactic gas clouds show a uniform elemental abundance of ~75% hydrogen and ~25% helium by mass. This precisely matches theoretical predictions of Big Bang nucleosynthesis, serving as primary evidence for the theory."
+  },
+
+  // ================= MODULE 4: WORKING SCIENTIFICALLY (9) =================
+  {
+    module: "Working Scientifically",
+    extractTitle: "SCENARIO 28: EXPERIMENTAL VARIABLE IDENTIFICATION",
+    extract: "A Year 10 student investigates the effect of nitrate fertilizer on the growth rate of spinach plants. They set up five identical plant pots containing 2.0 kg of sterilized potting mix. Each pot receives a different concentration of nitrogen fertilizer dissolved in 200 mL of water (0 g/L, 2 g/L, 4 g/L, 6 g/L, 8 g/L). All pots are placed in the same greenhouse bay receiving 10 hours of daily sunlight at 21&deg;C. After 28 days, the student cuts the spinach foliage at soil level and measures the dry biomass of leaves using an electronic balance.",
+    q: "Which option correctly identifies the independent variable, dependent variable, and one controlled variable in this investigation?",
+    options: [
+      "Independent: Dry leaf biomass; Dependent: Fertilizer concentration; Controlled: Potting mix type",
+      "Independent: Nitrogen fertilizer concentration; Dependent: Dry leaf biomass; Controlled: Sunlight exposure",
+      "Independent: Daily sunlight hours; Dependent: Nitrogen concentration; Controlled: Water volume",
+      "Independent: Pot size; Dependent: Temperature; Controlled: Leaf biomass"
+    ],
+    answer: 1,
+    exp: "The independent variable is the factor deliberately altered by the experimenter (fertilizer concentration). The dependent variable is the factor measured to assess the effect (dry leaf biomass). Controlled variables are held constant (sunlight, soil, temperature)."
+  },
+  {
+    module: "Working Scientifically",
+    extractTitle: "SCENARIO 29: RELIABILITY VS. VALIDITY EVALUATION",
+    extract: "A student measures the boiling point of pure distilled water at sea level using an uncalibrated laboratory alcohol thermometer whose internal scale has slipped downwards by exactly 3.0&deg;C. The student carries out 6 successive boiling trials. Their recorded values are: 103.1&deg;C, 102.9&deg;C, 103.0&deg;C, 103.1&deg;C, 103.0&deg;C, and 103.0&deg;C. The true expected boiling point of pure water at 1 atm is 100.0&deg;C.",
+    q: "How should the student evaluate the reliability and validity of their experimental findings?",
+    options: [
+      "The experiment is both highly reliable and highly valid because all 6 readings are nearly identical.",
+      "The experiment is highly reliable (consistent repeated measurements), but possesses low validity and accuracy due to a systematic calibration error.",
+      "The experiment is valid because water was boiling, but has zero reliability because the thermometer was faulty.",
+      "The experiment has low reliability because 6 trials is too few to calculate an average."
+    ],
+    answer: 1,
+    exp: "Reliability refers to consistency and repeatability of results upon repetition (the 6 trials were tightly clustered around 103.0&deg;C). Validity refers to whether the experiment accurately measures what it was designed to measure; the faulty thermometer introduced a systematic error, invalidating the true boiling point."
+  },
+  {
+    module: "Working Scientifically",
+    extractTitle: "SCENARIO 30: SYSTEMATIC VS. RANDOM EXPERIMENTAL ERRORS",
+    extract: "Two students conduct mass measurements in a chemistry practical. Student A uses a digital electronic balance that has a sticky pan mechanism, causing it to read +0.35 g even after pressing the tare button when empty. Student B reads the volume of liquid in a 50 mL graduated burette: on some trials they view the meniscus from above eye level, and on other trials they view it from below eye level, causing fluctuating readings.",
+    q: "Which classification of experimental error is affecting Student A and Student B respectively?",
+    options: [
+      "Student A has random error; Student B has human error.",
+      "Student A has systematic error (constant directional offset); Student B has random error (unpredictable parallax variations).",
+      "Both students have random parallax errors.",
+      "Student A has valid error; Student B has reliable error."
+    ],
+    answer: 1,
+    exp: "Student A's unzeroed balance causes a constant offset in one direction (+0.35 g) on every single trial—this is a systematic error. Student B's inconsistent viewing angle causes unpredictable fluctuations above and below the true value—this is a random (parallax) error."
+  },
+  {
+    module: "Working Scientifically",
+    extractTitle: "SCENARIO 31: PURPOSE OF A SCIENTIFIC CONTROL GROUP",
+    extract: "An agricultural research team develops an organic botanical spray claimed to eradicate powdery mildew fungus on grape vines. They spray 100 infected grapevines with the new organic formula once daily for 14 days and record fungal patch reduction. A consulting agronomist notes: 'Your experiment lacks a negative control group, rendering your conclusion unscientific.'",
+    q: "Why is a negative control group (e.g. 100 identical infected grapevines sprayed only with pure water) indispensable for experimental validity?",
+    options: [
+      "It proves that the researcher knows how to spray water onto plants.",
+      "It establishes a baseline to determine whether fungal reduction was genuinely caused by the botanical spray rather than natural environmental factors like changing humidity, sunlight, or vine immunity.",
+      "It doubles the cost of the experiment to meet government certification standards.",
+      "It ensures that all 200 grapevines are guaranteed to die before the harvest season."
+    ],
+    answer: 1,
+    exp: "A control group provides a baseline for comparison. Without a control group treated identically minus the independent variable, you cannot distinguish whether the effect was caused by the chemical spray or by external uncontrolled factors like weather changes."
+  },
+  {
+    module: "Working Scientifically",
+    extractTitle: "SCENARIO 32: GRAPH INTERPOLATION VS. EXTRAPOLATION",
+    extract: "A student records the volume of hydrogen gas generated during a magnesium-acid reaction over 60 seconds. They plot points at t = 0, 10, 20, 30, 40, 50, and 60 seconds and draw a smooth line of best fit. The line curves upward steeply and then begins leveling off toward 45 mL at 60 seconds. The student wants to determine the volume of gas at t = 25 seconds, and also attempts to predict the gas volume at t = 300 seconds.",
+    q: "What graphical analysis techniques are being used, and why is predicting the volume at 300 seconds prone to significant error?",
+    options: [
+      "25 s is extrapolation; 300 s is interpolation. 300 s is accurate because reactions continue producing gas forever.",
+      "25 s is interpolation (estimating within known data range); 300 s is extrapolation (projecting beyond known data), which is unreliable because the limiting reactant will have fully reacted and plateaued.",
+      "Both estimations are interpolation and are 100% mathematically certain.",
+      "Both estimations are invalid because lines of best fit cannot be drawn through curved data points."
+    ],
+    answer: 1,
+    exp: "Estimating at 25 s is interpolation (within the observed data interval 0-60 s) and is generally reliable. Predicting at 300 s is extrapolation (far outside the measured range); it is inaccurate because the reaction will have completed once magnesium is consumed, remaining flat rather than increasing."
+  },
+  {
+    module: "Working Scientifically",
+    extractTitle: "SCENARIO 33: SAMPLE SIZE & REDUCING CHANCE EFFECTS",
+    extract: "To simulate a genetic monohybrid cross between two heterozygous parents (Aa &times; Aa, theoretical 75% dominant : 25% recessive ratio), Group 1 flips two coins 8 times and records 8 dominant phenotypes (100% dominant, 0% recessive). Group 2 flips the two coins 500 times and records 373 dominant phenotypes and 127 recessive phenotypes (74.6% dominant, 25.4% recessive).",
+    q: "Why do Group 2's empirical results align much more closely with theoretical Mendelian ratios than Group 1's results?",
+    options: [
+      "Group 2 used newer coins with more symmetrical mass distributions.",
+      "A larger sample size substantially diminishes the statistical distortion of random chance fluctuations, increasing reliability and empirical accuracy.",
+      "Group 1 made arithmetic errors while tallying their 8 coin flips.",
+      "Mendelian ratios only apply to experiments that take more than two hours to complete."
+    ],
+    answer: 1,
+    exp: "Small sample sizes are highly vulnerable to random chance anomalies (e.g. 8 coin tosses landing on heads). Increasing the sample size (500 trials) averages out random variance, bringing the empirical results much closer to the true theoretical probability."
+  },
+  {
+    module: "Working Scientifically",
+    extractTitle: "SCENARIO 34: FORMULATING A VALID SCIENTIFIC CONCLUSION",
+    extract: "A Year 10 student tests the hypothesis: 'If water temperature increases, then an effervescent antacid tablet will dissolve in less time because reactant particles possess greater kinetic energy.' Their data table shows average dissolving times:\n&bull; At 10&deg;C: 92.4 seconds\n&bull; At 25&deg;C: 48.1 seconds\n&bull; At 45&deg;C: 21.6 seconds\n&bull; At 65&deg;C: 11.2 seconds",
+    q: "Which written statement represents an exemplary, evidence-based conclusion that directly addresses the hypothesis?",
+    options: [
+      "The experiment was successful and fun because effervescent tablets bubble when dropped into warm water.",
+      "The experimental data supports the hypothesis: as temperature increased from 10&deg;C to 65&deg;C, dissolving time decreased from 92.4 s to 11.2 s, proving that increased thermal energy increases reaction rate.",
+      "The hypothesis was disproven because the tablets dissolved completely at all four temperatures tested.",
+      "Water temperature has no measurable relationship with chemical reaction rates."
+    ],
+    answer: 1,
+    exp: "A high-scoring scientific conclusion explicitly states whether the hypothesis is supported or refuted, cites specific numerical range data from the investigation, and links the trend back to the underlying scientific concept."
+  },
+  {
+    module: "Working Scientifically",
+    extractTitle: "SCENARIO 35: QUALITATIVE VS. QUANTITATIVE OBSERVATIONS",
+    extract: "During an acid-carbonate lab, a student logs four observations in their lab notebook:\n1. 'The clear liquid inside the beaker vigorously effervesced, producing dense white foam.'\n2. 'The digital thermometer recorded an initial temperature of 21.5&deg;C and a final temperature of 17.8&deg;C.'\n3. 'A sharp, pungent vinegar odor was detected above the flask.'\n4. 'The mass of the open flask decreased by 0.84 grams over 3 minutes.'",
+    q: "Which numbered observations are strictly quantitative in nature?",
+    options: [
+      "Observations 1 and 3 only",
+      "Observations 2 and 4 only",
+      "Observations 1, 2, and 4",
+      "Observations 2, 3, and 4"
+    ],
+    answer: 1,
+    exp: "Quantitative observations involve objective numerical measurements using measuring instruments with standard units (Observation 2: 21.5&deg;C &rarr; 17.8&deg;C; Observation 4: 0.84 grams, 3 minutes). Observations 1 and 3 are qualitative sensory descriptions."
+  },
+  {
+    module: "Working Scientifically",
+    extractTitle: "SCENARIO 36: RISK ASSESSMENT & HIERARCHY OF SAFETY CONTROLS",
+    extract: "Students design a risk assessment for a laboratory practical involving heating 2.0 M hydrochloric acid with zinc granules to collect hydrogen gas. They identify three major hazards: corrosive acid contact with skin/eyes, thermal burns from the Bunsen burner flame/hot glassware, and explosive hydrogen gas ignition.",
+    q: "Which combination of safety controls best mitigates these identified hazards according to standard laboratory safety procedures?",
+    options: [
+      "Wearing nitrile gloves and approved splash-proof safety goggles; using heat-resistant tongs to handle hot glassware; keeping open flames away from gas collection equipment.",
+      "Working without eye protection to improve visibility when pouring acid into narrow test tubes.",
+      "Extinguishing the Bunsen burner with cold water while the flame is lit.",
+      "Performing the test inside a dark storage cupboard to observe the flame color better."
+    ],
+    answer: 0,
+    exp: "Approved safety eyewear and chemical-resistant gloves protect eyes and skin from corrosive acid splashes; crucible/beaker tongs prevent contact thermal burns; and maintaining distance between open flames and combustible hydrogen gas eliminates explosion hazards."
+  }
+];
+
+let userAnswers = {};
+
+function initQuiz() {
+  const container = document.getElementById("quiz-container");
+  container.innerHTML = "";
+
+  questions.forEach((q, idx) => {
+    const card = document.createElement("div");
+    card.className = "q-card";
+    card.id = `q-card-${idx}`;
+    card.dataset.module = q.module;
+
+    card.innerHTML = `
+      <div class="q-header">
+        <span class="q-num">Question ${idx + 1} of 36</span>
+        <span class="q-module">${q.module}</span>
+      </div>
+      <div class="extract-box">
+        <div class="extract-header">🔬 ${q.extractTitle}</div>
+        ${q.extract}
+      </div>
+      <div class="q-text">${q.q}</div>
+      <div class="options-grid">
+        ${q.options.map((opt, optIdx) => `
+          <button class="option-btn" onclick="selectAnswer(${idx}, ${optIdx})" id="btn-${idx}-${optIdx}">
+            <span class="option-letter">${String.fromCharCode(65 + optIdx)}</span>
+            <span>${opt}</span>
+          </button>
+        `).join("")}
+      </div>
+      <div class="explanation-box" id="exp-${idx}">
+        <div class="exp-title" id="exp-title-${idx}"></div>
+        <div id="exp-text-${idx}"></div>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+
+  updateScoreBoard();
+}
+
+function selectAnswer(qIdx, optIdx) {
+  if (userAnswers[qIdx] !== undefined) return; // already answered
+
+  userAnswers[qIdx] = optIdx;
+  const q = questions[qIdx];
+  const isCorrect = optIdx === q.answer;
+
+  const selectedBtn = document.getElementById(`btn-${qIdx}-${optIdx}`);
+  const expBox = document.getElementById(`exp-${qIdx}`);
+  const expTitle = document.getElementById(`exp-title-${qIdx}`);
+  const expText = document.getElementById(`exp-text-${qIdx}`);
+
+  // Disable all options in this question
+  for (let i = 0; i < 4; i++) {
+    const btn = document.getElementById(`btn-${qIdx}-${i}`);
+    btn.classList.add("disabled");
+    if (i === q.answer) {
+      btn.classList.add("reveal-correct");
+    }
+  }
+
+  if (isCorrect) {
+    selectedBtn.classList.add("selected-correct");
+    expBox.className = "explanation-box show correct";
+    expTitle.innerText = "✓ Correct!";
+  } else {
+    selectedBtn.classList.add("selected-wrong");
+    expBox.className = "explanation-box show wrong";
+    expTitle.innerText = `✗ Incorrect — Correct answer is (${String.fromCharCode(65 + q.answer)})`;
+  }
+
+  expText.innerHTML = q.exp;
+  updateScoreBoard();
+}
+
+function updateScoreBoard() {
+  const answered = Object.keys(userAnswers).length;
+  let correct = 0;
+  for (let idx in userAnswers) {
+    if (userAnswers[idx] === questions[idx].answer) {
+      correct++;
+    }
+  }
+
+  document.getElementById("answered-count").innerText = answered;
+  document.getElementById("score-count").innerText = correct;
+  document.getElementById("score-pct").innerText = answered > 0 ? Math.round((correct / 36) * 100) + "%" : "0%";
+  document.getElementById("accuracy-pct").innerText = answered > 0 ? Math.round((correct / answered) * 100) + "%" : "--";
+  document.getElementById("progress-fill").style.width = ((answered / 36) * 100) + "%";
+}
+
+function filterQuestions(mod, btn) {
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+
+  const cards = document.querySelectorAll(".q-card");
+  cards.forEach(card => {
+    if (mod === "all" || card.dataset.module === mod) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
+  });
+}
+
+function resetQuiz() {
+  if (confirm("Reset the entire test to start fresh?")) {
+    userAnswers = {};
+    initQuiz();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
+window.onload = initQuiz;
+</script>
+
+</body>
+</html>

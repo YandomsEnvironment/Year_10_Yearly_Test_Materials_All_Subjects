@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Year 10 Mathematics 5.3 Practice Exam (25 Questions) | NSW Stage 5.3</title>
+<style>
+  :root {
+    --primary: #B45309;
+    --primary-light: #F59E0B;
+    --primary-dark: #78350F;
+    --bg: #F8FAFC;
+    --card-bg: #FFFFFF;
+    --text-main: #0F172A;
+    --text-muted: #64748B;
+    --border: #E2E8F0;
+    --extract-bg: #FEF3C7;
+    --correct: #10B981;
+    --correct-bg: #ECFDF5;
+    --incorrect: #EF4444;
+    --incorrect-bg: #FEF2F2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  body { background-color: var(--bg); color: var(--text-main); line-height: 1.5; padding-bottom: 70px; }
+  
+  header {
+    background: linear-gradient(135deg, #78350F 0%, #B45309 100%);
+    color: white; padding: 30px 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  }
+  .header-content { max-width: 900px; margin: 0 auto; }
+  .badge { background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; margin-bottom: 8px; }
+  h1 { font-size: 1.85rem; font-weight: 800; margin-bottom: 6px; }
+  p.subtitle { color: #FDE68A; font-size: 0.95rem; }
+
+  /* Dashboard */
+  .score-sticky {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.96); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border); padding: 12px 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  .score-container {
+    max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+  }
+  .score-stat { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
+  .score-stat span { color: var(--primary); font-size: 1.15rem; font-weight: 800; }
+  .progress-bar-bg { width: 100%; height: 8px; background: #E2E8F0; border-radius: 4px; overflow: hidden; margin-top: 6px; }
+  .progress-bar-fill { height: 100%; background: var(--primary-light); width: 0%; transition: width 0.3s ease; }
+
+  /* Filters */
+  .filter-nav { max-width: 900px; margin: 20px auto; padding: 0 20px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .filter-btn {
+    background: white; border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px;
+    font-size: 0.85rem; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+  }
+  .filter-btn.active, .filter-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+  /* Main Container */
+  .quiz-container { max-width: 900px; margin: 0 auto; padding: 0 20px; display: flex; flex-direction: column; gap: 20px; }
+
+  .q-card {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 22px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .q-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .q-num { font-size: 0.85rem; font-weight: 700; color: var(--primary); background: #FEF3C7; padding: 3px 8px; border-radius: 6px; }
+  .q-module { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+
+  /* Extract Box */
+  .extract-box {
+    background: #FFFBEB;
+    border-left: 4px solid var(--primary);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 15px;
+    margin-bottom: 14px;
+    font-size: 0.92rem;
+    color: #78350F;
+    line-height: 1.5;
+  }
+  .extract-header {
+    font-weight: 800; font-size: 0.78rem; text-transform: uppercase; color: var(--primary);
+    margin-bottom: 4px; display: flex; align-items: center; gap: 6px; letter-spacing: 0.05em;
+  }
+
+  .q-text { font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 14px; }
+
+  .options-grid { display: flex; flex-direction: column; gap: 10px; }
+  .option-btn {
+    display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; background: #F8FAFC;
+    border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.95rem; color: var(--text-main);
+    cursor: pointer; text-align: left; transition: all 0.15s ease;
+  }
+  .option-btn:hover:not(.disabled) { background: #F1F5F9; border-color: #94A3B8; }
+  .option-letter {
+    font-weight: 700; color: var(--text-muted); background: white; border: 1px solid var(--border);
+    width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 0.8rem;
+  }
+
+  .option-btn.selected-correct {
+    background: var(--correct-bg) !important; border-color: var(--correct) !important; color: #065F46 !important;
+  }
+  .option-btn.selected-correct .option-letter { background: var(--correct); color: white; border-color: var(--correct); }
+
+  .option-btn.selected-wrong {
+    background: var(--incorrect-bg) !important; border-color: var(--incorrect) !important; color: #991B1B !important;
+  }
+  .option-btn.selected-wrong .option-letter { background: var(--incorrect); color: white; border-color: var(--incorrect); }
+
+  .option-btn.reveal-correct {
+    border-color: var(--correct) !important; background: var(--correct-bg) !important;
+  }
+
+  .explanation-box {
+    margin-top: 14px; padding: 12px 15px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.45;
+  }
+  .explanation-box.show { display: block; }
+  .explanation-box.correct { background: #ECFDF5; border-left: 4px solid var(--correct); color: #065F46; }
+  .explanation-box.wrong { background: #FEF2F2; border-left: 4px solid var(--incorrect); color: #991B1B; }
+  .exp-title { font-weight: 700; margin-bottom: 3px; }
+
+  .reset-btn {
+    background: white; border: 1px solid var(--border); padding: 6px 14px; border-radius: 6px;
+    font-size: 0.85rem; font-weight: 700; color: var(--text-main); cursor: pointer; transition: all 0.2s;
+  }
+  .reset-btn:hover { background: #F1F5F9; border-color: #94A3B8; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <div class="badge">NSW Stage 5.3 Mathematics &bull; Task 4 Exam: Thursday, 22 October 2026 (Week 2B)</div>
+    <h1>Year 10 Mathematics 5.3 Practice Exam (Scenarios &amp; Comprehension)</h1>
+    <p class="subtitle">Complete 25-Question Bank: Quadratics &amp; Parabolas, Functions &amp; Polynomials, and Multistage Probability</p>
+  </div>
+</header>
+
+<div class="score-sticky">
+  <div class="score-container">
+    <div class="score-stat">Answered: <span id="answered-count">0</span> / 25</div>
+    <div class="score-stat">Score: <span id="score-count">0</span> (<span id="score-pct">0%</span>)</div>
+    <div class="score-stat">Accuracy: <span id="accuracy-pct">--</span></div>
+    <button class="reset-btn" onclick="resetQuiz()">Reset Test</button>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-fill"></div>
+    </div>
+  </div>
+</div>
+
+<div class="filter-nav">
+  <button class="filter-btn active" onclick="filterQuestions('all', this)">All Scenarios (25)</button>
+  <button class="filter-btn" onclick="filterQuestions('Quadratics', this)">Quadratics &amp; Parabolas (9)</button>
+  <button class="filter-btn" onclick="filterQuestions('Polynomials', this)">Functions &amp; Polynomials (8)</button>
+  <button class="filter-btn" onclick="filterQuestions('Probability', this)">Probability &amp; Variation (8)</button>
+</div>
+
+<main class="quiz-container" id="quiz-container">
+  <!-- Generated via JavaScript -->
+</main>
+
+<script>
+const questions = [
+  // ================= QUADRATICS & PARABOLAS (9) =================
+  {
+    module: "Quadratics",
+    extractTitle: "SCENARIO 1: SOLVING QUADRATIC EQUATIONS",
+    extract: "In Year 10 5.3 Maths, students learn to solve quadratic equations using the Null Factor Law. A student writes down the equation: (x - 3)(x + 5) = 0.",
+    q: "What are the two solutions for x?",
+    options: [
+      "x = -3 and x = 5",
+      "x = 3 and x = -5",
+      "x = 3 and x = 5",
+      "x = 0 and x = 15"
+    ],
+    answer: 1,
+    exp: "If A × B = 0, then A = 0 or B = 0. So x - 3 = 0 → x = 3, and x + 5 = 0 → x = -5."
+  },
+  {
+    module: "Quadratics",
+    extractTitle: "SCENARIO 2: FINDING THE VERTEX OF A PARABOLA",
+    extract: "A parabola is given in turning point (vertex) form: y = (x - 4)² + 3. A student needs to find the coordinates of the turning point (vertex) to sketch the graph.",
+    q: "What are the coordinates of the vertex, and is it a minimum or maximum?",
+    options: [
+      "(4, 3) and it is a minimum",
+      "(-4, 3) and it is a maximum",
+      "(4, -3) and it is a minimum",
+      "(-4, -3) and it is a maximum"
+    ],
+    answer: 0,
+    exp: "In the form y = (x - h)² + k, the vertex is at (h, k) = (4, 3). Since the coefficient in front is positive (+1), the parabola opens upward, so it has a minimum turning point."
+  },
+  {
+    module: "Quadratics",
+    extractTitle: "SCENARIO 3: FACTORISING MONIC QUADRATICS",
+    extract: "To factorise x² + 7x + 10, a student looks for two numbers that multiply to give +10 and add together to give +7.",
+    q: "What is the factorised form of this quadratic?",
+    options: [
+      "(x + 1)(x + 10)",
+      "(x + 2)(x + 5)",
+      "(x - 2)(x - 5)",
+      "(x + 7)(x + 10)"
+    ],
+    answer: 1,
+    exp: "The two numbers are 2 and 5 (since 2 × 5 = 10 and 2 + 5 = 7). Therefore, x² + 7x + 10 = (x + 2)(x + 5)."
+  },
+  {
+    module: "Quadratics",
+    extractTitle: "SCENARIO 4: THE DISCRIMINANT (Δ = b² - 4ac)",
+    extract: "The discriminant formula Δ = b² - 4ac tells us how many real roots a quadratic equation has. A student calculates the discriminant for x² - 6x + 9 = 0 and finds Δ = (-6)² - 4(1)(9) = 36 - 36 = 0.",
+    q: "What does Δ = 0 tell us about the graph of y = x² - 6x + 9?",
+    options: [
+      "The graph does not touch the x-axis at all",
+      "The graph touches the x-axis at exactly one point (the vertex is tangent to the axis)",
+      "The graph crosses the x-axis at two completely different places",
+      "The graph is a straight line"
+    ],
+    answer: 1,
+    exp: "When the discriminant Δ = 0, there is exactly one repeated real root. This means the parabola touches the x-axis at its turning point."
+  },
+  {
+    module: "Quadratics",
+    extractTitle: "SCENARIO 5: PROJECTILE MOTION",
+    extract: "A tennis ball is hit into the air. Its height h (in metres) after t seconds is given by the formula: h = 20t - 5t². The ball hits the ground when h = 0.",
+    q: "How many seconds is the ball in the air before hitting the ground?",
+    options: [
+      "2 seconds",
+      "4 seconds",
+      "5 seconds",
+      "20 seconds"
+    ],
+    answer: 1,
+    exp: "Set h = 0: 0 = 20t - 5t² → 5t(4 - t) = 0. So t = 0 (launch) or t = 4 seconds (hitting the ground). The ball is in the air for 4 seconds."
+  },
+  {
+    module: "Quadratics",
+    extractTitle: "SCENARIO 6: QUADRATIC FORMULA APPLICATION",
+    extract: "When a quadratic equation cannot be easily factorised into whole numbers, Stage 5.3 students use the quadratic formula: x = (-b ± √(b² - 4ac)) / (2a). For the equation x² - 4x - 1 = 0, a = 1, b = -4, and c = -1.",
+    q: "What is the positive solution for x in exact surd form?",
+    options: [
+      "x = 2 + √5",
+      "x = 4 + √20",
+      "x = 2 + √20",
+      "x = 4 + √5"
+    ],
+    answer: 0,
+    exp: "b² - 4ac = (-4)² - 4(1)(-1) = 16 + 4 = 20. x = (4 ± √20) / 2 = (4 ± 2√5) / 2 = 2 ± √5. The positive solution is 2 + √5."
+  },
+  {
+    module: "Quadratics",
+    extractTitle: "SCENARIO 7: MAXIMUM AREA OF A RECTANGLE",
+    extract: "A gardener has 40 metres of wire fencing to enclose a rectangular vegetable garden against a straight brick wall (so only three sides need fencing: two widths of x and one length of 40 - 2x). The area is A = x(40 - 2x) = -2x² + 40x.",
+    q: "What width x gives the maximum garden area, and what is that maximum area?",
+    options: [
+      "Width = 20 m; Max area = 400 m²",
+      "Width = 10 m; Max area = 200 m²",
+      "Width = 5 m; Max area = 150 m²",
+      "Width = 10 m; Max area = 100 m²"
+    ],
+    answer: 1,
+    exp: "The vertex of y = ax² + bx is at x = -b / (2a) = -40 / (2 × (-2)) = 10 m. Maximum area is A(10) = 10 × (40 - 20) = 200 m²."
+  },
+  {
+    module: "Quadratics",
+    extractTitle: "SCENARIO 8: SOLVING QUADRATIC INEQUALITIES",
+    extract: "To solve the inequality x² - 9 < 0, a student considers the parabola y = x² - 9. The x-intercepts occur where x² - 9 = 0, which gives x = -3 and x = 3. The parabola opens upward.",
+    q: "For what values of x is the parabola below the x-axis (i.e. x² - 9 < 0)?",
+    options: [
+      "x < -3 or x > 3",
+      "-3 < x < 3",
+      "x < 3",
+      "-9 < x < 9"
+    ],
+    answer: 1,
+    exp: "Because the parabola y = x² - 9 opens upwards like a cup, the section of the curve that is strictly below zero (< 0) lies between the two roots: -3 < x < 3."
+  },
+  {
+    module: "Quadratics",
+    extractTitle: "SCENARIO 9: NON-MONIC QUADRATICS (a ≠ 1)",
+    extract: "To factorise 2x² + 5x + 3, a student looks for two numbers that multiply to give a × c = 2 × 3 = 6, and add together to give b = 5. The two numbers are 2 and 3.",
+    q: "What is the factorised form of 2x² + 5x + 3?",
+    options: [
+      "(2x + 1)(x + 3)",
+      "(2x + 3)(x + 1)",
+      "(2x + 2)(x + 3)",
+      "(x + 2)(x + 3)"
+    ],
+    answer: 1,
+    exp: "Split the middle term: 2x² + 2x + 3x + 3 = 2x(x + 1) + 3(x + 1) = (2x + 3)(x + 1)."
+  },
+
+  // ================= FUNCTIONS & POLYNOMIALS (8) =================
+  {
+    module: "Polynomials",
+    extractTitle: "SCENARIO 10: EVALUATING FUNCTION NOTATION",
+    extract: "In Stage 5.3, students use function notation f(x) where x is the input number. A function is defined as f(x) = 3x² - 2x + 1.",
+    q: "What is the value of f(3)?",
+    options: [
+      "10",
+      "22",
+      "28",
+      "7"
+    ],
+    answer: 1,
+    exp: "Substitute x = 3 into the formula: f(3) = 3(3)² - 2(3) + 1 = 3(9) - 6 + 1 = 27 - 6 + 1 = 22."
+  },
+  {
+    module: "Polynomials",
+    extractTitle: "SCENARIO 11: THE REMAINDER THEOREM",
+    extract: "The Remainder Theorem states: When a polynomial P(x) is divided by (x - a), the remainder is simply P(a). A student wants to find the remainder when P(x) = x³ + 2x² - 4 is divided by (x - 2).",
+    q: "Using the theorem, what is the remainder?",
+    options: [
+      "4",
+      "12",
+      "0",
+      "8"
+    ],
+    answer: 1,
+    exp: "Evaluate P(2): P(2) = (2)³ + 2(2)² - 4 = 8 + 2(4) - 4 = 8 + 8 - 4 = 12."
+  },
+  {
+    module: "Polynomials",
+    extractTitle: "SCENARIO 12: THE FACTOR THEOREM",
+    extract: "The Factor Theorem states that (x - a) is a factor of polynomial P(x) if and only if P(a) = 0. A student tests x = 1 for the polynomial P(x) = x³ - 3x² + 2.",
+    q: "Is (x - 1) a factor of P(x)?",
+    options: [
+      "Yes, because P(1) = 1³ - 3(1)² + 2 = 0",
+      "No, because P(1) = 2",
+      "No, because polynomials cannot have linear factors",
+      "Yes, because 1 is an odd number"
+    ],
+    answer: 0,
+    exp: "P(1) = 1 - 3 + 2 = 0. Because P(1) = 0, (x - 1) is a factor by the Factor Theorem."
+  },
+  {
+    module: "Polynomials",
+    extractTitle: "SCENARIO 13: VERTICAL LINE TEST",
+    extract: "A relation is a function if every x-value gives only one y-value. On a graph, we test this using the Vertical Line Test: if a vertical line cuts the graph in more than one place, it is NOT a function.",
+    q: "Which of the following graphs fails the Vertical Line Test and is therefore NOT a function?",
+    options: [
+      "A straight line y = 2x + 1",
+      "A parabola y = x²",
+      "A circle x² + y² = 25",
+      "A cubic curve y = x³"
+    ],
+    answer: 2,
+    exp: "A vertical line through a circle (like the y-axis x = 0) intersects the circle in two points (at y = 5 and y = -5). Therefore, a circle is a relation, not a function."
+  },
+  {
+    module: "Polynomials",
+    extractTitle: "SCENARIO 14: HYPERBOLA ASYMPTOTES",
+    extract: "The graph of the hyperbola y = 1/x has lines that the curve gets closer and closer to, but never touches. These are called asymptotes. Because you can never divide by zero, x cannot equal 0.",
+    q: "For the shifted hyperbola y = 1 / (x - 3) + 2, what is the vertical asymptote?",
+    options: [
+      "x = 0",
+      "x = 3",
+      "x = -3",
+      "y = 2"
+    ],
+    answer: 1,
+    exp: "The denominator cannot be zero: x - 3 = 0 → x = 3. Therefore, x = 3 is the vertical asymptote."
+  },
+  {
+    module: "Polynomials",
+    extractTitle: "SCENARIO 15: GRAPH TRANSFORMATIONS",
+    extract: "When transforming a graph y = f(x), replacing x with (x - 2) shifts the entire graph horizontally to the right by 2 units. Adding 5 to the end: y = f(x) + 5 shifts the graph vertically upwards by 5 units.",
+    q: "If the turning point of y = x² is at (0, 0), where is the turning point of y = (x - 4)² + 7?",
+    options: [
+      "(-4, 7)",
+      "(4, 7)",
+      "(4, -7)",
+      "(-4, -7)"
+    ],
+    answer: 1,
+    exp: "The graph is shifted right by 4 units and up by 7 units, so the vertex moves from (0, 0) to (4, 7)."
+  },
+  {
+    module: "Polynomials",
+    extractTitle: "SCENARIO 16: DEGREE OF A POLYNOMIAL",
+    extract: "The degree of a polynomial is the highest power of the variable x with a non-zero coefficient. For example, y = 4x³ - 5x + 2 has degree 3 (it is a cubic).",
+    q: "What is the degree of the polynomial P(x) = 7x⁵ - 3x⁴ + 8x² - 12?",
+    options: [
+      "Degree 7",
+      "Degree 5",
+      "Degree 4",
+      "Degree 12"
+    ],
+    answer: 1,
+    exp: "The term with the highest power of x is 7x⁵, so the degree of the polynomial is 5."
+  },
+  {
+    module: "Polynomials",
+    extractTitle: "SCENARIO 17: DOMAIN AND RANGE",
+    extract: "The domain of a function is the set of all possible input x-values. For f(x) = √(x - 2), the number under the square root symbol cannot be negative in the real number system.",
+    q: "What is the natural domain for f(x) = √(x - 2)?",
+    options: [
+      "All real numbers x",
+      "x ≥ 2",
+      "x > 0",
+      "x ≤ 2"
+    ],
+    answer: 1,
+    exp: "Since the inside of a square root must be zero or positive: x - 2 ≥ 0 → x ≥ 2."
+  },
+
+  // ================= MULTISTAGE PROBABILITY & VARIATION (8) =================
+  {
+    module: "Probability",
+    extractTitle: "SCENARIO 18: PROBABILITY WITHOUT REPLACEMENT",
+    extract: "A bag contains 5 red marbles and 3 green marbles (8 total). Jack draws one marble, does NOT put it back in the bag, and then draws a second marble.",
+    q: "What is the probability that BOTH marbles drawn are red?",
+    options: [
+      "25 / 64",
+      "20 / 56 (which simplifies to 5/14)",
+      "5 / 8",
+      "10 / 16"
+    ],
+    answer: 1,
+    exp: "First marble red: 5/8. Without replacement, 4 red marbles and 7 total marbles remain. Second marble red: 4/7. Probability = (5/8) × (4/7) = 20/56 = 5/14."
+  },
+  {
+    module: "Probability",
+    extractTitle: "SCENARIO 19: THE COMPLEMENT RULE ('AT LEAST ONE')",
+    extract: "Two fair coins are flipped. Instead of listing every combination with heads, a student uses the complement rule: P(At least one head) = 1 - P(No heads).",
+    q: "What is the probability of getting at least one head when flipping two coins?",
+    options: [
+      "1/4",
+      "2/4 (1/2)",
+      "3/4",
+      "4/4 (1)"
+    ],
+    answer: 2,
+    exp: "P(No heads) = P(Tail and Tail) = 1/2 × 1/2 = 1/4. Using the complement rule: P(At least one head) = 1 - 1/4 = 3/4."
+  },
+  {
+    module: "Probability",
+    extractTitle: "SCENARIO 20: DIRECT VARIATION",
+    extract: "In direct variation, two variables are connected by the formula y = kx, where k is a constant number. A student knows that y = 12 when x = 3.",
+    q: "What is the value of y when x = 5?",
+    options: [
+      "15",
+      "20",
+      "24",
+      "60"
+    ],
+    answer: 1,
+    exp: "Find k first: 12 = k × 3 → k = 4. Now find y when x = 5: y = 4 × 5 = 20."
+  },
+  {
+    module: "Probability",
+    extractTitle: "SCENARIO 21: INVERSE VARIATION",
+    extract: "In inverse variation, as one variable increases, the other decreases according to the formula y = k / x. If y = 6 when x = 4, the constant k is k = y × x = 24.",
+    q: "What is the value of y when x = 8?",
+    options: [
+      "3",
+      "48",
+      "2",
+      "12"
+    ],
+    answer: 0,
+    exp: "y = k / x = 24 / 8 = 3."
+  },
+  {
+    module: "Probability",
+    extractTitle: "SCENARIO 22: TWO-WAY TABLES",
+    extract: "A survey of 30 students shows: 18 students play soccer, 10 play basketball, and 4 play both sports.",
+    q: "How many students play soccer ONLY (not basketball)?",
+    options: [
+      "18 students",
+      "14 students",
+      "8 students",
+      "4 students"
+    ],
+    answer: 1,
+    exp: "Out of the 18 soccer players, 4 also play basketball. So students playing soccer ONLY = 18 - 4 = 14 students."
+  },
+  {
+    module: "Probability",
+    extractTitle: "SCENARIO 23: CONDITIONAL PROBABILITY",
+    extract: "A standard deck of 52 cards has 26 red cards (Hearts & Diamonds) and 26 black cards. There are 4 Kings in the deck (2 red Kings and 2 black Kings). A card is drawn and revealed to be a RED card.",
+    q: "What is the probability that this card is a King, given that it is already known to be Red?",
+    options: [
+      "4 / 52",
+      "2 / 26 (which simplifies to 1/13)",
+      "1 / 52",
+      "2 / 52"
+    ],
+    answer: 1,
+    exp: "Since we know the card is red, our sample space shrinks from 52 down to only the 26 red cards. Out of those 26 red cards, exactly 2 are Kings. Probability = 2/26 = 1/13."
+  },
+  {
+    module: "Probability",
+    extractTitle: "SCENARIO 24: AVERAGE RATE OF CHANGE",
+    extract: "A cyclist travels along a bike path. At 1 hour, her odometer reads 15 km. At 3 hours, her odometer reads 45 km. The average rate of change represents her average speed.",
+    q: "What is the cyclist's average speed between 1 hour and 3 hours?",
+    options: [
+      "10 km/h",
+      "15 km/h",
+      "30 km/h",
+      "45 km/h"
+    ],
+    answer: 1,
+    exp: "Average rate of change = (Change in distance) / (Change in time) = (45 - 15) / (3 - 1) = 30 / 2 = 15 km/h."
+  },
+  {
+    module: "Probability",
+    extractTitle: "SCENARIO 25: PROBABILITY TREE DIAGRAMS",
+    extract: "A weather forecaster calculates that the probability of rain on Saturday is 0.4. If it rains on Saturday, the probability of rain on Sunday is 0.7. A student draws a tree diagram with branches for Saturday and Sunday.",
+    q: "What is the probability that it rains on BOTH Saturday and Sunday?",
+    options: [
+      "0.4 + 0.7 = 1.1",
+      "0.4 × 0.7 = 0.28 (28%)",
+      "0.5",
+      "0.3"
+    ],
+    answer: 1,
+    exp: "Along branches of a probability tree, we multiply: P(Rain on Sat AND Rain on Sun) = 0.4 × 0.7 = 0.28 (28%)."
+  }
+];
+
+let userAnswers = new Array(questions.length).fill(null);
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+
+  questions.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.dataset.module = item.module;
+    card.id = `q-${idx}`;
+
+    const letters = ['A', 'B', 'C', 'D'];
+    let optionsHtml = '';
+    item.options.forEach((opt, optIdx) => {
+      optionsHtml += `
+        <button class="option-btn" onclick="selectOption(${idx}, ${optIdx})" id="opt-${idx}-${optIdx}">
+          <span class="option-letter">${letters[optIdx]}</span>
+          <span>${opt}</span>
+        </button>
+      `;
+    });
+
+    card.innerHTML = `
+      <div class="q-header">
+        <span class="q-num">Question ${idx + 1} of 25</span>
+        <span class="q-module">${item.module}</span>
+      </div>
+      <div class="extract-box">
+        <div class="extract-header">📐 ${item.extractTitle}</div>
+        <div>${item.extract}</div>
+      </div>
+      <div class="q-text">${item.q}</div>
+      <div class="options-grid">${optionsHtml}</div>
+      <div class="explanation-box" id="exp-${idx}"></div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+function selectOption(qIdx, optIdx) {
+  if (userAnswers[qIdx] !== null) return;
+
+  userAnswers[qIdx] = optIdx;
+  const item = questions[qIdx];
+  const isCorrect = (optIdx === item.answer);
+
+  for (let i = 0; i < item.options.length; i++) {
+    const btn = document.getElementById(`opt-${qIdx}-${i}`);
+    btn.classList.add('disabled');
+    if (i === item.answer) {
+      btn.classList.add('reveal-correct');
+    }
+  }
+
+  const chosenBtn = document.getElementById(`opt-${qIdx}-${optIdx}`);
+  if (isCorrect) {
+    chosenBtn.classList.remove('reveal-correct');
+    chosenBtn.classList.add('selected-correct');
+  } else {
+    chosenBtn.classList.add('selected-wrong');
+  }
+
+  const expBox = document.getElementById(`exp-${qIdx}`);
+  expBox.className = `explanation-box show ${isCorrect ? 'correct' : 'wrong'}`;
+  expBox.innerHTML = `
+    <div class="exp-title">${isCorrect ? '✅ Correct Solution:' : '❌ Not quite. The correct answer is (' + ['A','B','C','D'][item.answer] + '):'}</div>
+    <div>${item.exp}</div>
+  `;
+
+  updateStats();
+}
+
+function updateStats() {
+  const answered = userAnswers.filter(a => a !== null).length;
+  let correct = 0;
+  userAnswers.forEach((ans, idx) => {
+    if (ans === questions[idx].answer) correct++;
+  });
+
+  document.getElementById('answered-count').innerText = answered;
+  document.getElementById('score-count').innerText = correct;
+  const pct = answered > 0 ? Math.round((correct / 25) * 100) : 0;
+  document.getElementById('score-pct').innerText = `${pct}%`;
+
+  const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+  document.getElementById('accuracy-pct').innerText = answered > 0 ? `${accuracy}%` : '--';
+
+  const fill = document.getElementById('progress-fill');
+  fill.style.width = `${(answered / 25) * 100}%`;
+}
+
+function filterQuestions(mod, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const cards = document.querySelectorAll('.q-card');
+  cards.forEach(card => {
+    if (mod === 'all' || card.dataset.module === mod) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function resetQuiz() {
+  if (confirm("Reset all 25 questions and scores?")) {
+    userAnswers = new Array(questions.length).fill(null);
+    renderQuiz();
+    updateStats();
+  }
+}
+
+renderQuiz();
+updateStats();
+</script>
+</body>
+</html>

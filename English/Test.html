@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Year 10 English Dystopian Reading Comprehension (25 Passages) | NSW Stage 5</title>
+<style>
+  :root {
+    --primary: #1E3A8A;
+    --primary-light: #3B82F6;
+    --primary-dark: #172554;
+    --bg: #F8FAFC;
+    --card-bg: #FFFFFF;
+    --text-main: #0F172A;
+    --text-muted: #64748B;
+    --border: #E2E8F0;
+    --extract-bg: #F1F5F9;
+    --correct: #10B981;
+    --correct-bg: #ECFDF5;
+    --incorrect: #EF4444;
+    --incorrect-bg: #FEF2F2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  body { background-color: var(--bg); color: var(--text-main); line-height: 1.5; padding-bottom: 70px; }
+  
+  header {
+    background: linear-gradient(135deg, #172554 0%, #1E3A8A 100%);
+    color: white; padding: 30px 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  }
+  .header-content { max-width: 900px; margin: 0 auto; }
+  .badge { background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; margin-bottom: 8px; }
+  h1 { font-size: 1.85rem; font-weight: 800; margin-bottom: 6px; }
+  p.subtitle { color: #BFDBFE; font-size: 0.95rem; }
+
+  /* Dashboard */
+  .score-sticky {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.96); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border); padding: 12px 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  .score-container {
+    max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+  }
+  .score-stat { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
+  .score-stat span { color: var(--primary); font-size: 1.15rem; font-weight: 800; }
+  .progress-bar-bg { width: 100%; height: 8px; background: #E2E8F0; border-radius: 4px; overflow: hidden; margin-top: 6px; }
+  .progress-bar-fill { height: 100%; background: var(--primary-light); width: 0%; transition: width 0.3s ease; }
+
+  /* Filters */
+  .filter-nav { max-width: 900px; margin: 20px auto; padding: 0 20px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .filter-btn {
+    background: white; border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px;
+    font-size: 0.85rem; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+  }
+  .filter-btn.active, .filter-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+  /* Main Container */
+  .quiz-container { max-width: 900px; margin: 0 auto; padding: 0 20px; display: flex; flex-direction: column; gap: 20px; }
+
+  .q-card {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 22px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .q-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .q-num { font-size: 0.85rem; font-weight: 700; color: var(--primary); background: #EFF6FF; padding: 3px 8px; border-radius: 6px; }
+  .q-module { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+
+  /* Extract Box */
+  .extract-box {
+    background: var(--extract-bg);
+    border-left: 4px solid var(--primary);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    font-size: 0.95rem;
+    color: #1E293B;
+    line-height: 1.6;
+    font-style: italic;
+  }
+  .extract-header {
+    font-weight: 800; font-size: 0.78rem; text-transform: uppercase; color: var(--primary);
+    margin-bottom: 6px; display: flex; align-items: center; gap: 6px; letter-spacing: 0.05em; font-style: normal;
+  }
+
+  .q-text { font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 14px; }
+
+  .options-grid { display: flex; flex-direction: column; gap: 10px; }
+  .option-btn {
+    display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; background: #F8FAFC;
+    border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.95rem; color: var(--text-main);
+    cursor: pointer; text-align: left; transition: all 0.15s ease;
+  }
+  .option-btn:hover:not(.disabled) { background: #F1F5F9; border-color: #94A3B8; }
+  .option-letter {
+    font-weight: 700; color: var(--text-muted); background: white; border: 1px solid var(--border);
+    width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 0.8rem;
+  }
+
+  .option-btn.selected-correct {
+    background: var(--correct-bg) !important; border-color: var(--correct) !important; color: #065F46 !important;
+  }
+  .option-btn.selected-correct .option-letter { background: var(--correct); color: white; border-color: var(--correct); }
+
+  .option-btn.selected-wrong {
+    background: var(--incorrect-bg) !important; border-color: var(--incorrect) !important; color: #991B1B !important;
+  }
+  .option-btn.selected-wrong .option-letter { background: var(--incorrect); color: white; border-color: var(--incorrect); }
+
+  .option-btn.reveal-correct {
+    border-color: var(--correct) !important; background: var(--correct-bg) !important;
+  }
+
+  .explanation-box {
+    margin-top: 14px; padding: 12px 15px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.45;
+  }
+  .explanation-box.show { display: block; }
+  .explanation-box.correct { background: #ECFDF5; border-left: 4px solid var(--correct); color: #065F46; }
+  .explanation-box.wrong { background: #FEF2F2; border-left: 4px solid var(--incorrect); color: #991B1B; }
+  .exp-title { font-weight: 700; margin-bottom: 3px; }
+
+  .reset-btn {
+    background: white; border: 1px solid var(--border); padding: 6px 14px; border-radius: 6px;
+    font-size: 0.85rem; font-weight: 700; color: var(--text-main); cursor: pointer; transition: all 0.2s;
+  }
+  .reset-btn:hover { background: #F1F5F9; border-color: #94A3B8; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <div class="badge">NSW Stage 5 English &bull; Task 3 Exam: Term 4, Week 1A (13&ndash;16 Oct 2026)</div>
+    <h1>Year 10 English Dystopian Reading Comprehension Bank</h1>
+    <p class="subtitle">Complete 25-Passage Bank &bull; First Assessment of Term 4 (Students return Tue 13 Oct)</p>
+  </div>
+</header>
+
+<div class="score-sticky">
+  <div class="score-container">
+    <div class="score-stat">Answered: <span id="answered-count">0</span> / 25</div>
+    <div class="score-stat">Score: <span id="score-count">0</span> (<span id="score-pct">0%</span>)</div>
+    <div class="score-stat">Accuracy: <span id="accuracy-pct">--</span></div>
+    <button class="reset-btn" onclick="resetQuiz()">Reset Test</button>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-fill"></div>
+    </div>
+  </div>
+</div>
+
+<div class="filter-nav">
+  <button class="filter-btn active" onclick="filterQuestions('all', this)">All Passages (25)</button>
+  <button class="filter-btn" onclick="filterQuestions('Surveillance', this)">Surveillance &amp; Propaganda (7)</button>
+  <button class="filter-btn" onclick="filterQuestions('Setting', this)">Atmosphere &amp; Setting (6)</button>
+  <button class="filter-btn" onclick="filterQuestions('Conformity', this)">Enforced Conformity (6)</button>
+  <button class="filter-btn" onclick="filterQuestions('Rebellion', this)">Individuality &amp; Rebellion (6)</button>
+</div>
+
+<main class="quiz-container" id="quiz-container">
+  <!-- Generated via JavaScript -->
+</main>
+
+<script>
+const passages = [
+  // ================= SURVEILLANCE & PROPAGANDA (7) =================
+  {
+    module: "Surveillance",
+    extractTitle: "PASSAGE 1: THE WATCHFUL CAMERAS",
+    extract: "\"Every street corner had a camera mounted on a grey steel pole. The black lens turned with a quiet mechanical click, tracking Lucas as he walked quickly to school. A speaker crackled to life above his head: 'Citizen 4492, slow your pace. Hurrying indicates anxiety.' Lucas immediately slowed down and kept his eyes on the pavement.\"",
+    q: "How does the author show that Lucas lives in a strict, controlled society?",
+    options: [
+      "The school requires students to arrive early",
+      "Lucas is watched by cameras and reprimanded simply for walking too fast",
+      "The weather is rainy and cold",
+      "Lucas forgot his school bag at home"
+    ],
+    answer: 1,
+    exp: "In dystopian stories, total surveillance means citizens are constantly monitored, and even ordinary actions like walking fast are controlled by authorities."
+  },
+  {
+    module: "Surveillance",
+    extractTitle: "PASSAGE 2: THE CURFEW SIREN",
+    extract: "\"At eight o'clock, the evening siren wailed across the rooftops like an injured animal. In every living room, television screens turned bright red with the warning: ALL CITIZENS MUST REMAIN INDOORS. DO NOT LOOK OUT THE WINDOWS. Sarah pulled her heavy curtains shut and locked her front door with three separate locks.\"",
+    q: "What technique is used in the phrase 'wailed across the rooftops like an injured animal', and what mood does it create?",
+    options: [
+      "Alliteration; creates a calm, sleepy feeling",
+      "Simile; creates an alarming, fearful mood",
+      "Metaphor; suggests a zoo in the city",
+      "Rhyme; creates a playful tone"
+    ],
+    answer: 1,
+    exp: "Comparing the siren to an 'injured animal' using the word 'like' is a simile. It gives the siren an eerie, unsettling sound that creates tension and fear."
+  },
+  {
+    module: "Surveillance",
+    extractTitle: "PASSAGE 3: THE OMNIPRESENT SCREENS",
+    extract: "\"There was no way of shutting the telescreen off completely. You could turn the volume down, but the large glass square on the living room wall remained permanently active, broadcasting endless statistics of factory production while watching every movement in the room.\"",
+    q: "What effect does having a screen that can never be turned off have on the characters' daily lives?",
+    options: [
+      "It provides free entertainment after work",
+      "It eliminates any possibility of private life or personal sanctuary within the home",
+      "It helps save electricity in the building",
+      "It encourages families to talk to each other more often"
+    ],
+    answer: 1,
+    exp: "Telescreens that cannot be turned off represent the destruction of privacy, ensuring the government can spy on citizens inside their own homes."
+  },
+  {
+    module: "Surveillance",
+    extractTitle: "PASSAGE 4: FORBIDDEN BOOKS",
+    extract: "\"In the central square, a metal bin was filled with old paper books: poetry, history, and novels. Two guards in black helmets poured kerosene over the pile and struck a match. Yellow flames devoured the pages, turning decades of human imagination into floating black ash. A sign on the fence read: 'TRUE PEACE IS FREEDOM FROM CONFUSING THOUGHTS.'\"",
+    q: "What does the slogan 'TRUE PEACE IS FREEDOM FROM CONFUSING THOUGHTS' reveal about the ruling power?",
+    options: [
+      "They want citizens to read faster and more easily",
+      "They believe independent thinking and creativity cause trouble, so they destroy knowledge to keep control",
+      "They are cleaning up recyclable paper from the square",
+      "They want to build a bigger library"
+    ],
+    answer: 1,
+    exp: "Dystopian regimes often burn or ban books because reading encourages critical thinking and questioning of government authority."
+  },
+  {
+    module: "Surveillance",
+    extractTitle: "PASSAGE 5: THE THOUGHT DETECTORS",
+    extract: "\"At the entrance to the train station, commuters had to stand inside a glass scanner for three seconds while a green laser swept across their foreheads. The scanner measured brainwave frequencies and heart rate. If a passenger's pulse was above ninety, an alarm buzzed, and two armed officers escorted them away to the Questioning Centre.\"",
+    q: "Why does the government monitor heart rate and brainwaves at the train station?",
+    options: [
+      "To check if passengers have a common winter cold",
+      "To detect signs of nervousness, guilt, or rebellious thoughts before citizens can act on them",
+      "To ensure passengers do not miss their train",
+      "To test new medical technology for hospitals"
+    ],
+    answer: 1,
+    exp: "In advanced dystopian societies, the state polices not just actions, but inner thoughts and feelings, treating physiological fear or tension as a sign of criminal rebellion."
+  },
+  {
+    module: "Surveillance",
+    extractTitle: "PASSAGE 6: THE SLOGANS ON THE WALLS",
+    extract: "\"Every building bore enormous white banners with the Three Pillars of Unity: 'OBEDIENCE IS STRENGTH. QUESTIONING IS DANGER. SILENCE IS HARMONY.' Children recited these words before lunch, and factory workers repeated them over loudspeakers during shift changes.\"",
+    q: "What is the purpose of having citizens chant these slogans every day?",
+    options: [
+      "To improve children's reading and vocabulary",
+      "To continuously indoctrinate and brainwash the population so they accept control without questioning",
+      "To make lunchtime more enjoyable",
+      "To celebrate national poetry week"
+    ],
+    answer: 1,
+    exp: "Constant repetition of state slogans is a classic psychological tool of indoctrination used to make citizens accept authority as natural and unquestionable."
+  },
+  {
+    module: "Surveillance",
+    extractTitle: "PASSAGE 7: NEIGHBOURS SPYING ON NEIGHBOURS",
+    extract: "\"David never spoke about his opinions with his next-door neighbour, Mr Higgins. The government had established the 'Civic Watcher Reward', where citizens received extra food vouchers and fuel credits for reporting suspicious conversations or forbidden items owned by their friends and family.\"",
+    q: "How does the 'Civic Watcher Reward' damage social relationships in this community?",
+    options: [
+      "It helps neighbours become close friends who share food",
+      "It creates an atmosphere of paranoia and distrust, where nobody can trust even their own neighbours or family",
+      "It reduces the cost of groceries for everyone",
+      "It encourages people to have long conversations over the fence"
+    ],
+    answer: 1,
+    exp: "By rewarding citizens for reporting on one another, totalitarian regimes destroy trust and community bonds, making it impossible for citizens to unite against the government."
+  },
+
+  // ================= ATMOSPHERE & SETTING (6) =================
+  {
+    module: "Setting",
+    extractTitle: "PASSAGE 8: THE SMOGGY HORIZON",
+    extract: "\"Mark stepped outside and pulled his face mask tightly over his nose. The sky wasn't blue; it was a murky yellowish-grey, choked with smoke from the government chemical factories. The air tasted of burnt metal and stale dust. It had been seven years since the city had seen natural sunlight.\"",
+    q: "Which sense is mainly targeted by the phrase 'tasted of burnt metal and stale dust'?",
+    options: [
+      "Auditory (sound)",
+      "Gustatory (taste)",
+      "Visual (sight)",
+      "Kinesthetic (movement)"
+    ],
+    answer: 1,
+    exp: "Describing the taste of the polluted air uses gustatory imagery, helping the reader physically experience how ruined the environment is."
+  },
+  {
+    module: "Setting",
+    extractTitle: "PASSAGE 9: THE STERILE APARTMENTS",
+    extract: "\"Inside the apartment block, everything was made of white plastic and stainless steel. There were no pictures on the walls, no rugs on the floor, and no curtains on the windows. The fluorescent strip on the ceiling buzzed with a harsh white glare that cast no shadows. It felt less like a home and more like an operating theatre.\"",
+    q: "Why does the narrator describe the apartment as feeling 'more like an operating theatre'?",
+    options: [
+      "The apartment is very messy and needs cleaning",
+      "To emphasize how cold, sterile, and uninviting the living space is, lacking warmth and personality",
+      "Because the main character is a surgeon",
+      "To show that the apartment was recently built"
+    ],
+    answer: 1,
+    exp: "An operating theatre is clean, clinical, and impersonal. Comparing the apartment to one emphasizes that the regime does not care about comfort, warmth, or homely feelings."
+  },
+  {
+    module: "Setting",
+    extractTitle: "PASSAGE 10: SYNTHETIC RATIONS",
+    extract: "\"Dinner was a small plastic cube of grey protein paste and a cup of lukewarm recycled water. Tom took a bite; it had the rubbery texture of an eraser and no flavour whatsoever. A poster on the cafeteria wall reminded workers: 'Fuel the Body. Serve the State.'\"",
+    q: "How does the author's description of food reinforce the dystopian setting?",
+    options: [
+      "It proves that people in this city enjoy eating simple food",
+      "It shows that food has been reduced to purely functional fuel, showing the loss of cultural pleasure and personal comfort",
+      "It explains how to cook a healthy protein meal",
+      "It shows that Tom is on a personal fitness diet"
+    ],
+    answer: 1,
+    exp: "In dystopian texts, food is often bland, synthetic, and rationed to show that the regime views human beings as machines or tools rather than people."
+  },
+  {
+    module: "Setting",
+    extractTitle: "PASSAGE 11: ACID RAIN",
+    extract: "\"Rain began to fall, but none of the children ran outside to play. The droplets hissed as they struck the metal roof, leaving small pitted rust marks on the gutters. 'Keep inside!' called Mrs Davis, pulling the window shut. 'The rain burns today.'\"",
+    q: "How does the author subvert (change) the traditional meaning of rain in this passage?",
+    options: [
+      "Rain usually represents joy and farming, but here it is dangerous and toxic due to industrial pollution",
+      "Rain is described as warm and pleasant",
+      "The rain causes floods that destroy houses",
+      "The passage proves that rain cleans the city streets"
+    ],
+    answer: 0,
+    exp: "Normally in stories, rain brings life and refreshment. In this dystopian setting, it is inverted into toxic acid rain that burns, reinforcing environmental destruction."
+  },
+  {
+    module: "Setting",
+    extractTitle: "PASSAGE 12: THE CONCRETE WASTELAND",
+    extract: "\"Beyond the perimeter fence lay the Dead Zone—an endless expanse of cracked concrete, rusting car chassis, and piles of discarded computer monitors. Not a single tree grew. Not a blade of grass sprouted. The only motion was the wind swirling dirty plastic wrappers against the barbed wire.\"",
+    q: "What mood is established through this visual description of the Dead Zone?",
+    options: [
+      "Excitement and adventure",
+      "Desolation, decay, and hopelessness",
+      "Cheerfulness and humor",
+      "Relief and relaxation"
+    ],
+    answer: 1,
+    exp: "Describing rusting metal, dead ground, and barbed wire creates a desolate, grim mood typical of post-apocalyptic and dystopian wasteland settings."
+  },
+  {
+    module: "Setting",
+    extractTitle: "PASSAGE 13: THE CONSTANT ARTIFICIAL HUM",
+    extract: "\"The city was never truly silent. Even at three in the morning, a low, continuous electrical hum vibrated through the floorboards and water pipes. It came from the enormous subterranean ventilation fans that pumped filtered air into the dome. It was a mechanical heartbeat that reminded every resident they were trapped inside a machine.\"",
+    q: "What technique is used in calling the fans a 'mechanical heartbeat', and what does it suggest?",
+    options: [
+      "Personification / metaphor; suggests the city is a cold, artificial organism that controls and keeps the people alive like prisoners",
+      "Hyperbole; suggests the fans are completely broken",
+      "Rhyme; creates a musical rhythm in the sentence",
+      "Onomatopoeia; imitates the sound of water dripping"
+    ],
+    answer: 0,
+    exp: "Describing the fans as a 'mechanical heartbeat' uses metaphor and personification to picture the entire city as a giant artificial machine that controls human survival."
+  },
+
+  // ================= ENFORCED CONFORMITY (6) =================
+  {
+    module: "Conformity",
+    extractTitle: "PASSAGE 14: UNIFORM CLOTHING",
+    extract: "\"Thousands of office workers filed out of the station. Every man, woman, and teenager wore the exact same dark grey tunic, buttoned up to the chin. No jewelry was permitted. No bright colors were allowed. The crowd moved forward like a slow grey river, with nobody speaking a word to each other.\"",
+    q: "Why does the government in this story make all citizens wear identical grey tunics?",
+    options: [
+      "To save money on manufacturing clothes",
+      "To strip away individual identity and force everyone to conform",
+      "Because grey is the most fashionable color in the city",
+      "To keep everyone warm in the cold weather"
+    ],
+    answer: 1,
+    exp: "A core convention of dystopian fiction is enforced conformity. Removing personal choices like clothing and jewelry suppresses individuality."
+  },
+  {
+    module: "Conformity",
+    extractTitle: "PASSAGE 15: MANDATORY NUMBER NAMES",
+    extract: "\"Names had been phased out twenty years ago to promote collective equality. Jack was officially registered as Unit 774-B. When the school teacher called attendance, she called out numbers: '601-A? Present. 602-A? Present.' Nobody had a family surname, and nobody had a nickname.\"",
+    q: "What is the psychological effect of replacing human names with numbers?",
+    options: [
+      "It helps students learn mathematics faster",
+      "It completely dehumanizes people, reducing unique individuals to barcode numbers on a government spreadsheet",
+      "It prevents people from forgetting their names",
+      "It helps teachers mark rolls more quickly"
+    ],
+    answer: 1,
+    exp: "Names are fundamental to personal identity and family heritage. Replacing names with numbers is an effective way dystopian regimes strip away humanity and uniqueness."
+  },
+  {
+    module: "Conformity",
+    extractTitle: "PASSAGE 16: REGULATED EMOTIONS",
+    extract: "\"Crying in public was classified as Emotional Irresponsibility. When young Leo scraped his knee on the concrete, his mother did not comfort him with a hug. She pulled a small blue pill from her tin dispenser and commanded: 'Take your Calmant. Calmness is stability.' Leo swallowed the pill, and within thirty seconds his tears stopped and his face went blank.\"",
+    q: "Why does this society drug citizens to suppress sadness and anger?",
+    options: [
+      "Because medicines taste sweet like candy",
+      "Because strong genuine emotions can lead to discontent, rebellion, and questioning of the social order",
+      "To prevent people from catching common colds",
+      "Because mothers do not love their children"
+    ],
+    answer: 1,
+    exp: "Dystopian regimes often drug or condition citizens to keep them emotionally flat. If citizens cannot feel grief or anger, they will never feel passionate enough to rebel."
+  },
+  {
+    module: "Conformity",
+    extractTitle: "PASSAGE 17: SYNCHRONISED MARCHING",
+    extract: "\"At 7:00 AM sharp, the siren sounded and the student dormitories emptied onto the parade ground. Five hundred students stood in ten perfectly straight rows. When the drum beat, five hundred right boots struck the asphalt in a single concussive CRACK. To step out of line by even two inches resulted in three hours of detention.\"",
+    q: "What does the synchronized marching on the parade ground symbolize?",
+    options: [
+      "Preparation for an Olympic sports festival",
+      "Total military-style discipline and the complete suppression of personal freedom",
+      "The students' personal love for dancing",
+      "A fun morning game to wake up sleepy students"
+    ],
+    answer: 1,
+    exp: "Strict synchronized marching symbolizes that individuals exist only as tiny, obedient parts of a larger collective machine, with zero tolerance for stepping outside the line."
+  },
+  {
+    module: "Conformity",
+    extractTitle: "PASSAGE 18: ERASING THE VOCABULARY",
+    extract: "\"The Ministry of Education issued an updated dictionary with 200 fewer words than the previous year. Words like 'freedom', 'melancholy', and 'solitude' had been completely erased from the pages. The headmaster explained: 'If there is no word for a feeling, that feeling will soon cease to exist in human minds.'\"",
+    q: "How does removing words from the dictionary help the government maintain control?",
+    options: [
+      "It saves ink and paper when printing dictionaries",
+      "It limits what people are able to think and express, making it impossible to formulate ideas about rebellion or liberty",
+      "It makes English spelling much easier for Year 10 students",
+      "It encourages people to learn sign language"
+    ],
+    answer: 1,
+    exp: "This refers to linguistic determinism (like Orwell's Newspeak). If people don't have words for concepts like 'liberty' or 'loneliness', they cannot think or talk about them."
+  },
+  {
+    module: "Conformity",
+    extractTitle: "PASSAGE 19: BANNING PERSONAL ART",
+    extract: "\"Drawing or painting was strictly limited to official state posters depicting factories, harvest trucks, and glorious leaders. When Inspector Cole found a teenage girl sketching an imaginative picture of a flying dragon in her notebook, the sketch was confiscated and burned. 'Art must serve utility,' the inspector said coldly.\"",
+    q: "Why does the regime forbid personal, imaginative art?",
+    options: [
+      "Because paint brushes are expensive to import",
+      "Because imagination and creativity foster free thinking and independent self-expression, which threatens totalitarian conformity",
+      "Because dragons are scary for young children",
+      "Because the girl should have been doing her homework"
+    ],
+    answer: 1,
+    exp: "Imagination allows people to envision a different, better world. Authoritarian regimes fear personal art because it nurtures individuality and creative freedom."
+  },
+
+  // ================= INDIVIDUALITY & REBELLION (6) =================
+  {
+    module: "Rebellion",
+    extractTitle: "PASSAGE 20: THE HIDDEN FLOWER",
+    extract: "\"Deep in an abandoned subway tunnel where the surveillance cameras had broken years ago, Daniel found something miraculous: a single dandelion growing through a crack in the concrete. Its petals were bright golden yellow—a splash of real, living colour in a grey concrete world. Daniel crouched down and gently shielded it with his hands.\"",
+    q: "In this story, what does the golden dandelion symbolize?",
+    options: [
+      "A weed that needs to be sprayed with poison",
+      "Hope, resilience, and the persistence of nature and life against an oppressive system",
+      "That the subway station needs to be rebuilt",
+      "That Daniel wants to become a botanist"
+    ],
+    answer: 1,
+    exp: "A small, bright living flower growing in a dark concrete tunnel is a classic symbol of resilience, hope, and the human spirit surviving in a harsh world."
+  },
+  {
+    module: "Rebellion",
+    extractTitle: "PASSAGE 21: THE FORBIDDEN DIARY",
+    extract: "\"Underneath a loose floorboard in her bedroom, Elena kept an old wooden pencil and a small notebook with yellowed paper. Keeping a private diary was strictly outlawed. Each night, she wrote down her real thoughts: what she dreamed of, what she missed, and what she truly felt. As she wrote, her hand shook with fear, but she could not stop.\"",
+    q: "Why is writing in a private diary considered an act of rebellion in this dystopian society?",
+    options: [
+      "Because paper is too expensive to waste",
+      "Because writing personal thoughts proves that the citizen has an independent mind that the state cannot control",
+      "Because Elena has poor handwriting",
+      "Because students are only supposed to write at school"
+    ],
+    answer: 1,
+    exp: "Totalitarian regimes try to control what people think. Keeping a private diary is a direct act of mental freedom and defiance against conformity."
+  },
+  {
+    module: "Rebellion",
+    extractTitle: "PASSAGE 22: A FORGOTTEN SONG",
+    extract: "\"The old man at the back of the tram started humming a melody. It wasn't the loud marching hymn blasted from the city speakers; it was a gentle, slow lullaby about the ocean and the stars. A young woman nearby stopped typing on her phone and listened, her eyes filling with tears she couldn't explain.\"",
+    q: "What effect does the old man's song have on the people around him?",
+    options: [
+      "It annoys them because they want quiet to do their work",
+      "It awakens forgotten human emotions and a longing for beauty that the regime has tried to erase",
+      "It makes the passengers report him to the police immediately",
+      "It makes the tram driver lose concentration"
+    ],
+    answer: 1,
+    exp: "Art and music in dystopian stories often act as triggers that connect people back to their true human emotions and memories of a better past."
+  },
+  {
+    module: "Rebellion",
+    extractTitle: "PASSAGE 23: THE MOMENT OF CHOICE",
+    extract: "\"The guard looked at the boy standing before him. The boy was holding a forbidden silver compass he had found in the ruins. The protocol was simple: sound the alarm, arrest the boy, and receive a promotion. The guard looked into the boy's frightened eyes. Slowly, the guard lowered his radio, stepped aside, and whispered: 'Run. And never come back.'\"",
+    q: "What central human theme is highlighted in the guard's decision to let the boy go?",
+    options: [
+      "The guard was too lazy to do paperwork",
+      "Empathy and human compassion overcoming cold, blind obedience to an unjust system",
+      "The compass was not valuable enough to confiscate",
+      "The boy was faster at running than the guard"
+    ],
+    answer: 1,
+    exp: "This moment highlights moral choice: the guard chooses personal empathy and compassion over the cruel rules of the system."
+  },
+  {
+    module: "Rebellion",
+    extractTitle: "PASSAGE 24: THE BROKEN MIRROR SHARD",
+    extract: "\"Mirrors were banned across Sector 9 because seeing your own face was thought to encourage vanity and selfish thoughts. When Tomas stumbled upon a broken shard of polished glass in an alley, he saw his own reflection for the first time in ten years: the dark freckles on his nose, the brown eyes, the wavy hair. 'I am me,' he whispered. 'I am not just worker 402.'\"",
+    q: "What does looking into the mirror shard allow Tomas to reclaim?",
+    options: [
+      "He realizes his face is dirty and needs washing",
+      "His individual self-identity and human awareness, separating himself from the anonymous collective",
+      "He discovers that mirrors can be used as weapons",
+      "He realizes he wants to buy a new haircut"
+    ],
+    answer: 1,
+    exp: "The mirror symbolizes self-recognition and identity. Discovering his unique face helps Tomas break free from the feeling that he is just an anonymous worker number."
+  },
+  {
+    module: "Rebellion",
+    extractTitle: "PASSAGE 25: WHISPERED TRUTHS",
+    extract: "\"Beneath the deafening clatter of the factory machinery, where the microphones picked up only industrial noise, Maya leaned towards her co-worker and whispered five forbidden words: 'The sky used to be blue.' Her co-worker froze, looked around, and gave a tiny, almost invisible nod of understanding.\"",
+    q: "Why is whispering about what the sky used to look like a dangerous act in this society?",
+    options: [
+      "Because the factory is too loud to hear properly",
+      "Because sharing memories of the past challenges the regime's lie that life under their rule is the best it has ever been",
+      "Because talking during work hours slows down production slightly",
+      "Because blue paint is banned in the factory"
+    ],
+    answer: 1,
+    exp: "Dystopian regimes maintain control by claiming that life was terrible before they took power. Remembering that nature was once clean and beautiful exposes the regime's failures."
+  }
+];
+
+let userAnswers = new Array(passages.length).fill(null);
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+
+  passages.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.dataset.module = item.module;
+    card.id = `q-${idx}`;
+
+    const letters = ['A', 'B', 'C', 'D'];
+    let optionsHtml = '';
+    item.options.forEach((opt, optIdx) => {
+      optionsHtml += `
+        <button class="option-btn" onclick="selectOption(${idx}, ${optIdx})" id="opt-${idx}-${optIdx}">
+          <span class="option-letter">${letters[optIdx]}</span>
+          <span>${opt}</span>
+        </button>
+      `;
+    });
+
+    card.innerHTML = `
+      <div class="q-header">
+        <span class="q-num">Passage ${idx + 1} of 25</span>
+        <span class="q-module">${item.module}</span>
+      </div>
+      <div class="extract-box">
+        <div class="extract-header">📖 ${item.extractTitle}</div>
+        <div>${item.extract}</div>
+      </div>
+      <div class="q-text">${item.q}</div>
+      <div class="options-grid">${optionsHtml}</div>
+      <div class="explanation-box" id="exp-${idx}"></div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+function selectOption(qIdx, optIdx) {
+  if (userAnswers[qIdx] !== null) return;
+
+  userAnswers[qIdx] = optIdx;
+  const item = passages[qIdx];
+  const isCorrect = (optIdx === item.answer);
+
+  for (let i = 0; i < item.options.length; i++) {
+    const btn = document.getElementById(`opt-${qIdx}-${i}`);
+    btn.classList.add('disabled');
+    if (i === item.answer) {
+      btn.classList.add('reveal-correct');
+    }
+  }
+
+  const chosenBtn = document.getElementById(`opt-${qIdx}-${optIdx}`);
+  if (isCorrect) {
+    chosenBtn.classList.remove('reveal-correct');
+    chosenBtn.classList.add('selected-correct');
+  } else {
+    chosenBtn.classList.add('selected-wrong');
+  }
+
+  const expBox = document.getElementById(`exp-${qIdx}`);
+  expBox.className = `explanation-box show ${isCorrect ? 'correct' : 'wrong'}`;
+  expBox.innerHTML = `
+    <div class="exp-title">${isCorrect ? '✅ Well done! Analysis:' : '❌ Not quite. The correct answer is (' + ['A','B','C','D'][item.answer] + '):'}</div>
+    <div>${item.exp}</div>
+  `;
+
+  updateStats();
+}
+
+function updateStats() {
+  const answered = userAnswers.filter(a => a !== null).length;
+  let correct = 0;
+  userAnswers.forEach((ans, idx) => {
+    if (ans === passages[idx].answer) correct++;
+  });
+
+  document.getElementById('answered-count').innerText = answered;
+  document.getElementById('score-count').innerText = correct;
+  const pct = answered > 0 ? Math.round((correct / 25) * 100) : 0;
+  document.getElementById('score-pct').innerText = `${pct}%`;
+
+  const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+  document.getElementById('accuracy-pct').innerText = answered > 0 ? `${accuracy}%` : '--';
+
+  const fill = document.getElementById('progress-fill');
+  fill.style.width = `${(answered / 25) * 100}%`;
+}
+
+function filterQuestions(mod, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const cards = document.querySelectorAll('.q-card');
+  cards.forEach(card => {
+    if (mod === 'all' || card.dataset.module === mod) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function resetQuiz() {
+  if (confirm("Reset all 25 passages and score?")) {
+    userAnswers = new Array(passages.length).fill(null);
+    renderQuiz();
+    updateStats();
+  }
+}
+
+renderQuiz();
+updateStats();
+</script>
+</body>
+</html>

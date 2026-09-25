@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Year 10 Science Massive Practice Exam | Picnic Point High School</title>
+<style>
+  :root {
+    --primary: #047857;
+    --primary-light: #10B981;
+    --primary-dark: #065F46;
+    --bg: #F8FAFC;
+    --card-bg: #FFFFFF;
+    --text-main: #0F172A;
+    --text-muted: #64748B;
+    --border: #E2E8F0;
+    --correct: #10B981;
+    --correct-bg: #ECFDF5;
+    --incorrect: #EF4444;
+    --incorrect-bg: #FEF2F2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  body { background-color: var(--bg); color: var(--text-main); line-height: 1.5; padding-bottom: 60px; }
+  
+  header {
+    background: linear-gradient(135deg, #065F46 0%, #047857 100%);
+    color: white;
+    padding: 30px 20px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  }
+  .header-content { max-width: 900px; margin: 0 auto; }
+  .badge { background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 999px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; margin-bottom: 8px; }
+  h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; }
+  p.subtitle { color: #A7F3D0; font-size: 0.95rem; }
+
+  /* Sticky Score Dashboard */
+  .score-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  .score-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .score-stat { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
+  .score-stat span { color: var(--primary); font-size: 1.1rem; font-weight: 800; }
+  .progress-bar-bg { width: 100%; height: 8px; background: #E2E8F0; border-radius: 4px; overflow: hidden; margin-top: 6px; }
+  .progress-bar-fill { height: 100%; background: var(--primary-light); width: 0%; transition: width 0.3s ease; }
+
+  /* Filters */
+  .filter-nav { max-width: 900px; margin: 20px auto; padding: 0 20px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .filter-btn {
+    background: white; border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px;
+    font-size: 0.85rem; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+  }
+  .filter-btn.active, .filter-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+  /* Main Container */
+  .quiz-container { max-width: 900px; margin: 0 auto; padding: 0 20px; display: flex; flex-direction: column; gap: 20px; }
+
+  /* Question Card */
+  .q-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .q-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .q-num { font-size: 0.85rem; font-weight: 700; color: var(--primary); background: #ECFDF5; padding: 3px 8px; border-radius: 6px; }
+  .q-module { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
+  .q-text { font-size: 1.05rem; font-weight: 600; color: var(--text-main); margin-bottom: 16px; }
+
+  /* Options */
+  .options-grid { display: flex; flex-direction: column; gap: 10px; }
+  .option-btn {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 16px; background: #F8FAFC; border: 1.5px solid var(--border);
+    border-radius: 8px; font-size: 0.95rem; color: var(--text-main); cursor: pointer;
+    text-align: left; transition: all 0.15s ease;
+  }
+  .option-btn:hover:not(.disabled) { background: #F1F5F9; border-color: #94A3B8; }
+  .option-letter {
+    font-weight: 700; color: var(--text-muted); background: white; border: 1px solid var(--border);
+    width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 0.8rem;
+  }
+
+  /* Status States */
+  .option-btn.selected-correct {
+    background: var(--correct-bg) !important; border-color: var(--correct) !important; color: #065F46 !important;
+  }
+  .option-btn.selected-correct .option-letter { background: var(--correct); color: white; border-color: var(--correct); }
+
+  .option-btn.selected-wrong {
+    background: var(--incorrect-bg) !important; border-color: var(--incorrect) !important; color: #991B1B !important;
+  }
+  .option-btn.selected-wrong .option-letter { background: var(--incorrect); color: white; border-color: var(--incorrect); }
+
+  .option-btn.reveal-correct {
+    border-color: var(--correct) !important; background: var(--correct-bg) !important;
+  }
+
+  /* Explanation Box */
+  .explanation-box {
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    display: none;
+    line-height: 1.45;
+  }
+  .explanation-box.show { display: block; }
+  .explanation-box.correct { background: #ECFDF5; border-left: 4px solid var(--correct); color: #065F46; }
+  .explanation-box.wrong { background: #FEF2F2; border-left: 4px solid var(--incorrect); color: #991B1B; }
+  .exp-title { font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+
+  /* Reset Button */
+  .reset-btn {
+    background: white; border: 1px solid var(--border); padding: 8px 16px; border-radius: 8px;
+    font-size: 0.85rem; font-weight: 700; color: var(--text-main); cursor: pointer; transition: all 0.2s;
+  }
+  .reset-btn:hover { background: #F1F5F9; border-color: #94A3B8; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <div class="badge">NSW Stage 5 Science &bull; Task 3 Exam: Term 4, Week 1&ndash;2 (13&ndash;23 Oct 2026)</div>
+    <h1>Year 10 Science Interactive Mastery Exam</h1>
+    <p class="subtitle">Complete 40-Question Practice Bank Covering Biotechnology, Chemical Earth, Time Traveller &amp; Working Scientifically</p>
+  </div>
+</header>
+
+<div class="score-sticky">
+  <div class="score-container">
+    <div class="score-stat">Answered: <span id="answered-count">0</span> / 40</div>
+    <div class="score-stat">Current Score: <span id="score-count">0</span> (<span id="score-pct">0%</span>)</div>
+    <div class="score-stat">Accuracy: <span id="accuracy-pct">--</span></div>
+    <button class="reset-btn" onclick="resetQuiz()">Reset Test</button>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-fill"></div>
+    </div>
+  </div>
+</div>
+
+<div class="filter-nav">
+  <button class="filter-btn active" onclick="filterQuestions('all', this)">All Questions (40)</button>
+  <button class="filter-btn" onclick="filterQuestions('Biotechnology', this)">Biotechnology &amp; Genetics (10)</button>
+  <button class="filter-btn" onclick="filterQuestions('Chemical Earth', this)">Chemical Earth &amp; Reactions (10)</button>
+  <button class="filter-btn" onclick="filterQuestions('Time Traveller', this)">Time Traveller (Space &amp; Earth) (10)</button>
+  <button class="filter-btn" onclick="filterQuestions('Working Scientifically', this)">Working Scientifically (10)</button>
+</div>
+
+<main class="quiz-container" id="quiz-container">
+  <!-- Generated via JavaScript -->
+</main>
+
+<script>
+const questions = [
+  // ================= MODULE 1: BIOTECHNOLOGY & GENETICS (10) =================
+  {
+    module: "Biotechnology",
+    q: "Which of the following correctly pairs the nitrogenous bases found in a double-stranded molecule of DNA?",
+    options: [
+      "Adenine pairs with Guanine; Cytosine pairs with Thymine",
+      "Adenine pairs with Thymine; Cytosine pairs with Guanine",
+      "Adenine pairs with Uracil; Guanine pairs with Cytosine",
+      "Adenine pairs with Cytosine; Thymine pairs with Guanine"
+    ],
+    answer: 1,
+    exp: "According to Watson-Crick complementary base-pairing rules, Adenine (A) always pairs with Thymine (T) via 2 hydrogen bonds, and Cytosine (C) always pairs with Guanine (G) via 3 hydrogen bonds."
+  },
+  {
+    module: "Biotechnology",
+    q: "A nucleotide, the fundamental repeating monomer of DNA, is chemically composed of:",
+    options: [
+      "A glucose ring, an amino acid, and a nitrogenous base",
+      "A deoxyribose sugar, a phosphate group, and a nitrogenous base",
+      "A ribose sugar, a fatty acid chain, and a hydrogen ion",
+      "A polypeptide chain, an enzyme, and a histone protein"
+    ],
+    answer: 1,
+    exp: "Each DNA nucleotide consists of three bonded components: a 5-carbon deoxyribose sugar molecule, an acidic phosphate group, and one of four nitrogenous bases (A, T, C, or G)."
+  },
+  {
+    module: "Biotechnology",
+    q: "What is the primary biological difference between mitosis and meiosis?",
+    options: [
+      "Mitosis creates 4 genetically unique haploid cells; Meiosis creates 2 identical diploid cells",
+      "Mitosis halving the chromosome count; Meiosis doubles the chromosome count",
+      "Mitosis produces 2 genetically identical somatic cells; Meiosis produces 4 genetically diverse gametes",
+      "Mitosis occurs only in gonads; Meiosis occurs throughout somatic tissues"
+    ],
+    answer: 2,
+    exp: "Mitosis involves 1 cell division yielding 2 genetically identical diploid (2n) daughter cells for growth and tissue repair. Meiosis involves 2 divisions producing 4 haploid (n) gametes (sperm/egg) with genetic variation from crossing over and independent assortment."
+  },
+  {
+    module: "Biotechnology",
+    q: "A brown-eyed father who is heterozygous (Bb) and a blue-eyed mother (bb) have children. What is the theoretical probability of them having a blue-eyed child?",
+    options: [
+      "0%",
+      "25%",
+      "50%",
+      "75%"
+    ],
+    answer: 2,
+    exp: "A Punnett square crossing Bb × bb produces offspring genotypes: 50% Bb (Brown eyes) and 50% bb (Blue eyes). Thus, the probability of blue eyes is 50% (1 in 2)."
+  },
+  {
+    module: "Biotechnology",
+    q: "In recombinant DNA technology, what is the precise molecular role of a restriction enzyme?",
+    options: [
+      "To paste foreign DNA into the host chromosome",
+      "To cut DNA strands at specific palindromic recognition sequences, creating 'sticky ends'",
+      "To replicate millions of DNA copies using thermal cycling",
+      "To translate mRNA codons into polypeptide chains"
+    ],
+    answer: 1,
+    exp: "Restriction enzymes (molecular scissors) identify specific nucleotide palindromes and cut the DNA phosphodiester backbone, leaving overhanging complementary single-stranded 'sticky ends'."
+  },
+  {
+    module: "Biotechnology",
+    q: "Which enzyme is required to covalently bond the sugar-phosphate backbone of a target human gene into a cut bacterial plasmid vector?",
+    options: [
+      "DNA Polymerase",
+      "RNA Primase",
+      "DNA Ligase",
+      "Amylase"
+    ],
+    answer: 2,
+    exp: "DNA Ligase acts as molecular glue, forming permanent covalent phosphodiester bonds between the complementary sticky ends of the human gene and the plasmid."
+  },
+  {
+    module: "Biotechnology",
+    q: "During gel electrophoresis, DNA fragments migrate through the agarose gel toward the positive electrode because:",
+    options: [
+      "DNA is positively charged due to its nitrogenous bases",
+      "DNA is negatively charged due to its phosphate groups",
+      "DNA is neutral and moves solely by gravitational force",
+      "The electrical current heats the gel, evaporating larger molecules"
+    ],
+    answer: 1,
+    exp: "DNA carries an overall negative charge due to the phosphate groups along its backbone. When an electric field is applied, it migrates towards the positive anode (+), with shorter fragments traveling faster and further through the pores."
+  },
+  {
+    module: "Biotechnology",
+    q: "The Central Dogma of Molecular Biology traces the flow of genetic information inside a eukaryotic cell as:",
+    options: [
+      "Protein → mRNA → DNA",
+      "DNA → Transcription (mRNA) → Translation (Polypeptide/Protein)",
+      "mRNA → DNA → Amino Acid",
+      "DNA → Mitosis → Translation"
+    ],
+    answer: 1,
+    exp: "Genetic code in DNA is first transcribed into messenger RNA (mRNA) in the nucleus, which travels to ribosomes in the cytoplasm to be translated into a chain of amino acids (protein)."
+  },
+  {
+    module: "Biotechnology",
+    q: "A pedigree chart shows two unaffected parents having a child with a severe genetic condition. This pattern of inheritance is conclusive evidence that the trait is:",
+    options: [
+      "Autosomal dominant",
+      "Autosomal recessive",
+      "Y-linked",
+      "Non-genetic"
+    ],
+    answer: 1,
+    exp: "If two unaffected parents produce an affected offspring, both parents must be heterozygous carriers (Bb). The condition skipped a generation because the recessive allele (b) was masked by the dominant allele (B)."
+  },
+  {
+    module: "Biotechnology",
+    q: "Which of the following represents a significant ethical or ecological concern regarding the widespread release of Genetically Modified (GM) crops?",
+    options: [
+      "GM crops produce zero edible biomass",
+      "Transgenes may horizontally transfer via pollen to wild relatives, creating herbicide-resistant 'superweeds'",
+      "GM crops alter the laws of Newtonian mechanics",
+      "GM crops cannot perform photosynthesis"
+    ],
+    answer: 1,
+    exp: "A major ecological risk is outcrossing—the accidental transfer of engineered genes (such as pesticide resistance) from GM crops to wild weed relatives via cross-pollination, disrupting native ecosystems."
+  },
+
+  // ================= MODULE 2: CHEMICAL EARTH & REACTIONS (10) =================
+  {
+    module: "Chemical Earth",
+    q: "Elements that belong to the same vertical column (Group) of the Periodic Table have similar chemical reactivity because they possess the same:",
+    options: [
+      "Total number of protons",
+      "Number of electron shells",
+      "Number of valence electrons in their outermost shell",
+      "Atomic mass number"
+    ],
+    answer: 2,
+    exp: "Chemical reactivity is dictated by valence electrons. Elements in Group 1 have 1 valence electron, Group 2 have 2, and Group 17 have 7, which dictates how they form bonds to achieve an octet."
+  },
+  {
+    module: "Chemical Earth",
+    q: "What type of chemical bonding occurs when a metallic atom transfers electrons to a non-metallic atom?",
+    options: [
+      "Covalent bonding",
+      "Ionic bonding",
+      "Metallic sea-of-electrons bonding",
+      "Hydrogen bonding"
+    ],
+    answer: 1,
+    exp: "Ionic bonding occurs between metals and non-metals. The metal loses electrons to become a positive cation, and the non-metal gains electrons to become an anion, held in a lattice by strong electrostatic attraction."
+  },
+  {
+    module: "Chemical Earth",
+    q: "Which general equation accurately describes the products formed when an acid reacts with a metal carbonate?",
+    options: [
+      "Acid + Carbonate → Salt + Hydrogen Gas",
+      "Acid + Carbonate → Salt + Water + Carbon Dioxide",
+      "Acid + Carbonate → Base + Oxygen Gas",
+      "Acid + Carbonate → Water + Carbon Monoxide"
+    ],
+    answer: 1,
+    exp: "Acids react with carbonates to yield three distinct products: an ionic salt, water, and carbon dioxide gas (which causes effervescence and turns limewater milky)."
+  },
+  {
+    module: "Chemical Earth",
+    q: "What are the stoichiometric coefficients required to balance: __ Al(s) + __ O₂(g) → __ Al₂O₃(s)?",
+    options: [
+      "2, 3, 2",
+      "4, 3, 2",
+      "1, 3, 2",
+      "4, 2, 2"
+    ],
+    answer: 1,
+    exp: "Balancing atoms: Left side: 4 Al, 3×2 = 6 O. Right side: 2×2 = 4 Al, 2×3 = 6 O. Equation is: 4Al + 3O₂ → 2Al₂O₃."
+  },
+  {
+    module: "Chemical Earth",
+    q: "According to Collision Theory, which two conditions are strictly mandatory for a chemical reaction to take place between colliding particles?",
+    options: [
+      "Identical physical mass and zero electrical charge",
+      "Sufficient kinetic energy (≥ Activation Energy Ea) and correct spatial orientation",
+      "Presence of a liquid solvent and high gravitational acceleration",
+      "Equal concentrations of both reactants and high volume"
+    ],
+    answer: 1,
+    exp: "Collision Theory dictates that reacting particles must collide with energy equal to or exceeding the activation energy (Ea) AND they must collide with the correct geometric alignment to break existing bonds."
+  },
+  {
+    module: "Chemical Earth",
+    q: "Why does crushing a solid reactant into a fine powder increase the rate of reaction?",
+    options: [
+      "It lowers the activation energy required for the reaction",
+      "It increases total exposed surface area, increasing the frequency of collisions per second",
+      "It increases the average kinetic energy of the particles",
+      "It changes the chemical nature of the products"
+    ],
+    answer: 1,
+    exp: "Crushing exposes interior particles to the surrounding reactant. Greater surface area means more physical contact points, directly increasing the collision frequency per unit time."
+  },
+  {
+    module: "Chemical Earth",
+    q: "How does the addition of a chemical catalyst increase the rate of reaction?",
+    options: [
+      "By increasing the temperature of the solution",
+      "By supplying additional thermal energy to the reactants",
+      "By providing an alternative reaction pathway with a lower activation energy (Ea)",
+      "By acting as a permanent reactant that is consumed"
+    ],
+    answer: 2,
+    exp: "A catalyst provides an alternative pathway requiring less activation energy. Therefore, a significantly higher fraction of existing collisions have sufficient energy to react successfully, without consuming the catalyst."
+  },
+  {
+    module: "Chemical Earth",
+    q: "When a piece of magnesium ribbon is dropped into dilute hydrochloric acid, bubbles of gas rapidly form. What is this gas, and what is its standard laboratory identification test?",
+    options: [
+      "Carbon dioxide gas; turns limewater milky",
+      "Oxygen gas; relights a glowing wooden splint",
+      "Hydrogen gas; produces a squeaky 'pop' with a burning splint",
+      "Chlorine gas; bleaches damp litmus paper"
+    ],
+    answer: 2,
+    exp: "Acid + Metal → Salt + Hydrogen Gas (Mg + 2HCl → MgCl₂ + H₂). Hydrogen gas is confirmed by the 'pop test' where an ignited splint creates a sharp squeaky pop."
+  },
+  {
+    module: "Chemical Earth",
+    q: "Why do solid ionic compounds (such as NaCl crystal) NOT conduct electricity, whereas dissolved aqueous NaCl conducts electricity readily?",
+    options: [
+      "Solids have no electrons whatsoever",
+      "In the solid lattice, ions are locked in rigid positions; in solution, ions are mobile and act as charge carriers",
+      "Dissolving salt creates free neutrons",
+      "Water molecules destroy the ions"
+    ],
+    answer: 1,
+    exp: "Electrical conduction requires mobile charge carriers. In solid crystal lattices, ions are immobilized by strong ionic bonds. When dissolved or molten, cations and anions become mobile to carry current."
+  },
+  {
+    module: "Chemical Earth",
+    q: "Which of the following compounds exhibits covalent molecular bonding?",
+    options: [
+      "Magnesium oxide (MgO)",
+      "Sodium fluoride (NaF)",
+      "Carbon dioxide (CO₂)",
+      "Copper metal (Cu)"
+    ],
+    answer: 2,
+    exp: "Carbon dioxide (CO₂) consists of two non-metals sharing pairs of valence electrons to form covalent double bonds. MgO and NaF are ionic; Cu is metallic."
+  },
+
+  // ================= MODULE 3: TIME TRAVELLER (10) =================
+  {
+    module: "Time Traveller",
+    q: "What physical phenomenon provides conclusive observational evidence that the universe is actively expanding in all directions?",
+    options: [
+      "The gravitational collapse of black holes",
+      "Cosmological redshift of absorption spectra observed in light from distant galaxies",
+      "The formation of solar eclipses",
+      "The blueshift of stars within the Milky Way"
+    ],
+    answer: 1,
+    exp: "Edwin Hubble observed that spectral lines from distant galaxies are shifted toward longer (redder) wavelengths. By the Doppler effect, this demonstrates galaxies are receding from us, proving cosmic expansion."
+  },
+  {
+    module: "Time Traveller",
+    q: "The Cosmic Microwave Background Radiation (CMBR) detected across the entire sky is best described as:",
+    options: [
+      "Leftover radioactive fallout from Soviet atomic bomb testing",
+      "The thermal remnant radiation left over from the early universe (~380,000 years after the Big Bang)",
+      "Interference generated by modern wireless communication networks",
+      "X-rays produced by colliding neutron stars"
+    ],
+    answer: 1,
+    exp: "CMBR is the cooled 2.73 K thermal radiation released during recombination ~380,000 years post-Big Bang, when electrons combined with protons to form neutral atoms, letting light travel freely."
+  },
+  {
+    module: "Time Traveller",
+    q: "A main sequence star remains stable for billions of years due to a balance known as hydrostatic equilibrium. Which two opposing forces maintain this equilibrium?",
+    options: [
+      "Electrostatic repulsion and magnetic attraction",
+      "Inward gravitational collapse balanced by outward thermal radiation pressure from nuclear fusion",
+      "Centrifugal force balanced by solar wind",
+      "Frictional drag balanced by dark energy"
+    ],
+    answer: 1,
+    exp: "Hydrostatic equilibrium is the balance between the immense inward pull of gravity and the outward thermal gas pressure created by nuclear fusion (4H → He) in the stellar core."
+  },
+  {
+    module: "Time Traveller",
+    q: "Where in the universe are chemical elements heavier than Iron (Fe)—such as Gold, Platinum, and Uranium—synthesized?",
+    options: [
+      "Inside the gentle cores of low-mass red dwarf stars",
+      "During cataclysmic supernova explosions and merging neutron stars",
+      "In planetary atmospheres via lightning strikes",
+      "Within deep ocean hydrothermal vents"
+    ],
+    answer: 1,
+    exp: "Nuclear fusion in stars is exothermic only up to Iron (Fe). Elements heavier than iron require massive energy input and extreme neutron flux, occurring exclusively during supernovae and kilonovae."
+  },
+  {
+    module: "Time Traveller",
+    q: "What is the final evolutionary remnant of an average, medium-mass star like our Sun?",
+    options: [
+      "A black hole",
+      "A white dwarf (gradually cooling into a black dwarf)",
+      "A pulsar / neutron star",
+      "A supermassive red hypergiant"
+    ],
+    answer: 1,
+    exp: "Low to medium-mass stars (<8 solar masses) expand into Red Giants, shed their outer layers as planetary nebulae, and leave behind an inert carbon-oxygen core known as a White Dwarf."
+  },
+  {
+    module: "Time Traveller",
+    q: "Which geological feature is typically formed at a convergent boundary where an oceanic plate subducts beneath a continental plate?",
+    options: [
+      "Mid-ocean rift valley with seafloor spreading",
+      "Deep ocean trench parallel to a volcanic mountain range",
+      "Transform strike-slip fault with zero volcanic activity",
+      "Continental desert plateau"
+    ],
+    answer: 1,
+    exp: "Dense oceanic lithosphere plunges down into the asthenosphere, carving a deep ocean trench (e.g. Peru-Chile Trench) and melting to feed a chain of continental volcanoes (e.g. the Andes)."
+  },
+  {
+    module: "Time Traveller",
+    q: "The discovery of symmetrical, alternating normal and reversed magnetic 'zebra stripes' preserved in basalt on either side of the Mid-Atlantic Ridge confirmed:",
+    options: [
+      "That Earth's gravity reverses every 1,000 years",
+      "The theory of seafloor spreading and creation of new oceanic crust at divergent boundaries",
+      "That continental plates remain completely stationary",
+      "That ocean water prevents tectonic movement"
+    ],
+    answer: 1,
+    exp: "Iron minerals align with Earth's magnetic field as magma cools. Symmetrical alternating polarity bands on either side of mid-ocean ridges prove that new crust is continuously formed and pushed laterally outwards."
+  },
+  {
+    module: "Time Traveller",
+    q: "According to the Law of Superposition, in an undisturbed sequence of sedimentary rock strata:",
+    options: [
+      "The youngest rock layers are situated at the bottom",
+      "The oldest rock layers are located at the bottom and youngest at the top",
+      "All rock layers are exactly the same age",
+      "Fossils can only form in the uppermost layer"
+    ],
+    answer: 1,
+    exp: "In undeformed sedimentary strata, each layer is deposited on top of an older preexisting layer. Therefore, the deepest strata are the oldest, and the surface strata are the youngest."
+  },
+  {
+    module: "Time Traveller",
+    q: "Why is the fossil specimen Archaeopteryx classified as a crucial 'transitional fossil'?",
+    options: [
+      "It lived underwater like modern whales",
+      "It displays intermediate anatomical features connecting non-avian theropod dinosaurs (teeth, bony tail) with modern avian birds (feathers, wings)",
+      "It is the only fossil completely preserved in amber",
+      "It proved that dinosaurs were mammals"
+    ],
+    answer: 1,
+    exp: "Transitional fossils bridge the morphological gap between ancestral and derived descendant species. Archaeopteryx possesses both reptilian dinosaur traits and avian flight traits."
+  },
+  {
+    module: "Time Traveller",
+    q: "In Darwinian Natural Selection, what must be present within a biological population for evolutionary change to occur?",
+    options: [
+      "Complete genetic uniformity across all organisms",
+      "Heritable genetic variation and differential selective pressures in the environment",
+      "A conscious desire by animals to evolve new traits",
+      "Constant, unchanging climate conditions"
+    ],
+    answer: 1,
+    exp: "Natural selection requires preexisting heritable genetic variation (via mutation and sexual reproduction). Environmental selective pressures then favor advantageous traits, altering allele frequencies over generations."
+  },
+
+  // ================= MODULE 4: WORKING SCIENTIFICALLY (10) =================
+  {
+    module: "Working Scientifically",
+    q: "A student designs an experiment testing how temperature affects the rate of photosynthesis in Elodea plants. What is the INDEPENDENT variable?",
+    options: [
+      "The number of oxygen bubbles produced per minute",
+      "The temperature of the water bath (°C)",
+      "The species of plant used",
+      "The intensity of the light source"
+    ],
+    answer: 1,
+    exp: "The Independent Variable is the single factor deliberately manipulated or changed by the experimenter (here: the water bath temperature)."
+  },
+  {
+    module: "Working Scientifically",
+    q: "In the same photosynthesis experiment, what is the DEPENDENT variable?",
+    options: [
+      "The temperature of the water bath (°C)",
+      "The number of oxygen bubbles produced per minute (rate of oxygen evolution)",
+      "The wattage of the lamp",
+      "The volume of water in the beaker"
+    ],
+    answer: 1,
+    exp: "The Dependent Variable is the factor measured or recorded to determine the effect of changing the independent variable (here: oxygen bubbles evolved per minute)."
+  },
+  {
+    module: "Working Scientifically",
+    q: "Which procedure directly and effectively improves the RELIABILITY of an experimental investigation?",
+    options: [
+      "Changing three independent variables at the same time",
+      "Repeating the experimental trial 3 to 5 times under identical conditions, discarding outliers, and calculating a mean",
+      "Using a kitchen cup instead of a measuring cylinder",
+      "Altering the hypothesis after looking at the results"
+    ],
+    answer: 1,
+    exp: "Reliability is the consistency and repeatability of results. It is improved by multiple repetitions, identifying/excluding anomalous outliers, and calculating an average."
+  },
+  {
+    module: "Working Scientifically",
+    q: "How does an experimenter ensure high VALIDITY in a scientific investigation?",
+    options: [
+      "By using coloured pens on the graph",
+      "By isolating only ONE independent variable, strictly controlling all other variables, and including a control group",
+      "By finishing the experiment as quickly as possible",
+      "By measuring temperature with a clock"
+    ],
+    answer: 1,
+    exp: "Validity evaluates whether the experiment truly tests what it sets out to test. This requires a fair test: only one variable changed, all others controlled, and a baseline control group."
+  },
+  {
+    module: "Working Scientifically",
+    q: "A student measures 20 mL of liquid using an uncalibrated 500 mL glass beaker. Which modification would most significantly improve the ACCURACY of this measurement?",
+    options: [
+      "Using an uncalibrated bucket",
+      "Replacing the beaker with a 25 mL calibrated graduated measuring cylinder or volumetric pipette",
+      "Guessing the volume by weight",
+      "Pouring the liquid on the benchtop"
+    ],
+    answer: 1,
+    exp: "Accuracy describes how close a measurement is to the true value. Replacing a coarse, wide beaker with fine-resolution apparatus (like a volumetric pipette) minimizes reading error."
+  },
+  {
+    module: "Working Scientifically",
+    q: "When constructing a scientific line graph to represent experimental data, which variable must be plotted on the horizontal (X) axis?",
+    options: [
+      "The Dependent Variable",
+      "The Independent Variable",
+      "The Controlled Variable",
+      "The room temperature"
+    ],
+    answer: 1,
+    exp: "By universal scientific convention, the Independent Variable is plotted on the horizontal X-axis, and the Dependent Variable is plotted on the vertical Y-axis."
+  },
+  {
+    module: "Working Scientifically",
+    q: "What is the primary scientific purpose of including an untreated 'Control Group' in an experimental trial?",
+    options: [
+      "To ensure all chemicals are completely used up",
+      "To provide an untreated baseline comparison to prove that observed changes were caused solely by the independent variable",
+      "To give student researchers a break during testing",
+      "To make the graph look symmetrical"
+    ],
+    answer: 1,
+    exp: "A control group is kept in an untreated, natural state. Comparing results against this baseline confirms that the independent variable was the sole cause of any observed change."
+  },
+  {
+    module: "Working Scientifically",
+    q: "A student records the following four timings (in seconds) for a chemical reaction: 42.1 s, 41.8 s, 42.4 s, and 89.5 s. How should the student determine the average reaction time?",
+    options: [
+      "Add all four values together and divide by 4",
+      "Identify 89.5 s as an anomalous outlier, exclude it, and calculate the mean of the remaining three values (42.1 s)",
+      "Select 89.5 s as the sole data point",
+      "Discard all results and make up a number"
+    ],
+    answer: 1,
+    exp: "89.5 s is an obvious anomalous outlier (likely due to a timer or procedural error). Outliers must be excluded before calculating a reliable mean: (42.1 + 41.8 + 42.4) / 3 = 42.1 s."
+  },
+  {
+    module: "Working Scientifically",
+    q: "What type of error is caused when a student reads a graduated cylinder with their eyes positioned above the meniscus rather than at eye level?",
+    options: [
+      "Zero error",
+      "Parallax error",
+      "Systematic calibration fault",
+      "Random radioactive decay"
+    ],
+    answer: 1,
+    exp: "Parallax error occurs when a measuring scale is viewed from an angle rather than perpendicular to the level of the liquid meniscus, introducing measurement inaccuracy."
+  },
+  {
+    module: "Working Scientifically",
+    q: "Which of the following represents a quantitative, continuous form of scientific data?",
+    options: [
+      "Eye colour (Brown, Blue, Green)",
+      "Temperature over time measured in degrees Celsius (°C)",
+      "Brand of running shoe",
+      "Presence or absence of enzyme activity"
+    ],
+    answer: 1,
+    exp: "Quantitative data is numerical. Continuous data can take any numerical value along a continuum (e.g. 23.4°C, 23.45°C), unlike categorical discrete data (like shoe brand or eye colour)."
+  }
+];
+
+let userAnswers = new Array(questions.length).fill(null);
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+
+  questions.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.dataset.module = q.module;
+    card.id = `q-${idx}`;
+
+    const letters = ['A', 'B', 'C', 'D'];
+    let optionsHtml = '';
+    q.options.forEach((opt, optIdx) => {
+      optionsHtml += `
+        <button class="option-btn" onclick="selectOption(${idx}, ${optIdx})" id="opt-${idx}-${optIdx}">
+          <span class="option-letter">${letters[optIdx]}</span>
+          <span>${opt}</span>
+        </button>
+      `;
+    });
+
+    card.innerHTML = `
+      <div class="q-header">
+        <span class="q-num">Question ${idx + 1} of 40</span>
+        <span class="q-module">${q.module}</span>
+      </div>
+      <div class="q-text">${q.q}</div>
+      <div class="options-grid">${optionsHtml}</div>
+      <div class="explanation-box" id="exp-${idx}"></div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+function selectOption(qIdx, optIdx) {
+  if (userAnswers[qIdx] !== null) return; // already answered
+
+  userAnswers[qIdx] = optIdx;
+  const q = questions[qIdx];
+  const isCorrect = (optIdx === q.answer);
+
+  // Disable all options for this question
+  for (let i = 0; i < q.options.length; i++) {
+    const btn = document.getElementById(`opt-${qIdx}-${i}`);
+    btn.classList.add('disabled');
+    if (i === q.answer) {
+      btn.classList.add('reveal-correct');
+    }
+  }
+
+  const chosenBtn = document.getElementById(`opt-${qIdx}-${optIdx}`);
+  if (isCorrect) {
+    chosenBtn.classList.remove('reveal-correct');
+    chosenBtn.classList.add('selected-correct');
+  } else {
+    chosenBtn.classList.add('selected-wrong');
+  }
+
+  // Show explanation
+  const expBox = document.getElementById(`exp-${qIdx}`);
+  expBox.className = `explanation-box show ${isCorrect ? 'correct' : 'wrong'}`;
+  expBox.innerHTML = `
+    <div class="exp-title">${isCorrect ? '✅ Correct! High-Yield Fact:' : '❌ Incorrect. Correct Answer is (' + ['A','B','C','D'][q.answer] + '):'}</div>
+    <div>${q.exp}</div>
+  `;
+
+  updateStats();
+}
+
+function updateStats() {
+  const answered = userAnswers.filter(a => a !== null).length;
+  let correct = 0;
+  userAnswers.forEach((ans, idx) => {
+    if (ans === questions[idx].answer) correct++;
+  });
+
+  document.getElementById('answered-count').innerText = answered;
+  document.getElementById('score-count').innerText = correct;
+  const pct = answered > 0 ? Math.round((correct / 40) * 100) : 0;
+  document.getElementById('score-pct').innerText = `${pct}%`;
+
+  const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+  document.getElementById('accuracy-pct').innerText = answered > 0 ? `${accuracy}%` : '--';
+
+  const fill = document.getElementById('progress-fill');
+  fill.style.width = `${(answered / 40) * 100}%`;
+}
+
+function filterQuestions(mod, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const cards = document.querySelectorAll('.q-card');
+  cards.forEach(card => {
+    if (mod === 'all' || card.dataset.module === mod) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function resetQuiz() {
+  if (confirm("Are you sure you want to reset all answers and scores?")) {
+    userAnswers = new Array(questions.length).fill(null);
+    renderQuiz();
+    updateStats();
+  }
+}
+
+// Initialise
+renderQuiz();
+updateStats();
+</script>
+</body>
+</html>

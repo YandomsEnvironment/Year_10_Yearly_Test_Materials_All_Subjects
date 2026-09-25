@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Year 10 Assessment Portal | NSW Stage 5</title>
+<style>
+  :root {
+    --bg: #090D16;
+    --surface: #111726;
+    --surface-hover: #161F33;
+    --border: #1E293B;
+    --border-light: #334155;
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --accent: #38BDF8;
+    --sci: #10B981;
+    --sci-surface: rgba(16, 185, 129, 0.06);
+    --sci-border: rgba(16, 185, 129, 0.25);
+    --math: #F59E0B;
+    --math-surface: rgba(245, 158, 11, 0.06);
+    --math-border: rgba(245, 158, 11, 0.25);
+    --eng: #3B82F6;
+    --eng-surface: rgba(59, 130, 246, 0.06);
+    --eng-border: rgba(59, 130, 246, 0.25);
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--sans);
+    line-height: 1.5;
+    padding: 36px 20px 80px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1060px; margin: 0 auto; }
+
+  /* Header */
+  header { margin-bottom: 28px; }
+  .header-meta {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .header-meta::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  p.subtitle {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
+
+  /* Schedule Banner */
+  .status-banner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .status-info { display: flex; flex-direction: column; gap: 2px; }
+  .status-tag {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .status-main {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .status-detail {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+  .status-links { display: flex; gap: 8px; }
+  .btn-sm {
+    background: var(--surface-hover);
+    border: 1px solid var(--border-light);
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .btn-sm:hover { background: #1E293B; border-color: var(--accent); }
+  .btn-sm.accent {
+    background: #0284C7;
+    border-color: #0284C7;
+    color: white;
+  }
+  .btn-sm.accent:hover { background: #0369A1; }
+
+  /* Navigation Bar */
+  .nav-pills {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .nav-link {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.15s;
+  }
+  .nav-link:hover {
+    color: var(--text-primary);
+    background: var(--surface-hover);
+    border-color: var(--border-light);
+  }
+
+  /* Segmented Filter Control */
+  .filter-control {
+    display: inline-flex;
+    background: #0B0F19;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 3px;
+    gap: 2px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { color: var(--text-primary); }
+  .filter-btn.active {
+    background: var(--surface-hover);
+    color: var(--text-primary);
+    border: 1px solid var(--border-light);
+  }
+
+  /* Subject Section */
+  .subject-block {
+    margin-bottom: 36px;
+  }
+  .subject-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .subject-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .dot.sci { background: var(--sci); }
+  .dot.math { background: var(--math); }
+  .dot.eng { background: var(--eng); }
+  .dot.other { background: #A78BFA; }
+
+  .subject-schedule {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  /* Cards Grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: border-color 0.15s, background-color 0.15s;
+  }
+  .card:hover {
+    border-color: var(--border-light);
+    background: var(--surface-hover);
+  }
+  .card-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .card-h {
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .card-p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.45;
+    margin-bottom: 16px;
+  }
+  .card-link {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .card-link:hover { text-decoration: underline; }
+
+  /* Table Section */
+  .table-section { margin-top: 44px; }
+  .table-heading {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 0.88rem;
+  }
+  .data-table th {
+    background: #0B0F19;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 10px 14px;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--border);
+  }
+  .data-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .table-subject { color: var(--text-primary); font-weight: 600; }
+  .table-date { font-family: var(--mono); font-size: 0.82rem; color: var(--text-primary); }
+  .table-weight { font-family: var(--mono); font-size: 0.82rem; }
+
+  @media (max-width: 768px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    .status-banner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <div class="header-meta">Picnic Point High School &bull; Stage 5</div>
+    <h1>Year 10 Yearly Assessment Workspace</h1>
+    <p class="subtitle">Curriculum study suites, interactive practice papers, and revision notes for Mathematics 5.3, Core Science, and English.</p>
+  </header>
+
+  <!-- Term 4 Schedule Notice -->
+  <div class="status-banner">
+    <div class="status-info">
+      <div class="status-tag">NSW Public Schools &bull; Term 4, 2026</div>
+      <div class="status-main">Students return Tuesday, 13 October 2026 (Week 1A)</div>
+      <div class="status-detail">Staff Development Day on Monday, 12 October 2026 (Pupil-free study day)</div>
+    </div>
+    <div class="status-links">
+      <a class="btn-sm accent" href="Due Dates.html">Assessment Schedule</a>
+      <a class="btn-sm" href="Schedule.html">4-Week Timetable</a>
+    </div>
+  </div>
+
+  <!-- Global Fast Links -->
+  <div class="nav-pills">
+    <a class="nav-link" href="Due Dates.html">Assessment Calendar</a>
+    <a class="nav-link" href="Cheat Sheet.html">Exam Cheat Sheet</a>
+    <a class="nav-link" href="Schedule.html">Weekly Timetable</a>
+  </div>
+
+  <!-- Segmented View Switcher -->
+  <div class="filter-control">
+    <button class="filter-btn active" onclick="setFilter('all', this)">All Subjects</button>
+    <button class="filter-btn" onclick="setFilter('sci', this)">Science</button>
+    <button class="filter-btn" onclick="setFilter('math', this)">Mathematics 5.3</button>
+    <button class="filter-btn" onclick="setFilter('eng', this)">English</button>
+    <button class="filter-btn" onclick="setFilter('other', this)">Electives</button>
+  </div>
+
+  <!-- ================= SCIENCE MODULE ================= -->
+  <div class="subject-block" id="block-sci">
+    <div class="subject-title-row">
+      <div class="subject-name">
+        <span class="dot sci"></span>
+        <span>Science (Core Stage 5)</span>
+      </div>
+      <div class="subject-schedule">Task 3 Exam &bull; Weight: 35% &bull; School Hall (90 mins) &bull; Term 4, Week 1&ndash;2 (13&ndash;23 Oct)</div>
+    </div>
+    <div class="cards-grid">
+      
+      <div class="card">
+        <div>
+          <div class="card-label">Practice Exam &bull; 36 Scenarios</div>
+          <div class="card-h">Science Practice Paper</div>
+          <div class="card-p">36 scenario-based questions across Genetics &amp; Biotech, Chemical Earth, Time Traveller, and Working Scientifically.</div>
+        </div>
+        <a class="card-link" href="Science/Test.html">Open practice paper &rarr;</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <div class="card-label">Rapid Recall &bull; 40 Questions</div>
+          <div class="card-h">Science 40-Q Drill</div>
+          <div class="card-p">Fast-paced multiple choice testing DNA base pairs, diagnostic gas tests, collision theory, and H-R diagrams.</div>
+        </div>
+        <a class="card-link" href="Science/Drill.html">Start rapid drill &rarr;</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <div class="card-label">Reference &bull; Definitions &amp; Formulas</div>
+          <div class="card-h">Science Revision Notes</div>
+          <div class="card-p">Reliability, validity, and accuracy sentence templates, 3-sentence collision theory, and core chemical reactions.</div>
+        </div>
+        <a class="card-link" href="Cheat Sheet.html">View revision notes &rarr;</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <div class="card-label">Specification &bull; Task 3</div>
+          <div class="card-h">Exam Notification Scope</div>
+          <div class="card-p">Formal notification breakdown: 15% Working Scientifically methodology and 20% knowledge and understanding.</div>
+        </div>
+        <a class="card-link" href="Due Dates.html">View notification &rarr;</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= MATHEMATICS MODULE ================= -->
+  <div class="subject-block" id="block-math">
+    <div class="subject-title-row">
+      <div class="subject-name">
+        <span class="dot math"></span>
+        <span>Mathematics 5.3 (Advanced)</span>
+      </div>
+      <div class="subject-schedule">Task 4 Exam &bull; Weight: 30% &bull; 100 mins &bull; Thursday, 22 October 2026 (Week 2B)</div>
+    </div>
+    <div class="cards-grid">
+
+      <div class="card">
+        <div>
+          <div class="card-label">Practice Exam &bull; 25 Scenarios</div>
+          <div class="card-h">Mathematics 5.3 Paper</div>
+          <div class="card-p">25 applied problems covering quadratics, vertex turning points, polynomials, rates of change, and multi-stage probability.</div>
+        </div>
+        <a class="card-link" href="Mathematics/Test.html">Open practice paper &rarr;</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <div class="card-label">Rapid Drill &bull; 30 Questions</div>
+          <div class="card-h">Maths 30-Q Drill</div>
+          <div class="card-p">Focused calculations on discriminant rules (&Delta; = b&sup2; - 4ac), monic factoring, asymptotes, and tree diagrams.</div>
+        </div>
+        <a class="card-link" href="Mathematics/Drill.html">Start rapid drill &rarr;</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <div class="card-label">Reference &bull; Formulas &amp; Theorems</div>
+          <div class="card-h">Maths 5.3 Formula Sheet</div>
+          <div class="card-p">Null factor law, vertex form y = a(x-h)&sup2; + k, polynomial remainder theorem P(a), and probability rules.</div>
+        </div>
+        <a class="card-link" href="Cheat Sheet.html">View formula sheet &rarr;</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <div class="card-label">Specification &bull; Task 4</div>
+          <div class="card-h">Exam Notification Scope</div>
+          <div class="card-p">100-minute examination covering Cambridge Year 10 chapters 5, 7, 8, and 10. Assesses Stage 5.3 outcomes.</div>
+        </div>
+        <a class="card-link" href="Due Dates.html">View notification &rarr;</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= ENGLISH MODULE ================= -->
+  <div class="subject-block" id="block-eng">
+    <div class="subject-title-row">
+      <div class="subject-name">
+        <span class="dot eng"></span>
+        <span>English (Stage 5 Regular)</span>
+      </div>
+      <div class="subject-schedule">Task 3 Exam &bull; Weight: 40% &bull; 90 mins &bull; Term 4, Week 1A (13&ndash;16 Oct 2026)</div>
+    </div>
+    <div class="cards-grid">
+
+      <div class="card">
+        <div>
+          <div class="card-label">Reading Exam &bull; 25 Extracts</div>
+          <div class="card-h">Dystopian Reading Paper</div>
+          <div class="card-p">25 unseen textual passages analyzing surveillance regimes, bleak settings, conformity, and rebellion.</div>
+        </div>
+        <a class="card-link" href="English/Test.html">Open reading paper &rarr;</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <div class="card-label">Creative Writing &bull; Section 2 (20 Marks)</div>
+          <div class="card-h">4-Step Micro-Plot Guide</div>
+          <div class="card-p">Narrative progression formula: The Routine &rarr; The Anomaly &rarr; The Tension &rarr; Quiet Defiance.</div>
+        </div>
+        <a class="card-link" href="Cheat Sheet.html">View writing guide &rarr;</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <div class="card-label">Analysis Guide &bull; Section 1 (20 Marks)</div>
+          <div class="card-h">PETAL Analytical Formula</div>
+          <div class="card-p">Standardized paragraph structure for short-answer analysis, supported by Band 6 power verbs.</div>
+        </div>
+        <a class="card-link" href="Cheat Sheet.html">View PETAL structure &rarr;</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <div class="card-label">Specification &bull; Task 3</div>
+          <div class="card-h">Exam Notification Scope</div>
+          <div class="card-p">90-minute examination: 10 mins reading + 80 mins writing. Section 1 unseen texts + Section 2 imaginative response.</div>
+        </div>
+        <a class="card-link" href="Due Dates.html">View notification &rarr;</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= ELECTIVES MODULE ================= -->
+  <div class="subject-block" id="block-other">
+    <div class="subject-title-row">
+      <div class="subject-name">
+        <span class="dot other"></span>
+        <span>Electives &amp; HSIE Subjects</span>
+      </div>
+      <div class="subject-schedule">Year 10 Assessment Tasks</div>
+    </div>
+    <div class="cards-grid">
+
+      <div class="card">
+        <div>
+          <div class="card-label">iSTEM &bull; Task 3 (30%)</div>
+          <div class="card-h">Solar Car Processing Exam</div>
+          <div class="card-p">Engineering report on STELR Solar Car speed vs. hill climb gear ratios and track performance.</div>
+        </div>
+        <a class="card-link" href="Due Dates.html">Due Thu 22 Oct 2026 &rarr;</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <div class="card-label">Geography &bull; Task 2 (50%)</div>
+          <div class="card-h">Human Wellbeing Presentation</div>
+          <div class="card-p">Digital presentation comparing spatial wellbeing variations between Australia and another country.</div>
+        </div>
+        <a class="card-link" href="Due Dates.html">Due Thu 29 Oct 2026 (11:59 pm) &rarr;</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <div class="card-label">PASS &bull; Task 2 (30%)</div>
+          <div class="card-h">Coaching &amp; Sport Yearly Exam</div>
+          <div class="card-p">50-minute examination covering coaching styles, training design, round robin draws, and women in sport.</div>
+        </div>
+        <a class="card-link" href="Due Dates.html">Exam Fri 30 Oct 2026 &rarr;</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= ASSESSMENT SCHEDULE TABLE ================= -->
+  <div class="table-section">
+    <div class="table-heading">Term 4 Assessment Schedule</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th>Assessment Format</th>
+          <th>Weight</th>
+          <th>Due Date / Window</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="table-subject">English</td>
+          <td>Yearly Examination (Dystopian Fiction)</td>
+          <td class="table-weight">40%</td>
+          <td class="table-date">Term 4, Week 1A (13&ndash;16 Oct 2026)</td>
+          <td>Students return Tue 13 Oct (Mon 12 Oct is pupil-free study day)</td>
+        </tr>
+        <tr>
+          <td class="table-subject">Science</td>
+          <td>Yearly Examination (Core Modules)</td>
+          <td class="table-weight">35%</td>
+          <td class="table-date">Term 4, Week 1&ndash;2 (13&ndash;23 Oct 2026)</td>
+          <td>90-min Hall exam: Genetics, Reactions, Time Traveller</td>
+        </tr>
+        <tr>
+          <td class="table-subject">Mathematics 5.3</td>
+          <td>Yearly Examination (Advanced)</td>
+          <td class="table-weight">30%</td>
+          <td class="table-date">Thursday, 22 October 2026</td>
+          <td>100-min exam: Quadratics, Functions, Rates, Probability</td>
+        </tr>
+        <tr>
+          <td class="table-subject">iSTEM</td>
+          <td>Practical Processing Exam</td>
+          <td class="table-weight">30%</td>
+          <td class="table-date">Thursday, 22 October 2026</td>
+          <td>STELR Solar Car Report + in-class performance testing</td>
+        </tr>
+        <tr>
+          <td class="table-subject">Geography</td>
+          <td>Digital Presentation (Human Wellbeing)</td>
+          <td class="table-weight">50%</td>
+          <td class="table-date">Thursday, 29 October 2026</td>
+          <td>Submit via Google Classroom before 11:59 pm</td>
+        </tr>
+        <tr>
+          <td class="table-subject">PASS</td>
+          <td>Yearly Examination (Coaching &amp; Sport)</td>
+          <td class="table-weight">30%</td>
+          <td class="table-date">Friday, 30 October 2026</td>
+          <td>50-min examination in Periods 2 &amp; 4</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+  function setFilter(subject, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const blocks = {
+      sci: document.getElementById('block-sci'),
+      math: document.getElementById('block-math'),
+      eng: document.getElementById('block-eng'),
+      other: document.getElementById('block-other')
+    };
+
+    if (subject === 'all') {
+      Object.values(blocks).forEach(b => b.style.display = 'block');
+    } else {
+      Object.keys(blocks).forEach(k => {
+        blocks[k].style.display = (k === subject) ? 'block' : 'none';
+      });
+    }
+  }
+</script>
+
+</body>
+</html>

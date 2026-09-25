@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4-Week High-Performance Study Schedule | NSW Term 4, 2026</title>
+<style>
+  :root {
+    --bg: #0F172A;
+    --card-bg: #1E293B;
+    --text: #F8FAFC;
+    --muted: #94A3B8;
+    --border: #334155;
+    --accent: #38BDF8;
+    --eng: #60A5FA;
+    --sci: #34D399;
+    --math: #FBBF24;
+    --other: #A78BFA;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  body { background-color: var(--bg); color: var(--text); padding: 30px 20px 80px; line-height: 1.5; }
+  .container { max-width: 960px; margin: 0 auto; }
+  
+  header { margin-bottom: 24px; text-align: center; }
+  .badge { background: rgba(56, 189, 248, 0.15); color: var(--accent); padding: 5px 14px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; margin-bottom: 10px; }
+  h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 6px; }
+  p.subtitle { color: var(--muted); font-size: 1rem; }
+
+  .nav-bar { display: flex; justify-content: center; gap: 12px; margin-bottom: 26px; }
+  .nav-btn { background: #334155; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.85rem; transition: background 0.2s; }
+  .nav-btn:hover { background: #475569; }
+
+  .date-alert {
+    background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 12px; padding: 16px 20px; margin-bottom: 24px;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .date-alert-icon { font-size: 1.8rem; line-height: 1; }
+  .date-alert-title { color: #38BDF8; font-weight: 800; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .date-alert-body { color: #CBD5E1; font-size: 0.9rem; margin-top: 4px; line-height: 1.5; }
+
+  /* Tabs */
+  .week-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+  .tab-btn {
+    background: #1E293B; border: 1px solid var(--border); color: var(--muted);
+    padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 0.9rem;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .tab-btn:hover { background: #334155; color: white; }
+  .tab-btn.active {
+    background: #38BDF8; color: #0F172A; border-color: #38BDF8; font-weight: 800;
+  }
+
+  .tab-content { display: none; flex-direction: column; gap: 18px; margin-bottom: 30px; }
+  .tab-content.active { display: flex; }
+
+  .week-banner {
+    background: #1E293B; border-left: 4px solid #38BDF8; padding: 12px 18px;
+    border-radius: 0 10px 10px 0; font-size: 0.9rem; color: #E2E8F0;
+  }
+
+  .day-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px 22px; display: grid;
+    grid-template-columns: 160px 1fr 1fr; gap: 20px; align-items: center;
+  }
+  .day-card.highlight {
+    border-color: #F59E0B; background: linear-gradient(180deg, #1E293B 0%, rgba(245, 158, 11, 0.08) 100%);
+  }
+  .day-card.pupil-free {
+    border-color: #38BDF8; background: linear-gradient(180deg, #1E293B 0%, rgba(56, 189, 248, 0.08) 100%);
+  }
+
+  .day-title { font-size: 1.1rem; font-weight: 800; color: white; }
+  .day-date { font-size: 0.85rem; font-weight: 700; color: #38BDF8; margin-top: 2px; }
+  .day-sub { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+  .day-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; margin-top: 5px; }
+  .badge-staff { background: rgba(56, 189, 248, 0.2); color: #38BDF8; }
+  .badge-exam { background: rgba(239, 68, 68, 0.2); color: #F87171; }
+  .badge-due { background: rgba(245, 158, 11, 0.2); color: #FBBF24; }
+
+  .session-box { background: #0F172A; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+  .session-header { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+  .session-box.eng .session-header { color: var(--eng); }
+  .session-box.sci .session-header { color: var(--sci); }
+  .session-box.math .session-header { color: var(--math); }
+  .session-box.other .session-header { color: var(--other); }
+
+  .session-task { font-size: 0.9rem; font-weight: 700; color: white; margin-bottom: 2px; }
+  .session-desc { font-size: 0.8rem; color: var(--muted); }
+
+  .pro-tip { background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 20px; }
+  .pro-tip h3 { color: var(--accent); margin-bottom: 6px; font-size: 1.1rem; }
+  .pro-tip p { color: #CBD5E1; font-size: 0.9rem; }
+
+  @media (max-width: 768px) {
+    .day-card { grid-template-columns: 1fr; }
+    .week-tabs { flex-direction: column; }
+    .tab-btn { width: 100%; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="badge">Study Timetable &bull; Year 10 NSW</div>
+    <h1>Term 4 Study Timetable &amp; Revision Plan</h1>
+    <p class="subtitle">Structured 45-minute daily focus sessions for Mathematics 5.3, Science, and English</p>
+  </header>
+
+  <div class="nav-bar">
+    <a class="nav-btn" href="Portal.html">&larr; Back to Portal</a>
+    <a class="nav-btn" href="Due Dates.html">Assessment Calendar</a>
+    <a class="nav-btn" href="Cheat Sheet.html">Open Cheat Sheet</a>
+  </div>
+
+  <!-- TERM 4 2026 CALENDAR NOTICE -->
+  <div class="date-alert">
+    <div>
+      <div class="date-alert-title">NSW Public Schools &bull; Term 4, 2026 Dates</div>
+      <div class="date-alert-body">
+        &bull; <strong>Monday, 12 October 2026:</strong> School Development Day (Staff only &bull; Pupil-free day at home)<br>
+        &bull; <strong>Tuesday, 13 October 2026:</strong> First day of Term 4 for students (Week 1A starts)
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK SELECTOR TABS -->
+  <div class="week-tabs">
+    <button class="tab-btn active" onclick="switchWeek('week1')">Week 1A (12&ndash;18 Oct) &bull; English Exam</button>
+    <button class="tab-btn" onclick="switchWeek('week2')">Week 2B (19&ndash;25 Oct) &bull; Maths &amp; Science</button>
+    <button class="tab-btn" onclick="switchWeek('week3')">Week 3A (26 Oct&ndash;1 Nov) &bull; Geo &amp; PASS</button>
+    <button class="tab-btn" onclick="switchWeek('holiday')">Spring Holidays (28 Sep&ndash;11 Oct)</button>
+  </div>
+
+  <!-- TAB 1: WEEK 1A -->
+  <div id="tab-week1" class="tab-content active">
+    <div class="week-banner">
+      <strong>Week 1A Focus:</strong> English Task 3 Examination (40%) and foundational recall for Science and Mathematics.
+    </div>
+
+    <!-- MONDAY 12 OCT -->
+    <div class="day-card pupil-free">
+      <div>
+        <div class="day-title">Monday</div>
+        <div class="day-date">12 October 2026</div>
+        <div class="day-sub">School Development Day</div>
+        <span class="day-badge badge-staff">Pupil-Free Day</span>
+      </div>
+      <div class="session-box eng">
+        <div class="session-header">📘 English (60 mins)</div>
+        <div class="session-task">Dystopian Comprehension Drill</div>
+        <div class="session-desc">Open <a href="English/Test.html" style="color:var(--eng);">English/Test.html</a> and complete 12 reading extracts. Focus on identifying panoptic surveillance and sensory language.</div>
+      </div>
+      <div class="session-box eng">
+        <div class="session-header">📘 English (45 mins)</div>
+        <div class="session-task">Creative Writing Micro-Plot</div>
+        <div class="session-desc">Draft a 500-word dystopian narrative using the 4-step plot formula on the Cheat Sheet (Ordinary Routine &rarr; Inciting Disruption &rarr; Act of Subversion &rarr; Ambiguous Resolve).</div>
+      </div>
+    </div>
+
+    <!-- TUESDAY 13 OCT -->
+    <div class="day-card">
+      <div>
+        <div class="day-title">Tuesday</div>
+        <div class="day-date">13 October 2026</div>
+        <div class="day-sub">Students Return &bull; Day 1</div>
+      </div>
+      <div class="session-box eng">
+        <div class="session-header">📘 English (30 mins)</div>
+        <div class="session-task">PETAL Formula Refresh</div>
+        <div class="session-desc">Review high-yield analytical verbs (manifests, underscores, mirrors) on <a href="Cheat Sheet.html" style="color:var(--eng);">Cheat Sheet.html</a>.</div>
+      </div>
+      <div class="session-box math">
+        <div class="session-header">📐 Maths 5.3 (45 mins)</div>
+        <div class="session-task">Quadratics &amp; Vertex Turning Points</div>
+        <div class="session-desc">Work through questions 1 to 8 on <a href="Mathematics/Test.html" style="color:var(--math);">Mathematics/Test.html</a>. Practice $x = -b/(2a)$.</div>
+      </div>
+    </div>
+
+    <!-- WEDNESDAY 14 OCT -->
+    <div class="day-card">
+      <div>
+        <div class="day-title">Wednesday</div>
+        <div class="day-date">14 October 2026</div>
+        <div class="day-sub">Term 4 &bull; Week 1A</div>
+      </div>
+      <div class="session-box sci">
+        <div class="session-header">🔬 Science (45 mins)</div>
+        <div class="session-task">Genetics &amp; Punnett Squares</div>
+        <div class="session-desc">Review 2x2 monohybrid crosses, heterozygous ratios (3:1, 1:2:1), and DNA replication in <a href="Science/Test.html" style="color:var(--sci);">Science/Test.html</a>.</div>
+      </div>
+      <div class="session-box math">
+        <div class="session-header">📐 Maths 5.3 (45 mins)</div>
+        <div class="session-task">Polynomial Remainder Theorem</div>
+        <div class="session-desc">Practice evaluating $P(a)$ for remainder and testing factors where $P(a) = 0$.</div>
+      </div>
+    </div>
+
+    <!-- THURSDAY 15 OCT -->
+    <div class="day-card">
+      <div>
+        <div class="day-title">Thursday</div>
+        <div class="day-date">15 October 2026</div>
+        <div class="day-sub">Term 4 &bull; Week 1A</div>
+      </div>
+      <div class="session-box sci">
+        <div class="session-header">🔬 Science (45 mins)</div>
+        <div class="session-task">Reaction Rates &amp; Collision Theory</div>
+        <div class="session-desc">Master the 3-sentence collision theory template on the Cheat Sheet (Concentration, Temperature, Surface Area).</div>
+      </div>
+      <div class="session-box math">
+        <div class="session-header">📐 Maths 5.3 (45 mins)</div>
+        <div class="session-task">Probability Without Replacement</div>
+        <div class="session-desc">Solve multi-stage tree diagrams dropping the denominator by 1 on each dependent draw.</div>
+      </div>
+    </div>
+
+    <!-- FRIDAY 16 OCT -->
+    <div class="day-card">
+      <div>
+        <div class="day-title">Friday</div>
+        <div class="day-date">16 October 2026</div>
+        <div class="day-sub">Term 4 &bull; Week 1A</div>
+      </div>
+      <div class="session-box sci">
+        <div class="session-header">🔬 Science (45 mins)</div>
+        <div class="session-task">Cosmology &amp; Doppler Redshift</div>
+        <div class="session-desc">Review Big Bang evidence: Hubble's redshift and 2.7K Cosmic Microwave Background Radiation (CMBR).</div>
+      </div>
+      <div class="session-box other">
+        <div class="session-header">📁 iSTEM (45 mins)</div>
+        <div class="session-task">Solar Car Report Draft</div>
+        <div class="session-desc">Review your STELR solar car test data (speed vs hill climb gear ratios) for the processing exam.</div>
+      </div>
+    </div>
+
+    <!-- WEEKEND 17-18 OCT -->
+    <div class="day-card">
+      <div>
+        <div class="day-title">Weekend</div>
+        <div class="day-date">17&ndash;18 October 2026</div>
+        <div class="day-sub">Pre-Exam Check-in</div>
+      </div>
+      <div class="session-box sci">
+        <div class="session-header">🔬 Science (45 mins)</div>
+        <div class="session-task">Rapid 40-Question Drill</div>
+        <div class="session-desc">Complete <a href="Science/Drill.html" style="color:var(--sci);">Science/Drill.html</a> to verify zero knowledge gaps before Week 2.</div>
+      </div>
+      <div class="session-box math">
+        <div class="session-header">📐 Maths 5.3 (45 mins)</div>
+        <div class="session-task">Stage 5.3 Practice Exam</div>
+        <div class="session-desc">Run through all 25 applied problems on <a href="Mathematics/Test.html" style="color:var(--math);">Mathematics/Test.html</a>.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: WEEK 2B -->
+  <div id="tab-week2" class="tab-content">
+    <div class="week-banner">
+      <strong>🎯 Week 2B Objective:</strong> Peak performance on <strong>Thursday, 22 October 2026</strong> for Mathematics 5.3 Yearly Exam (30%) &amp; iSTEM Solar Car Submission (30%).
+    </div>
+
+    <!-- MONDAY 19 OCT -->
+    <div class="day-card">
+      <div>
+        <div class="day-title">Monday</div>
+        <div class="day-date">19 October 2026</div>
+        <div class="day-sub">Term 4 &bull; Week 2B</div>
+      </div>
+      <div class="session-box sci">
+        <div class="session-header">🔬 Science (45 mins)</div>
+        <div class="session-task">Working Scientifically Checklist</div>
+        <div class="session-desc">Memorise definitions for Validity (controlled variables), Reliability (repetition), and Accuracy (precision calibration).</div>
+      </div>
+      <div class="session-box math">
+        <div class="session-header">📐 Maths 5.3 (45 mins)</div>
+        <div class="session-task">Monic &amp; Non-Monic Factoring</div>
+        <div class="session-desc">Factor quadratics $ax^2 + bx + c$ using grouping and the quadratic formula $x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}$.</div>
+      </div>
+    </div>
+
+    <!-- TUESDAY 20 OCT -->
+    <div class="day-card">
+      <div>
+        <div class="day-title">Tuesday</div>
+        <div class="day-date">20 October 2026</div>
+        <div class="day-sub">Term 4 &bull; Week 2B</div>
+      </div>
+      <div class="session-box math">
+        <div class="session-header">📐 Maths 5.3 (60 mins)</div>
+        <div class="session-task">Discriminant &amp; Vertex Form</div>
+        <div class="session-desc">Practice $\Delta &gt; 0$ (2 roots), $\Delta = 0$ (1 root), $\Delta &lt; 0$ (no real roots) and completing the square $y = a(x-h)^2 + k$.</div>
+      </div>
+      <div class="session-box other">
+        <div class="session-header">📁 iSTEM (45 mins)</div>
+        <div class="session-task">Solar Car Report Finalisation</div>
+        <div class="session-desc">Finalise gear ratio graphs and conclusion comparing flat acceleration vs inclined torque.</div>
+      </div>
+    </div>
+
+    <!-- WEDNESDAY 21 OCT -->
+    <div class="day-card highlight">
+      <div>
+        <div class="day-title">Wednesday</div>
+        <div class="day-date">21 October 2026</div>
+        <div class="day-sub">Day Before Maths Exam</div>
+        <span class="day-badge badge-due">Final Prep</span>
+      </div>
+      <div class="session-box math">
+        <div class="session-header">📐 Maths 5.3 (45 mins)</div>
+        <div class="session-task">Maths 30-Question Rapid Drill</div>
+        <div class="session-desc">Complete <a href="Mathematics/Drill.html" style="color:var(--math);">Mathematics/Drill.html</a> to sharpen calculation speed and formula recall.</div>
+      </div>
+      <div class="session-box other">
+        <div class="session-header">📁 iSTEM (30 mins)</div>
+        <div class="session-task">Submission Upload Check</div>
+        <div class="session-desc">Double-check report formatting, student details, and PDF export for tomorrow's submission.</div>
+      </div>
+    </div>
+
+    <!-- THURSDAY 22 OCT -->
+    <div class="day-card highlight">
+      <div>
+        <div class="day-title">Thursday</div>
+        <div class="day-date">22 October 2026</div>
+        <div class="day-sub">🎯 MAJOR EXAM DAY</div>
+        <span class="day-badge badge-exam">Maths Exam &bull; iSTEM Due</span>
+      </div>
+      <div class="session-box math">
+        <div class="session-header">📐 Maths 5.3 (Exam Day)</div>
+        <div class="session-task">Yearly Examination (100 mins)</div>
+        <div class="session-desc">5 mins reading + 95 mins writing. Keep calm, write down formulas, and double-check algebraic signs.</div>
+      </div>
+      <div class="session-box other">
+        <div class="session-header">📁 iSTEM (Due Today)</div>
+        <div class="session-task">Task 3 Solar Car Submission</div>
+        <div class="session-desc">Submit online report and complete in-class vehicle test run.</div>
+      </div>
+    </div>
+
+    <!-- FRIDAY 23 OCT -->
+    <div class="day-card">
+      <div>
+        <div class="day-title">Friday</div>
+        <div class="day-date">23 October 2026</div>
+        <div class="day-sub">Term 4 &bull; Week 2B</div>
+      </div>
+      <div class="session-box other">
+        <div class="session-header">📁 Geography (45 mins)</div>
+        <div class="session-task">Human Wellbeing Indicators</div>
+        <div class="session-desc">Select 2 key indicators (e.g., Human Development Index &amp; GDP per capita) comparing Australia vs Papua New Guinea.</div>
+      </div>
+      <div class="session-box other">
+        <div class="session-header">📁 PASS (45 mins)</div>
+        <div class="session-task">Coaching Styles &amp; Roles</div>
+        <div class="session-desc">Review Authoritarian (strict), Democratic (shared decisions), and Laissez-faire coaching profiles.</div>
+      </div>
+    </div>
+
+    <!-- WEEKEND 24-25 OCT -->
+    <div class="day-card">
+      <div>
+        <div class="day-title">Weekend</div>
+        <div class="day-date">24&ndash;25 October 2026</div>
+        <div class="day-sub">Slide Deck &amp; PASS Review</div>
+      </div>
+      <div class="session-box other">
+        <div class="session-header">📁 Geography (60 mins)</div>
+        <div class="session-task">Digital Presentation Slides</div>
+        <div class="session-desc">Draft slides with spatial maps, bar graphs, and written analysis of wellbeing discrepancies.</div>
+      </div>
+      <div class="session-box other">
+        <div class="session-header">📁 PASS (45 mins)</div>
+        <div class="session-task">Round Robin Scheduling Formula</div>
+        <div class="session-desc">Practice draw construction: Total matches = $\frac{N(N-1)}{2}$ where $N$ is number of teams.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: WEEK 3A -->
+  <div id="tab-week3" class="tab-content">
+    <div class="week-banner">
+      <strong>🎯 Week 3A Objective:</strong> Submit Geography Presentation (50%) on <strong>Thursday, 29 October</strong> and sit PASS Yearly Exam (30%) on <strong>Friday, 30 October</strong>.
+    </div>
+
+    <!-- MONDAY 26 OCT -->
+    <div class="day-card">
+      <div>
+        <div class="day-title">Monday</div>
+        <div class="day-date">26 October 2026</div>
+        <div class="day-sub">Term 4 &bull; Week 3A</div>
+      </div>
+      <div class="session-box other">
+        <div class="session-header">📁 Geography (60 mins)</div>
+        <div class="session-task">Spatial Data Comparison</div>
+        <div class="session-desc">Evaluate reasons for spatial inequalities between Australia and PNG (healthcare access, education funding, infrastructure).</div>
+      </div>
+      <div class="session-box other">
+        <div class="session-header">📁 PASS (45 mins)</div>
+        <div class="session-task">Training Design &amp; FITT Principles</div>
+        <div class="session-desc">Frequency, Intensity, Time, Type + Progressive Overload and Specificity.</div>
+      </div>
+    </div>
+
+    <!-- TUESDAY 27 OCT -->
+    <div class="day-card">
+      <div>
+        <div class="day-title">Tuesday</div>
+        <div class="day-date">27 October 2026</div>
+        <div class="day-sub">Term 4 &bull; Week 3A</div>
+      </div>
+      <div class="session-box other">
+        <div class="session-header">📁 Geography (45 mins)</div>
+        <div class="session-task">Presentation Script &amp; Timing</div>
+        <div class="session-desc">Rehearse digital presentation audio/notes. Ensure speaker voice is clear and pacing is under time limits.</div>
+      </div>
+      <div class="session-box other">
+        <div class="session-header">📁 PASS (45 mins)</div>
+        <div class="session-task">Women in Sport &amp; Leisure</div>
+        <div class="session-desc">Key historical barriers, media coverage disparities, and contemporary equity strategies.</div>
+      </div>
+    </div>
+
+    <!-- WEDNESDAY 28 OCT -->
+    <div class="day-card highlight">
+      <div>
+        <div class="day-title">Wednesday</div>
+        <div class="day-date">28 October 2026</div>
+        <div class="day-sub">Eve of Geography Due Date</div>
+        <span class="day-badge badge-due">Final Polish</span>
+      </div>
+      <div class="session-box other">
+        <div class="session-header">📁 Geography (45 mins)</div>
+        <div class="session-task">Final Polish &amp; Export</div>
+        <div class="session-desc">Check bibliography, Harvard referencing, slide formatting, and export presentation video/slides.</div>
+      </div>
+      <div class="session-box other">
+        <div class="session-header">📁 PASS (45 mins)</div>
+        <div class="session-task">PASS Multiple Choice Practice</div>
+        <div class="session-desc">Review 20 sample MC questions and 10 True/False items on coaching and event management.</div>
+      </div>
+    </div>
+
+    <!-- THURSDAY 29 OCT -->
+    <div class="day-card highlight">
+      <div>
+        <div class="day-title">Thursday</div>
+        <div class="day-date">29 October 2026</div>
+        <div class="day-sub">🎯 SUBMISSION DAY</div>
+        <span class="day-badge badge-due">Geo Due 11:59 pm</span>
+      </div>
+      <div class="session-box other">
+        <div class="session-header">📁 Geography (Due Today)</div>
+        <div class="session-task">Submit via Google Classroom</div>
+        <div class="session-desc">Upload Task 2 Presentation to Google Classroom before 11:59 pm. Confirm submission receipt.</div>
+      </div>
+      <div class="session-box other">
+        <div class="session-header">📁 PASS (60 mins)</div>
+        <div class="session-task">Eve of Exam Recall</div>
+        <div class="session-desc">Memorise 3 coaching styles, tournament structures (Single Elimination vs Round Robin), and fitness components.</div>
+      </div>
+    </div>
+
+    <!-- FRIDAY 30 OCT -->
+    <div class="day-card highlight">
+      <div>
+        <div class="day-title">Friday</div>
+        <div class="day-date">30 October 2026</div>
+        <div class="day-sub">🎯 FINAL EXAM DAY</div>
+        <span class="day-badge badge-exam">PASS Exam</span>
+      </div>
+      <div class="session-box other">
+        <div class="session-header">📁 PASS (Exam Day)</div>
+        <div class="session-task">Yearly Examination (50 mins)</div>
+        <div class="session-desc">Periods 2 &amp; 4. 20 MC, 10 T/F, 10 Fill the gap, 30 Written marks.</div>
+      </div>
+      <div class="session-box sci">
+        <div class="session-header">🎉 Celebration &bull; All Done!</div>
+        <div class="session-task">Assessment Block Complete</div>
+        <div class="session-desc">All 6 major tasks submitted. Relax and enjoy your weekend!</div>
+      </div>
+    </div>
+
+    <!-- WEEKEND 31 OCT - 1 NOV -->
+    <div class="day-card">
+      <div>
+        <div class="day-title">Weekend</div>
+        <div class="day-date">31 Oct &ndash; 1 Nov 2026</div>
+        <div class="day-sub">Post-Exam Rest</div>
+      </div>
+      <div class="session-box eng">
+        <div class="session-header">🌟 Free Time</div>
+        <div class="session-task">Total Rest &amp; Reset</div>
+        <div class="session-desc">Zero study required. Celebrate completing Year 10 Yearly Examinations.</div>
+      </div>
+      <div class="session-box other">
+        <div class="session-header">🌟 Error Log Reflection</div>
+        <div class="session-task">Review Feedback (Optional)</div>
+        <div class="session-desc">Take note of areas of strength as marks begin returning in Term 4.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: SPRING HOLIDAYS BOOSTER -->
+  <div id="tab-holiday" class="tab-content">
+    <div class="week-banner">
+      <strong>☀️ Spring Holidays Prep (28 Sep &ndash; 11 Oct 2026):</strong> Low-stress, 30-minute daily warmups to enter Term 4 ahead of your class.
+    </div>
+
+    <div class="day-card">
+      <div>
+        <div class="day-title">Holiday Week 1</div>
+        <div class="day-date">28 Sep &ndash; 4 Oct 2026</div>
+        <div class="day-sub">Diagnostic Baseline</div>
+      </div>
+      <div class="session-box sci">
+        <div class="session-header">🔬 Science (30 mins)</div>
+        <div class="session-task">Science Rapid Drill Run</div>
+        <div class="session-desc">Take the 40-question quiz on <a href="Science/Drill.html" style="color:var(--sci);">Science/Drill.html</a> to spot topics you need to review.</div>
+      </div>
+      <div class="session-box math">
+        <div class="session-header">📐 Maths 5.3 (30 mins)</div>
+        <div class="session-task">Maths 30-Question Drill</div>
+        <div class="session-desc">Test yourself on <a href="Mathematics/Drill.html" style="color:var(--math);">Mathematics/Drill.html</a> to isolate any factoring or probability weaknesses.</div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div>
+        <div class="day-title">Holiday Week 2</div>
+        <div class="day-date">5 Oct &ndash; 11 Oct 2026</div>
+        <div class="day-sub">Formulas &amp; Writing</div>
+      </div>
+      <div class="session-box eng">
+        <div class="session-header">📘 English (30 mins)</div>
+        <div class="session-task">Read 5 Extracts</div>
+        <div class="session-desc">Casually read and answer questions 1 to 5 on <a href="English/Test.html" style="color:var(--eng);">English/Test.html</a> to build textual analysis rhythm.</div>
+      </div>
+      <div class="session-box other">
+        <div class="session-header">⚡ Cheat Sheet (30 mins)</div>
+        <div class="session-task">Read Cheat Sheet Tabs</div>
+        <div class="session-desc">Familiarise yourself with the 3 tabs on <a href="Cheat Sheet.html" style="color:var(--accent);">Cheat Sheet.html</a> for quick recall.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRO TIP -->
+  <div class="pro-tip">
+    <h3>💡 The Golden "Error Log" Rule</h3>
+    <p>Whenever you select an incorrect answer in an interactive test, don't just click next. Read the green explanation box, write down the one concept you missed in your notebook, and re-attempt that question 2 days later. This simple habit guarantees an A or B in your yearly examinations.</p>
+  </div>
+</div>
+
+<script>
+  function switchWeek(weekId) {
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+    
+    event.currentTarget.classList.add('active');
+    document.getElementById('tab-' + weekId).classList.add('active');
+  }
+</script>
+
+</body>
+</html>
