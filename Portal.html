@@ -3,29 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Year 10 Assessment Portal | NSW Stage 5</title>
+<title>Year 10 Academic Assessment Workspace &bull; NSW Stage 5</title>
 <style>
   :root {
-    --bg: #090D16;
-    --surface: #111726;
-    --surface-hover: #161F33;
-    --border: #1E293B;
-    --border-light: #334155;
+    --bg: #080C14;
+    --surface: #0E1422;
+    --surface-hover: #141C30;
+    --surface-elevated: #18223A;
+    --border: #1B253B;
+    --border-subtle: #141B2D;
+    --border-hover: #2B3A5A;
     --text-primary: #F8FAFC;
     --text-secondary: #94A3B8;
     --text-muted: #64748B;
     --accent: #38BDF8;
+    --accent-glow: rgba(56, 189, 248, 0.15);
     --sci: #10B981;
-    --sci-surface: rgba(16, 185, 129, 0.06);
-    --sci-border: rgba(16, 185, 129, 0.25);
+    --sci-surface: rgba(16, 185, 129, 0.08);
+    --sci-border: rgba(16, 185, 129, 0.28);
     --math: #F59E0B;
-    --math-surface: rgba(245, 158, 11, 0.06);
-    --math-border: rgba(245, 158, 11, 0.25);
+    --math-surface: rgba(245, 158, 11, 0.08);
+    --math-border: rgba(245, 158, 11, 0.28);
     --eng: #3B82F6;
-    --eng-surface: rgba(59, 130, 246, 0.06);
-    --eng-border: rgba(59, 130, 246, 0.25);
-    --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
-    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+    --eng-surface: rgba(59, 130, 246, 0.08);
+    --eng-border: rgba(59, 130, 246, 0.28);
+    --other: #8B5CF6;
+    --other-surface: rgba(139, 92, 246, 0.08);
+    --other-border: rgba(139, 92, 246, 0.28);
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Inter, Roboto, sans-serif;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,192 +40,243 @@
     color: var(--text-primary);
     font-family: var(--sans);
     line-height: 1.5;
-    padding: 36px 20px 80px;
+    padding: 32px 20px 80px;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  .container { max-width: 1060px; margin: 0 auto; }
+  .container { max-width: 1080px; margin: 0 auto; }
 
-  /* Header */
-  header { margin-bottom: 28px; }
-  .header-meta {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--accent);
-    margin-bottom: 6px;
+  /* Top Command Header */
+  .brand-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .brand-left {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
   }
-  .header-meta::before {
-    content: "";
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
+  .brand-logo-mark {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: #0284C7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: white;
+    letter-spacing: -0.05em;
   }
-  h1 {
-    font-size: 2rem;
+  .brand-title {
+    font-family: var(--mono);
+    font-size: 0.82rem;
     font-weight: 700;
-    letter-spacing: -0.02em;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     color: var(--text-primary);
-    margin-bottom: 6px;
   }
-  p.subtitle {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
+  .brand-meta {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
   }
 
-  /* Schedule Banner */
-  .status-banner {
+  /* Telemetry Status Strip */
+  .telemetry-strip {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 16px 20px;
-    margin-bottom: 24px;
+    padding: 14px 20px;
+    margin-bottom: 28px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .telemetry-item {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 14px;
+    flex-direction: column;
+    gap: 2px;
   }
-  .status-info { display: flex; flex-direction: column; gap: 2px; }
-  .status-tag {
+  .telemetry-label {
     font-family: var(--mono);
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 600;
-    color: var(--accent);
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  .status-main {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--text-primary);
-  }
-  .status-detail {
-    font-size: 0.82rem;
+    letter-spacing: 0.08em;
     color: var(--text-muted);
   }
-  .status-links { display: flex; gap: 8px; }
-  .btn-sm {
-    background: var(--surface-hover);
-    border: 1px solid var(--border-light);
+  .telemetry-val {
+    font-size: 0.95rem;
+    font-weight: 700;
     color: var(--text-primary);
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background 0.15s, border-color 0.15s;
-  }
-  .btn-sm:hover { background: #1E293B; border-color: var(--accent); }
-  .btn-sm.accent {
-    background: #0284C7;
-    border-color: #0284C7;
-    color: white;
-  }
-  .btn-sm.accent:hover { background: #0369A1; }
-
-  /* Navigation Bar */
-  .nav-pills {
     display: flex;
-    gap: 10px;
+    align-items: center;
+    gap: 6px;
+  }
+  .status-indicator {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
+  }
+  .telemetry-sub {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+  }
+
+  /* Search & Filter Command Line */
+  .control-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 28px;
     flex-wrap: wrap;
+    gap: 12px;
   }
-  .nav-link {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 8px 16px;
-    border-radius: 8px;
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: all 0.15s;
-  }
-  .nav-link:hover {
-    color: var(--text-primary);
-    background: var(--surface-hover);
-    border-color: var(--border-light);
-  }
-
-  /* Segmented Filter Control */
-  .filter-control {
+  .segmented-control {
     display: inline-flex;
-    background: #0B0F19;
+    background: #05080E;
     border: 1px solid var(--border);
     border-radius: 8px;
     padding: 3px;
     gap: 2px;
-    margin-bottom: 28px;
-    flex-wrap: wrap;
   }
-  .filter-btn {
+  .segment-btn {
     background: transparent;
     border: none;
-    color: var(--text-muted);
-    padding: 6px 14px;
+    color: var(--text-secondary);
+    padding: 7px 15px;
     border-radius: 6px;
     font-size: 0.82rem;
     font-weight: 600;
     cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .segment-btn:hover {
+    color: var(--text-primary);
+  }
+  .segment-btn.active {
+    background: var(--surface-elevated);
+    color: var(--text-primary);
+    border: 1px solid var(--border-hover);
+  }
+
+  .search-wrapper {
+    position: relative;
+    min-width: 260px;
+  }
+  .search-input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 12px 7px 32px;
+    color: var(--text-primary);
+    font-size: 0.82rem;
+    font-family: var(--sans);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .search-input:focus {
+    border-color: var(--accent);
+  }
+  .search-input::placeholder {
+    color: var(--text-muted);
+  }
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    pointer-events: none;
+  }
+
+  /* Quick Actions Bar */
+  .quick-links-strip {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .pill-link {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     transition: all 0.15s;
   }
-  .filter-btn:hover { color: var(--text-primary); }
-  .filter-btn.active {
-    background: var(--surface-hover);
+  .pill-link:hover {
     color: var(--text-primary);
-    border: 1px solid var(--border-light);
+    border-color: var(--border-hover);
+    background: var(--surface-hover);
   }
 
   /* Subject Section */
-  .subject-block {
-    margin-bottom: 36px;
+  .subject-container {
+    margin-bottom: 38px;
   }
-  .subject-title-row {
+  .section-eyebrow {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--border);
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 14px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
   }
-  .subject-name {
+  .section-heading {
     font-size: 1.15rem;
     font-weight: 700;
+    letter-spacing: -0.01em;
     color: var(--text-primary);
     display: flex;
     align-items: center;
     gap: 8px;
   }
-  .dot {
-    width: 8px; height: 8px;
+  .section-dot {
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    display: inline-block;
   }
-  .dot.sci { background: var(--sci); }
-  .dot.math { background: var(--math); }
-  .dot.eng { background: var(--eng); }
-  .dot.other { background: #A78BFA; }
+  .section-dot.sci { background: var(--sci); box-shadow: 0 0 8px rgba(16, 185, 129, 0.4); }
+  .section-dot.math { background: var(--math); box-shadow: 0 0 8px rgba(245, 158, 11, 0.4); }
+  .section-dot.eng { background: var(--eng); box-shadow: 0 0 8px rgba(59, 130, 246, 0.4); }
+  .section-dot.other { background: var(--other); box-shadow: 0 0 8px rgba(139, 92, 246, 0.4); }
 
-  .subject-schedule {
+  .section-meta {
     font-family: var(--mono);
-    font-size: 0.78rem;
+    font-size: 0.74rem;
     color: var(--text-muted);
   }
 
   /* Cards Grid */
-  .cards-grid {
+  .grid-suite {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 14px;
   }
-  .card {
+  .workbench-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -227,84 +284,116 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: border-color 0.15s, background-color 0.15s;
+    transition: all 0.15s ease;
   }
-  .card:hover {
-    border-color: var(--border-light);
+  .workbench-card:hover {
+    border-color: var(--border-hover);
     background: var(--surface-hover);
   }
-  .card-label {
+  .card-chip {
     font-family: var(--mono);
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
+    font-size: 0.68rem;
+    font-weight: 700;
     text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 6px;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    display: inline-block;
   }
-  .card-h {
+  .card-chip.sci { color: var(--sci); }
+  .card-chip.math { color: var(--math); }
+  .card-chip.eng { color: #60A5FA; }
+  .card-chip.other { color: #A78BFA; }
+
+  .card-headline {
     font-size: 1.02rem;
     font-weight: 600;
     color: var(--text-primary);
     margin-bottom: 6px;
+    letter-spacing: -0.01em;
   }
-  .card-p {
-    font-size: 0.85rem;
+  .card-body {
+    font-size: 0.84rem;
     color: var(--text-secondary);
     line-height: 1.45;
     margin-bottom: 16px;
   }
-  .card-link {
-    font-size: 0.82rem;
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 12px;
+  }
+  .card-stat {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+  }
+  .card-cta {
+    font-size: 0.8rem;
     font-weight: 600;
     color: var(--accent);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     gap: 4px;
+    transition: gap 0.15s;
   }
-  .card-link:hover { text-decoration: underline; }
+  .card-cta:hover {
+    gap: 6px;
+    text-decoration: underline;
+  }
 
-  /* Table Section */
-  .table-section { margin-top: 44px; }
-  .table-heading {
-    font-size: 1.15rem;
-    font-weight: 700;
-    margin-bottom: 12px;
+  /* Master Schedule Table */
+  .schedule-block {
+    margin-top: 44px;
   }
-  .data-table {
-    width: 100%;
-    border-collapse: collapse;
+  .schedule-table-wrap {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 10px;
     overflow: hidden;
-    font-size: 0.88rem;
   }
-  .data-table th {
-    background: #0B0F19;
+  .schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  .schedule-table th {
+    background: #060910;
     color: var(--text-muted);
-    text-align: left;
-    padding: 10px 14px;
     font-family: var(--mono);
-    font-size: 0.72rem;
+    font-size: 0.7rem;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
+    text-align: left;
+    padding: 10px 16px;
     border-bottom: 1px solid var(--border);
   }
-  .data-table td {
-    padding: 12px 14px;
-    border-bottom: 1px solid var(--border);
+  .schedule-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-subtle);
     color: var(--text-secondary);
   }
-  .data-table tr:last-child td { border-bottom: none; }
-  .table-subject { color: var(--text-primary); font-weight: 600; }
-  .table-date { font-family: var(--mono); font-size: 0.82rem; color: var(--text-primary); }
-  .table-weight { font-family: var(--mono); font-size: 0.82rem; }
+  .schedule-table tr:last-child td { border-bottom: none; }
+  .schedule-table tr:hover td { background: var(--surface-hover); }
+  .col-subj { font-weight: 600; color: var(--text-primary); }
+  .col-date { font-family: var(--mono); font-size: 0.8rem; color: var(--text-primary); }
+  .col-weight { font-family: var(--mono); font-size: 0.8rem; }
+  .col-action a {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-decoration: none;
+  }
+  .col-action a:hover { text-decoration: underline; }
 
   @media (max-width: 768px) {
-    .cards-grid { grid-template-columns: 1fr; }
-    .status-banner { flex-direction: column; align-items: flex-start; }
+    .control-row { flex-direction: column; align-items: stretch; }
+    .segmented-control { width: 100%; justify-content: space-between; }
+    .search-wrapper { width: 100%; }
+    .telemetry-strip { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -312,313 +401,425 @@
 
 <div class="container">
 
-  <header>
-    <div class="header-meta">Picnic Point High School &bull; Stage 5</div>
-    <h1>Year 10 Yearly Assessment Workspace</h1>
-    <p class="subtitle">Curriculum study suites, interactive practice papers, and revision notes for Mathematics 5.3, Core Science, and English.</p>
-  </header>
-
-  <!-- Term 4 Schedule Notice -->
-  <div class="status-banner">
-    <div class="status-info">
-      <div class="status-tag">NSW Public Schools &bull; Term 4, 2026</div>
-      <div class="status-main">Students return Tuesday, 13 October 2026 (Week 1A)</div>
-      <div class="status-detail">Staff Development Day on Monday, 12 October 2026 (Pupil-free study day)</div>
+  <!-- Top Brand Line -->
+  <div class="brand-bar">
+    <div class="brand-left">
+      <div class="brand-logo-mark">Y10</div>
+      <div>
+        <div class="brand-title">Picnic Point High School</div>
+        <div class="brand-meta">NSW Stage 5 Assessment &bull; Yearly Examination Workspace</div>
+      </div>
     </div>
-    <div class="status-links">
-      <a class="btn-sm accent" href="Due Dates.html">Assessment Schedule</a>
-      <a class="btn-sm" href="Schedule.html">4-Week Timetable</a>
+    <div class="brand-meta" id="live-time-display">NSW Term 4 Cycle &bull; 2026</div>
+  </div>
+
+  <!-- Telemetry Bar -->
+  <div class="telemetry-strip">
+    <div class="telemetry-item">
+      <div class="telemetry-label">Academic Calendar</div>
+      <div class="telemetry-val">
+        <span class="status-indicator"></span>
+        <span>Term 4, Week 1A Begins</span>
+      </div>
+      <div class="telemetry-sub">Students Return: Tuesday, 13 Oct 2026</div>
+    </div>
+    <div class="telemetry-item">
+      <div class="telemetry-label">Staff Development</div>
+      <div class="telemetry-val">Monday, 12 Oct 2026</div>
+      <div class="telemetry-sub">Pupil-free home preparation day</div>
+    </div>
+    <div class="telemetry-item">
+      <div class="telemetry-label">First Exam Scheduled</div>
+      <div class="telemetry-val" style="color:#60A5FA;">English Task 3 (40%)</div>
+      <div class="telemetry-sub">Window: 13&ndash;16 Oct 2026</div>
+    </div>
+    <div class="telemetry-item">
+      <div class="telemetry-label">Suite Readiness</div>
+      <div class="telemetry-val" style="color:var(--sci);">All Papers Operational</div>
+      <div class="telemetry-sub">3 practice exams &bull; 2 rapid drills</div>
     </div>
   </div>
 
-  <!-- Global Fast Links -->
-  <div class="nav-pills">
-    <a class="nav-link" href="Due Dates.html">Assessment Calendar</a>
-    <a class="nav-link" href="Cheat Sheet.html">Exam Cheat Sheet</a>
-    <a class="nav-link" href="Schedule.html">Weekly Timetable</a>
+  <!-- Fast Access Links -->
+  <div class="quick-links-strip">
+    <a class="pill-link" href="Due Dates.html">Assessment Calendar &rarr;</a>
+    <a class="pill-link" href="Cheat Sheet.html">Syllabus Reference Sheets &rarr;</a>
+    <a class="pill-link" href="Schedule.html">4-Week Study Timetable &rarr;</a>
   </div>
 
-  <!-- Segmented View Switcher -->
-  <div class="filter-control">
-    <button class="filter-btn active" onclick="setFilter('all', this)">All Subjects</button>
-    <button class="filter-btn" onclick="setFilter('sci', this)">Science</button>
-    <button class="filter-btn" onclick="setFilter('math', this)">Mathematics 5.3</button>
-    <button class="filter-btn" onclick="setFilter('eng', this)">English</button>
-    <button class="filter-btn" onclick="setFilter('other', this)">Electives</button>
+  <!-- Search & Segment Controls -->
+  <div class="control-row">
+    <div class="segmented-control">
+      <button class="segment-btn active" onclick="filterBySubject('all', this)">All</button>
+      <button class="segment-btn" onclick="filterBySubject('sci', this)">Science</button>
+      <button class="segment-btn" onclick="filterBySubject('math', this)">Mathematics 5.3</button>
+      <button class="segment-btn" onclick="filterBySubject('eng', this)">English</button>
+      <button class="segment-btn" onclick="filterBySubject('other', this)">Electives</button>
+    </div>
+
+    <div class="search-wrapper">
+      <span class="search-icon">/</span>
+      <input type="text" class="search-input" id="topic-search" placeholder="Filter topics (e.g. genetics, quadratics)..." oninput="handleSearch(this.value)">
+    </div>
   </div>
 
-  <!-- ================= SCIENCE MODULE ================= -->
-  <div class="subject-block" id="block-sci">
-    <div class="subject-title-row">
-      <div class="subject-name">
-        <span class="dot sci"></span>
+  <!-- ================= 1. SCIENCE SUITE ================= -->
+  <div class="subject-container" id="subject-sci" data-subject="sci">
+    <div class="section-eyebrow">
+      <div class="section-heading">
+        <span class="section-dot sci"></span>
         <span>Science (Core Stage 5)</span>
       </div>
-      <div class="subject-schedule">Task 3 Exam &bull; Weight: 35% &bull; School Hall (90 mins) &bull; Term 4, Week 1&ndash;2 (13&ndash;23 Oct)</div>
+      <div class="section-meta">Task 3 Exam &bull; Weight: 35% &bull; School Hall (90 mins) &bull; Term 4, Week 1&ndash;2 (13&ndash;23 Oct)</div>
     </div>
-    <div class="cards-grid">
-      
-      <div class="card">
+    <div class="grid-suite">
+
+      <div class="workbench-card" data-keywords="science practice exam paper scenarios genetics biotech chemical earth reactions time traveller space working scientifically">
         <div>
-          <div class="card-label">Practice Exam &bull; 36 Scenarios</div>
-          <div class="card-h">Science Practice Paper</div>
-          <div class="card-p">36 scenario-based questions across Genetics &amp; Biotech, Chemical Earth, Time Traveller, and Working Scientifically.</div>
+          <div class="card-chip sci">Exam Paper &bull; 36 Scenarios</div>
+          <div class="card-headline">Science Practice Examination</div>
+          <div class="card-body">Extract-based questions covering DNA gel electrophoresis, Mendelian dihybrid ratios, collision kinetics, gas tests, Doppler redshift, and fair test design.</div>
         </div>
-        <a class="card-link" href="Science/Test.html">Open practice paper &rarr;</a>
+        <div class="card-footer">
+          <span class="card-stat">36 Qs &bull; Scenarios</span>
+          <a class="card-cta" href="Science/Test.html">Open paper &rarr;</a>
+        </div>
       </div>
 
-      <div class="card">
+      <div class="workbench-card" data-keywords="science rapid drill recall speed quiz multiple choice base pairing hr diagram">
         <div>
-          <div class="card-label">Rapid Recall &bull; 40 Questions</div>
-          <div class="card-h">Science 40-Q Drill</div>
-          <div class="card-p">Fast-paced multiple choice testing DNA base pairs, diagnostic gas tests, collision theory, and H-R diagrams.</div>
+          <div class="card-chip sci">Rapid Drill &bull; 40 Questions</div>
+          <div class="card-headline">Science Mastery Drill</div>
+          <div class="card-body">High-speed recall drill targeting core factual recall: DNA base pairs, pop and limewater tests, collision theory conditions, and H-R star groups.</div>
         </div>
-        <a class="card-link" href="Science/Drill.html">Start rapid drill &rarr;</a>
+        <div class="card-footer">
+          <span class="card-stat">40 Qs &bull; Rapid</span>
+          <a class="card-cta" href="Science/Drill.html">Start drill &rarr;</a>
+        </div>
       </div>
 
-      <div class="card">
+      <div class="workbench-card" data-keywords="science reference cheat sheet formulas collision theory reliability validity accuracy chemical reactions">
         <div>
-          <div class="card-label">Reference &bull; Definitions &amp; Formulas</div>
-          <div class="card-h">Science Revision Notes</div>
-          <div class="card-p">Reliability, validity, and accuracy sentence templates, 3-sentence collision theory, and core chemical reactions.</div>
+          <div class="card-chip sci">Syllabus Reference</div>
+          <div class="card-headline">Science Revision Reference</div>
+          <div class="card-body">Standardized 3-sentence collision theory template, working scientifically definitions (reliability, validity, accuracy), and acid reaction formulas.</div>
         </div>
-        <a class="card-link" href="Cheat Sheet.html">View revision notes &rarr;</a>
+        <div class="card-footer">
+          <span class="card-stat">Reference Sheet</span>
+          <a class="card-cta" href="Cheat Sheet.html">View sheet &rarr;</a>
+        </div>
       </div>
 
-      <div class="card">
+      <div class="workbench-card" data-keywords="science notification specification scope task 3 hall exam 90 minutes">
         <div>
-          <div class="card-label">Specification &bull; Task 3</div>
-          <div class="card-h">Exam Notification Scope</div>
-          <div class="card-p">Formal notification breakdown: 15% Working Scientifically methodology and 20% knowledge and understanding.</div>
+          <div class="card-chip sci">Task Scope</div>
+          <div class="card-headline">Exam Notification Details</div>
+          <div class="card-body">90-minute examination in the School Hall. Assesses 15% Working Scientifically methodology and 20% syllabus knowledge across all core modules.</div>
         </div>
-        <a class="card-link" href="Due Dates.html">View notification &rarr;</a>
+        <div class="card-footer">
+          <span class="card-stat">Notification</span>
+          <a class="card-cta" href="Due Dates.html">View scope &rarr;</a>
+        </div>
       </div>
 
     </div>
   </div>
 
-  <!-- ================= MATHEMATICS MODULE ================= -->
-  <div class="subject-block" id="block-math">
-    <div class="subject-title-row">
-      <div class="subject-name">
-        <span class="dot math"></span>
+  <!-- ================= 2. MATHEMATICS SUITE ================= -->
+  <div class="subject-container" id="subject-math" data-subject="math">
+    <div class="section-eyebrow">
+      <div class="section-heading">
+        <span class="section-dot math"></span>
         <span>Mathematics 5.3 (Advanced)</span>
       </div>
-      <div class="subject-schedule">Task 4 Exam &bull; Weight: 30% &bull; 100 mins &bull; Thursday, 22 October 2026 (Week 2B)</div>
+      <div class="section-meta">Task 4 Exam &bull; Weight: 30% &bull; 100 mins &bull; Thursday, 22 October 2026 (Week 2B)</div>
     </div>
-    <div class="cards-grid">
+    <div class="grid-suite">
 
-      <div class="card">
+      <div class="workbench-card" data-keywords="mathematics 5.3 practice exam quadratics parabolas vertex polynomials remainder factor variation probability">
         <div>
-          <div class="card-label">Practice Exam &bull; 25 Scenarios</div>
-          <div class="card-h">Mathematics 5.3 Paper</div>
-          <div class="card-p">25 applied problems covering quadratics, vertex turning points, polynomials, rates of change, and multi-stage probability.</div>
+          <div class="card-chip math">Exam Paper &bull; 25 Scenarios</div>
+          <div class="card-headline">Mathematics 5.3 Paper</div>
+          <div class="card-body">25 applied problem scenarios covering quadratics, vertex form transformations, polynomial remainder theorem, variation models, and dependent probability.</div>
         </div>
-        <a class="card-link" href="Mathematics/Test.html">Open practice paper &rarr;</a>
+        <div class="card-footer">
+          <span class="card-stat">25 Qs &bull; 100 Mins</span>
+          <a class="card-cta" href="Mathematics/Test.html">Open paper &rarr;</a>
+        </div>
       </div>
 
-      <div class="card">
+      <div class="workbench-card" data-keywords="mathematics rapid drill calculations discriminant factoring null factor law asymptotes">
         <div>
-          <div class="card-label">Rapid Drill &bull; 30 Questions</div>
-          <div class="card-h">Maths 30-Q Drill</div>
-          <div class="card-p">Focused calculations on discriminant rules (&Delta; = b&sup2; - 4ac), monic factoring, asymptotes, and tree diagrams.</div>
+          <div class="card-chip math">Rapid Drill &bull; 30 Questions</div>
+          <div class="card-headline">Maths 30-Q Problem Drill</div>
+          <div class="card-body">Fast-paced calculations on discriminant rules (&Delta; = b&sup2; - 4ac), monic and non-monic factoring, hyperbolic asymptotes, and tree diagrams without replacement.</div>
         </div>
-        <a class="card-link" href="Mathematics/Drill.html">Start rapid drill &rarr;</a>
+        <div class="card-footer">
+          <span class="card-stat">30 Qs &bull; Rapid</span>
+          <a class="card-cta" href="Mathematics/Drill.html">Start drill &rarr;</a>
+        </div>
       </div>
 
-      <div class="card">
+      <div class="workbench-card" data-keywords="mathematics formula sheet reference cheat sheet vertex form remainder theorem probability shortcuts">
         <div>
-          <div class="card-label">Reference &bull; Formulas &amp; Theorems</div>
-          <div class="card-h">Maths 5.3 Formula Sheet</div>
-          <div class="card-p">Null factor law, vertex form y = a(x-h)&sup2; + k, polynomial remainder theorem P(a), and probability rules.</div>
+          <div class="card-chip math">Formula Sheet</div>
+          <div class="card-headline">Maths 5.3 Formula Sheet</div>
+          <div class="card-body">Quick-reference formulas for discriminant classification, vertex coordinates x = -b/(2a), remainder theorem evaluation P(a), and complementary probability.</div>
         </div>
-        <a class="card-link" href="Cheat Sheet.html">View formula sheet &rarr;</a>
+        <div class="card-footer">
+          <span class="card-stat">Formula Sheet</span>
+          <a class="card-cta" href="Cheat Sheet.html">View formulas &rarr;</a>
+        </div>
       </div>
 
-      <div class="card">
+      <div class="workbench-card" data-keywords="mathematics notification specification scope task 4 cambridge chapters 5 7 8 10">
         <div>
-          <div class="card-label">Specification &bull; Task 4</div>
-          <div class="card-h">Exam Notification Scope</div>
-          <div class="card-p">100-minute examination covering Cambridge Year 10 chapters 5, 7, 8, and 10. Assesses Stage 5.3 outcomes.</div>
+          <div class="card-chip math">Task Scope</div>
+          <div class="card-headline">Exam Notification Details</div>
+          <div class="card-body">100-minute examination covering Cambridge Year 10 chapters 5, 7, 8, and 10. Calculators permitted; formula reference provided.</div>
         </div>
-        <a class="card-link" href="Due Dates.html">View notification &rarr;</a>
+        <div class="card-footer">
+          <span class="card-stat">Notification</span>
+          <a class="card-cta" href="Due Dates.html">View scope &rarr;</a>
+        </div>
       </div>
 
     </div>
   </div>
 
-  <!-- ================= ENGLISH MODULE ================= -->
-  <div class="subject-block" id="block-eng">
-    <div class="subject-title-row">
-      <div class="subject-name">
-        <span class="dot eng"></span>
+  <!-- ================= 3. ENGLISH SUITE ================= -->
+  <div class="subject-container" id="subject-eng" data-subject="eng">
+    <div class="section-eyebrow">
+      <div class="section-heading">
+        <span class="section-dot eng"></span>
         <span>English (Stage 5 Regular)</span>
       </div>
-      <div class="subject-schedule">Task 3 Exam &bull; Weight: 40% &bull; 90 mins &bull; Term 4, Week 1A (13&ndash;16 Oct 2026)</div>
+      <div class="section-meta">Task 3 Exam &bull; Weight: 40% &bull; 90 mins &bull; Term 4, Week 1A (13&ndash;16 Oct 2026)</div>
     </div>
-    <div class="cards-grid">
+    <div class="grid-suite">
 
-      <div class="card">
+      <div class="workbench-card" data-keywords="english dystopian reading paper comprehension 25 extracts surveillance conformity rebellion textual analysis">
         <div>
-          <div class="card-label">Reading Exam &bull; 25 Extracts</div>
-          <div class="card-h">Dystopian Reading Paper</div>
-          <div class="card-p">25 unseen textual passages analyzing surveillance regimes, bleak settings, conformity, and rebellion.</div>
+          <div class="card-chip eng">Reading Paper &bull; 25 Extracts</div>
+          <div class="card-headline">Dystopian Reading Paper</div>
+          <div class="card-body">25 unseen textual passages analyzing totalitarian surveillance regimes, brutalist wastelands, linguistic stripping, and acts of quiet psychological defiance.</div>
         </div>
-        <a class="card-link" href="English/Test.html">Open reading paper &rarr;</a>
+        <div class="card-footer">
+          <span class="card-stat">25 Extracts &bull; Analysis</span>
+          <a class="card-cta" href="English/Test.html">Open paper &rarr;</a>
+        </div>
       </div>
 
-      <div class="card">
+      <div class="workbench-card" data-keywords="english creative writing narrative micro-plot blueprint section 2 20 marks">
         <div>
-          <div class="card-label">Creative Writing &bull; Section 2 (20 Marks)</div>
-          <div class="card-h">4-Step Micro-Plot Guide</div>
-          <div class="card-p">Narrative progression formula: The Routine &rarr; The Anomaly &rarr; The Tension &rarr; Quiet Defiance.</div>
+          <div class="card-chip eng">Creative Writing &bull; Section 2</div>
+          <div class="card-headline">4-Step Micro-Plot Blueprint</div>
+          <div class="card-body">Narrative architecture designed for exam conditions: The Routine &rarr; The Anomaly &rarr; The Tension &rarr; Quiet Internal Subversion. Avoids sprawling war stories.</div>
         </div>
-        <a class="card-link" href="Cheat Sheet.html">View writing guide &rarr;</a>
+        <div class="card-footer">
+          <span class="card-stat">20 Marks &bull; Guide</span>
+          <a class="card-cta" href="Cheat Sheet.html">View blueprint &rarr;</a>
+        </div>
       </div>
 
-      <div class="card">
+      <div class="workbench-card" data-keywords="english petal paragraph analytical framework short answer section 1 verbs">
         <div>
-          <div class="card-label">Analysis Guide &bull; Section 1 (20 Marks)</div>
-          <div class="card-h">PETAL Analytical Formula</div>
-          <div class="card-p">Standardized paragraph structure for short-answer analysis, supported by Band 6 power verbs.</div>
+          <div class="card-chip eng">Analysis Guide &bull; Section 1</div>
+          <div class="card-headline">PETAL Analytical Framework</div>
+          <div class="card-body">Standardized analytical paragraph structure for unseen short answers, paired with high-impact verbs (dismantles, encapsulates, subverts, illuminates).</div>
         </div>
-        <a class="card-link" href="Cheat Sheet.html">View PETAL structure &rarr;</a>
+        <div class="card-footer">
+          <span class="card-stat">20 Marks &bull; Structure</span>
+          <a class="card-cta" href="Cheat Sheet.html">View framework &rarr;</a>
+        </div>
       </div>
 
-      <div class="card">
+      <div class="workbench-card" data-keywords="english notification specification scope task 3 90 minutes 10 reading 80 writing">
         <div>
-          <div class="card-label">Specification &bull; Task 3</div>
-          <div class="card-h">Exam Notification Scope</div>
-          <div class="card-p">90-minute examination: 10 mins reading + 80 mins writing. Section 1 unseen texts + Section 2 imaginative response.</div>
+          <div class="card-chip eng">Task Scope</div>
+          <div class="card-headline">Exam Notification Details</div>
+          <div class="card-body">90-minute examination: 10 mins reading + 80 mins writing. Section 1 Reading Comprehension (20 marks) + Section 2 Imaginative Narrative (20 marks).</div>
         </div>
-        <a class="card-link" href="Due Dates.html">View notification &rarr;</a>
+        <div class="card-footer">
+          <span class="card-stat">Notification</span>
+          <a class="card-cta" href="Due Dates.html">View scope &rarr;</a>
+        </div>
       </div>
 
     </div>
   </div>
 
-  <!-- ================= ELECTIVES MODULE ================= -->
-  <div class="subject-block" id="block-other">
-    <div class="subject-title-row">
-      <div class="subject-name">
-        <span class="dot other"></span>
+  <!-- ================= 4. ELECTIVES ================= -->
+  <div class="subject-container" id="subject-other" data-subject="other">
+    <div class="section-eyebrow">
+      <div class="section-heading">
+        <span class="section-dot other"></span>
         <span>Electives &amp; HSIE Subjects</span>
       </div>
-      <div class="subject-schedule">Year 10 Assessment Tasks</div>
+      <div class="section-meta">Year 10 Practical Processing, Presentations &amp; Exams</div>
     </div>
-    <div class="cards-grid">
+    <div class="grid-suite">
 
-      <div class="card">
+      <div class="workbench-card" data-keywords="istem solar car sustainable transport gear ratios processing exam">
         <div>
-          <div class="card-label">iSTEM &bull; Task 3 (30%)</div>
-          <div class="card-h">Solar Car Processing Exam</div>
-          <div class="card-p">Engineering report on STELR Solar Car speed vs. hill climb gear ratios and track performance.</div>
+          <div class="card-chip other">iSTEM &bull; Task 3 (30%)</div>
+          <div class="card-headline">Solar Car Processing Exam</div>
+          <div class="card-body">Engineering report on STELR Solar Car speed vs. hill climb gear ratios and in-class vehicle track performance.</div>
         </div>
-        <a class="card-link" href="Due Dates.html">Due Thu 22 Oct 2026 &rarr;</a>
+        <div class="card-footer">
+          <span class="card-stat">Due Thu 22 Oct 2026</span>
+          <a class="card-cta" href="Due Dates.html">View task &rarr;</a>
+        </div>
       </div>
 
-      <div class="card">
+      <div class="workbench-card" data-keywords="geography human wellbeing digital presentation spatial variations australia png">
         <div>
-          <div class="card-label">Geography &bull; Task 2 (50%)</div>
-          <div class="card-h">Human Wellbeing Presentation</div>
-          <div class="card-p">Digital presentation comparing spatial wellbeing variations between Australia and another country.</div>
+          <div class="card-chip other">Geography &bull; Task 2 (50%)</div>
+          <div class="card-headline">Human Wellbeing Presentation</div>
+          <div class="card-body">Digital presentation comparing spatial wellbeing variations between Australia and Papua New Guinea across two indicators.</div>
         </div>
-        <a class="card-link" href="Due Dates.html">Due Thu 29 Oct 2026 (11:59 pm) &rarr;</a>
+        <div class="card-footer">
+          <span class="card-stat">Due Thu 29 Oct 2026</span>
+          <a class="card-cta" href="Due Dates.html">View task &rarr;</a>
+        </div>
       </div>
 
-      <div class="card">
+      <div class="workbench-card" data-keywords="pass coaching training design round robin tournament women in sport exam">
         <div>
-          <div class="card-label">PASS &bull; Task 2 (30%)</div>
-          <div class="card-h">Coaching &amp; Sport Yearly Exam</div>
-          <div class="card-p">50-minute examination covering coaching styles, training design, round robin draws, and women in sport.</div>
+          <div class="card-chip other">PASS &bull; Task 2 (30%)</div>
+          <div class="card-headline">Coaching &amp; Sport Yearly Exam</div>
+          <div class="card-body">50-minute examination covering coaching styles, training design, round robin tournament draws, and women in sport.</div>
         </div>
-        <a class="card-link" href="Due Dates.html">Exam Fri 30 Oct 2026 &rarr;</a>
+        <div class="card-footer">
+          <span class="card-stat">Exam Fri 30 Oct 2026</span>
+          <a class="card-cta" href="Due Dates.html">View task &rarr;</a>
+        </div>
       </div>
 
     </div>
   </div>
 
-  <!-- ================= ASSESSMENT SCHEDULE TABLE ================= -->
-  <div class="table-section">
-    <div class="table-heading">Term 4 Assessment Schedule</div>
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>Subject</th>
-          <th>Assessment Format</th>
-          <th>Weight</th>
-          <th>Due Date / Window</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="table-subject">English</td>
-          <td>Yearly Examination (Dystopian Fiction)</td>
-          <td class="table-weight">40%</td>
-          <td class="table-date">Term 4, Week 1A (13&ndash;16 Oct 2026)</td>
-          <td>Students return Tue 13 Oct (Mon 12 Oct is pupil-free study day)</td>
-        </tr>
-        <tr>
-          <td class="table-subject">Science</td>
-          <td>Yearly Examination (Core Modules)</td>
-          <td class="table-weight">35%</td>
-          <td class="table-date">Term 4, Week 1&ndash;2 (13&ndash;23 Oct 2026)</td>
-          <td>90-min Hall exam: Genetics, Reactions, Time Traveller</td>
-        </tr>
-        <tr>
-          <td class="table-subject">Mathematics 5.3</td>
-          <td>Yearly Examination (Advanced)</td>
-          <td class="table-weight">30%</td>
-          <td class="table-date">Thursday, 22 October 2026</td>
-          <td>100-min exam: Quadratics, Functions, Rates, Probability</td>
-        </tr>
-        <tr>
-          <td class="table-subject">iSTEM</td>
-          <td>Practical Processing Exam</td>
-          <td class="table-weight">30%</td>
-          <td class="table-date">Thursday, 22 October 2026</td>
-          <td>STELR Solar Car Report + in-class performance testing</td>
-        </tr>
-        <tr>
-          <td class="table-subject">Geography</td>
-          <td>Digital Presentation (Human Wellbeing)</td>
-          <td class="table-weight">50%</td>
-          <td class="table-date">Thursday, 29 October 2026</td>
-          <td>Submit via Google Classroom before 11:59 pm</td>
-        </tr>
-        <tr>
-          <td class="table-subject">PASS</td>
-          <td>Yearly Examination (Coaching &amp; Sport)</td>
-          <td class="table-weight">30%</td>
-          <td class="table-date">Friday, 30 October 2026</td>
-          <td>50-min examination in Periods 2 &amp; 4</td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- Master Assessment Table -->
+  <div class="schedule-block">
+    <div class="section-eyebrow">
+      <div class="section-heading">Master Assessment Schedule (Term 4, 2026)</div>
+      <div class="section-meta">Chronological examination and submission order</div>
+    </div>
+    <div class="schedule-table-wrap">
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Assessment Component</th>
+            <th>Weight</th>
+            <th>Official Date / Window</th>
+            <th>Operational Notes</th>
+            <th>Direct Access</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-subj" style="color:#60A5FA;">English</td>
+            <td>Yearly Examination (Dystopian Fiction)</td>
+            <td class="col-weight">40%</td>
+            <td class="col-date">Term 4, Week 1A (13&ndash;16 Oct)</td>
+            <td>Students return Tue 13 Oct (Mon 12 Oct is pupil-free study day)</td>
+            <td class="col-action"><a href="English/Test.html">Open Paper &rarr;</a></td>
+          </tr>
+          <tr>
+            <td class="col-subj" style="color:var(--sci);">Science</td>
+            <td>Yearly Examination (Core Modules)</td>
+            <td class="col-weight">35%</td>
+            <td class="col-date">Term 4, Week 1&ndash;2 (13&ndash;23 Oct)</td>
+            <td>90-min Hall exam: Genetics, Reactions, Time Traveller</td>
+            <td class="col-action"><a href="Science/Test.html">Open Paper &rarr;</a></td>
+          </tr>
+          <tr>
+            <td class="col-subj" style="color:var(--math);">Mathematics 5.3</td>
+            <td>Yearly Examination (Advanced)</td>
+            <td class="col-weight">30%</td>
+            <td class="col-date">Thursday, 22 October 2026</td>
+            <td>100-min exam: Quadratics, Functions, Rates, Probability</td>
+            <td class="col-action"><a href="Mathematics/Test.html">Open Paper &rarr;</a></td>
+          </tr>
+          <tr>
+            <td class="col-subj" style="color:#A78BFA;">iSTEM</td>
+            <td>Practical Processing Exam</td>
+            <td class="col-weight">30%</td>
+            <td class="col-date">Thursday, 22 October 2026</td>
+            <td>STELR Solar Car Report + in-class performance testing</td>
+            <td class="col-action"><a href="Due Dates.html">View Task &rarr;</a></td>
+          </tr>
+          <tr>
+            <td class="col-subj" style="color:#A78BFA;">Geography</td>
+            <td>Digital Presentation (Human Wellbeing)</td>
+            <td class="col-weight">50%</td>
+            <td class="col-date">Thursday, 29 October 2026</td>
+            <td>Submit via Google Classroom before 11:59 pm</td>
+            <td class="col-action"><a href="Due Dates.html">View Task &rarr;</a></td>
+          </tr>
+          <tr>
+            <td class="col-subj" style="color:#A78BFA;">PASS</td>
+            <td>Yearly Examination (Coaching &amp; Sport)</td>
+            <td class="col-weight">30%</td>
+            <td class="col-date">Friday, 30 October 2026</td>
+            <td>50-min examination in Periods 2 &amp; 4</td>
+            <td class="col-action"><a href="Due Dates.html">View Task &rarr;</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
 </div>
 
 <script>
-  function setFilter(subject, btn) {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  let activeSubjectFilter = 'all';
+
+  function filterBySubject(subj, btn) {
+    activeSubjectFilter = subj;
+    document.querySelectorAll('.segment-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
-    const blocks = {
-      sci: document.getElementById('block-sci'),
-      math: document.getElementById('block-math'),
-      eng: document.getElementById('block-eng'),
-      other: document.getElementById('block-other')
-    };
+    const containers = document.querySelectorAll('.subject-container');
+    containers.forEach(c => {
+      if (subj === 'all' || c.dataset.subject === subj) {
+        c.style.display = 'block';
+      } else {
+        c.style.display = 'none';
+      }
+    });
 
-    if (subject === 'all') {
-      Object.values(blocks).forEach(b => b.style.display = 'block');
-    } else {
-      Object.keys(blocks).forEach(k => {
-        blocks[k].style.display = (k === subject) ? 'block' : 'none';
-      });
+    // Re-apply search if text exists
+    const query = document.getElementById('topic-search').value;
+    if (query.trim()) {
+      handleSearch(query);
     }
+  }
+
+  function handleSearch(query) {
+    const term = query.toLowerCase().trim();
+    const cards = document.querySelectorAll('.workbench-card');
+
+    cards.forEach(card => {
+      const parentSection = card.closest('.subject-container');
+      const isSectionVisible = (activeSubjectFilter === 'all' || parentSection.dataset.subject === activeSubjectFilter);
+
+      if (!isSectionVisible) {
+        return;
+      }
+
+      if (!term) {
+        card.style.display = 'flex';
+      } else {
+        const keywords = (card.dataset.keywords || '') + ' ' + card.innerText;
+        if (keywords.toLowerCase().includes(term)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      }
+    });
   }
 </script>
 
