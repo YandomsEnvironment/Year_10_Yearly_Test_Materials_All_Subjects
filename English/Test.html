@@ -3,642 +3,1813 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Year 10 English Dystopian Reading Comprehension (25 Passages) | NSW Stage 5</title>
+<title>Year 10 English Yearly Examination Suite (20 Marks • 45 Mins) | NSW Stage 5</title>
 <style>
   :root {
     --primary: #1E3A8A;
-    --primary-light: #3B82F6;
-    --primary-dark: #172554;
-    --bg: #F8FAFC;
-    --card-bg: #FFFFFF;
-    --text-main: #0F172A;
-    --text-muted: #64748B;
-    --border: #E2E8F0;
-    --extract-bg: #F1F5F9;
+    --primary-light: #2563EB;
+    --primary-dark: #0F172A;
+    --accent: #38BDF8;
+    --accent-gold: #F59E0B;
+    --bg-app: #0B0F19;
+    --surface: #111827;
+    --surface-card: #1F2937;
+    --surface-highlight: #374151;
+    --border: #374151;
+    --border-subtle: #242E42;
+    --text-primary: #F3F4F6;
+    --text-secondary: #9CA3AF;
+    --text-muted: #6B7280;
+    --stimulus-bg: #0F172A;
+    --stimulus-text: #E2E8F0;
     --correct: #10B981;
-    --correct-bg: #ECFDF5;
+    --correct-bg: rgba(16, 185, 129, 0.12);
     --incorrect: #EF4444;
+    --incorrect-bg: rgba(239, 68, 68, 0.12);
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, monospace;
+    --serif: "Georgia", "Cambria", "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  body.theme-parchment {
+    --bg-app: #F4F1EA;
+    --surface: #FFFFFF;
+    --surface-card: #FAF8F5;
+    --surface-highlight: #EDE8DF;
+    --border: #DCD5C5;
+    --border-subtle: #E8E2D5;
+    --text-primary: #1C1917;
+    --text-secondary: #57534E;
+    --text-muted: #8E877E;
+    --stimulus-bg: #FCFBF9;
+    --stimulus-text: #292524;
+    --correct-bg: #ECFDF5;
     --incorrect-bg: #FEF2F2;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-  body { background-color: var(--bg); color: var(--text-main); line-height: 1.5; padding-bottom: 70px; }
-  
-  header {
-    background: linear-gradient(135deg, #172554 0%, #1E3A8A 100%);
-    color: white; padding: 30px 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-  }
-  .header-content { max-width: 900px; margin: 0 auto; }
-  .badge { background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; margin-bottom: 8px; }
-  h1 { font-size: 1.85rem; font-weight: 800; margin-bottom: 6px; }
-  p.subtitle { color: #BFDBFE; font-size: 0.95rem; }
 
-  /* Dashboard */
-  .score-sticky {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(255,255,255,0.96); backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border); padding: 12px 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: var(--bg-app);
+    color: var(--text-primary);
+    font-family: var(--sans);
+    line-height: 1.5;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
-  .score-container {
-    max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+
+  /* TOP HEADER / APP BAR */
+  .app-header {
+    background: #090D16;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    z-index: 50;
+    gap: 12px;
   }
-  .score-stat { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
-  .score-stat span { color: var(--primary); font-size: 1.15rem; font-weight: 800; }
-  .progress-bar-bg { width: 100%; height: 8px; background: #E2E8F0; border-radius: 4px; overflow: hidden; margin-top: 6px; }
-  .progress-bar-fill { height: 100%; background: var(--primary-light); width: 0%; transition: width 0.3s ease; }
-
-  /* Filters */
-  .filter-nav { max-width: 900px; margin: 20px auto; padding: 0 20px; display: flex; gap: 8px; flex-wrap: wrap; }
-  .filter-btn {
-    background: white; border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px;
-    font-size: 0.85rem; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
   }
-  .filter-btn.active, .filter-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
-
-  /* Main Container */
-  .quiz-container { max-width: 900px; margin: 0 auto; padding: 0 20px; display: flex; flex-direction: column; gap: 20px; }
-
-  .q-card {
-    background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 22px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: all 0.2s;
   }
-  .q-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-  .q-num { font-size: 0.85rem; font-weight: 700; color: var(--primary); background: #EFF6FF; padding: 3px 8px; border-radius: 6px; }
-  .q-module { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+  .back-btn:hover {
+    background: rgba(255,255,255,0.12);
+    color: white;
+    border-color: #60A5FA;
+  }
 
-  /* Extract Box */
-  .extract-box {
-    background: var(--extract-bg);
-    border-left: 4px solid var(--primary);
-    border-radius: 0 8px 8px 0;
-    padding: 14px 16px;
-    margin-bottom: 14px;
-    font-size: 0.95rem;
-    color: #1E293B;
-    line-height: 1.6;
+  .paper-select-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .paper-select-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #60A5FA;
+    letter-spacing: 0.05em;
+  }
+  .paper-dropdown {
+    background: #131D2E;
+    border: 1px solid #2B3A5A;
+    color: white;
+    font-weight: 700;
+    font-size: 0.86rem;
+    padding: 5px 12px;
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+  }
+  .paper-dropdown:focus { border-color: #38BDF8; }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Timer Widget (45 Minutes) */
+  .timer-pill {
+    background: #131D2E;
+    border: 1px solid #1E293B;
+    border-radius: 20px;
+    padding: 4px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #38BDF8;
+  }
+  .timer-pill.urgent {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: #EF4444;
+    color: #F87171;
+    animation: pulseAlert 1.5s infinite;
+  }
+  @keyframes pulseAlert {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+  .timer-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.8rem;
+    padding: 2px 4px;
+    border-radius: 4px;
+  }
+  .timer-btn:hover { color: white; }
+
+  .header-action-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 5px 11px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+  .header-action-btn:hover {
+    background: var(--surface-highlight);
+    color: white;
+  }
+
+  /* SUB STRIP TELEMETRY */
+  .sub-strip {
+    background: #0E1422;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 8px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  .stat-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+  }
+  .stat-item span {
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .layout-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .segmented-control {
+    background: #141C2E;
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    display: flex;
+    padding: 2px;
+  }
+  .seg-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .seg-btn.active {
+    background: #2563EB;
+    color: white;
+  }
+
+  /* EXAM WORKSPACE */
+  .exam-workspace {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* LEFT PANE: STIMULUS */
+  .pane-stimulus {
+    flex: 1;
+    min-width: 380px;
+    background: var(--stimulus-bg);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .stimulus-bar {
+    background: rgba(17, 24, 39, 0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 10px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .stimulus-bar-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #93C5FD;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .highlight-tools {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .hl-color-btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .hl-color-btn:hover { transform: scale(1.15); }
+  .hl-color-btn.active { border-color: white; }
+  .hl-yellow { background: #FDE047; }
+  .hl-green { background: #86EFAC; }
+  .hl-cyan { background: #67E8F9; }
+  .hl-clear {
+    background: transparent;
+    border: 1px dashed var(--text-muted);
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .hl-clear:hover { color: white; border-color: white; }
+
+  .stimulus-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px 32px 60px;
+    scroll-behavior: smooth;
+  }
+  .stimulus-container {
+    max-width: 680px;
+    margin: 0 auto;
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--stimulus-text);
+  }
+  .story-header {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--sans);
+  }
+  .story-kicker {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #60A5FA;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+  .story-title {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    font-family: var(--serif);
+    line-height: 1.25;
+    margin-bottom: 6px;
+  }
+  body.theme-parchment .story-title { color: #1C1917; }
+  .story-meta {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
     font-style: italic;
   }
-  .extract-header {
-    font-weight: 800; font-size: 0.78rem; text-transform: uppercase; color: var(--primary);
-    margin-bottom: 6px; display: flex; align-items: center; gap: 6px; letter-spacing: 0.05em; font-style: normal;
+  .stimulus-intro-note {
+    background: rgba(59, 130, 246, 0.08);
+    border-left: 3px solid #3B82F6;
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: #BFDBFE;
+    margin-bottom: 26px;
+    line-height: 1.45;
+  }
+  body.theme-parchment .stimulus-intro-note {
+    background: #EFF6FF;
+    color: #1E40AF;
   }
 
-  .q-text { font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 14px; }
+  .story-p {
+    position: relative;
+    margin-bottom: 18px;
+    text-align: justify;
+  }
+  .line-num-marker {
+    position: absolute;
+    left: -38px;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    user-select: none;
+    top: 2px;
+  }
+  .story-p mark { border-radius: 2px; padding: 1px 2px; }
+  .story-p mark.hl-y { background-color: rgba(253, 224, 71, 0.35); color: inherit; }
+  .story-p mark.hl-g { background-color: rgba(134, 239, 172, 0.35); color: inherit; }
+  .story-p mark.hl-c { background-color: rgba(103, 232, 249, 0.35); color: inherit; }
 
-  .options-grid { display: flex; flex-direction: column; gap: 10px; }
-  .option-btn {
-    display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; background: #F8FAFC;
-    border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.95rem; color: var(--text-main);
-    cursor: pointer; text-align: left; transition: all 0.15s ease;
+  .target-highlight-flash {
+    animation: flashTarget 2.4s ease-out;
   }
-  .option-btn:hover:not(.disabled) { background: #F1F5F9; border-color: #94A3B8; }
-  .option-letter {
-    font-weight: 700; color: var(--text-muted); background: white; border: 1px solid var(--border);
-    width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; font-size: 0.8rem;
+  @keyframes flashTarget {
+    0% { background: rgba(245, 158, 11, 0.4); outline: 2px solid #F59E0B; }
+    70% { background: rgba(245, 158, 11, 0.2); outline: 1px solid #F59E0B; }
+    100% { background: transparent; outline: none; }
   }
 
-  .option-btn.selected-correct {
-    background: var(--correct-bg) !important; border-color: var(--correct) !important; color: #065F46 !important;
-  }
-  .option-btn.selected-correct .option-letter { background: var(--correct); color: white; border-color: var(--correct); }
-
-  .option-btn.selected-wrong {
-    background: var(--incorrect-bg) !important; border-color: var(--incorrect) !important; color: #991B1B !important;
-  }
-  .option-btn.selected-wrong .option-letter { background: var(--incorrect); color: white; border-color: var(--incorrect); }
-
-  .option-btn.reveal-correct {
-    border-color: var(--correct) !important; background: var(--correct-bg) !important;
+  /* RIGHT PANE: QUESTIONS */
+  .pane-questions {
+    flex: 1.1;
+    min-width: 420px;
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
 
-  .explanation-box {
-    margin-top: 14px; padding: 12px 15px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.45;
+  .section-nav-bar {
+    background: #0E1422;
+    border-bottom: 1px solid var(--border);
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    flex-shrink: 0;
   }
-  .explanation-box.show { display: block; }
-  .explanation-box.correct { background: #ECFDF5; border-left: 4px solid var(--correct); color: #065F46; }
-  .explanation-box.wrong { background: #FEF2F2; border-left: 4px solid var(--incorrect); color: #991B1B; }
-  .exp-title { font-weight: 700; margin-bottom: 3px; }
+  .section-tab {
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 12px 14px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .section-tab:hover { color: white; }
+  .section-tab.active {
+    color: #60A5FA;
+    border-bottom-color: #3B82F6;
+  }
+  .tab-badge {
+    background: rgba(255,255,255,0.08);
+    font-size: 0.7rem;
+    padding: 1px 6px;
+    border-radius: 10px;
+  }
+  .section-tab.active .tab-badge {
+    background: #2563EB;
+    color: white;
+  }
 
-  .reset-btn {
-    background: white; border: 1px solid var(--border); padding: 6px 14px; border-radius: 6px;
-    font-size: 0.85rem; font-weight: 700; color: var(--text-main); cursor: pointer; transition: all 0.2s;
+  .q-jump-ribbon {
+    background: #141C2E;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 8px 16px;
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    flex-shrink: 0;
   }
-  .reset-btn:hover { background: #F1F5F9; border-color: #94A3B8; }
+  .q-ribbon-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .q-ribbon-btn:hover { border-color: #60A5FA; color: white; }
+  .q-ribbon-btn.answered {
+    background: rgba(16, 185, 129, 0.2);
+    border-color: #10B981;
+    color: #34D399;
+  }
+  .q-ribbon-btn.flagged::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #F59E0B;
+  }
+  .q-ribbon-btn.active-q {
+    border-color: #38BDF8;
+    box-shadow: 0 0 0 1px #38BDF8;
+  }
+
+  .questions-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 24px 80px;
+    scroll-behavior: smooth;
+  }
+  .questions-container {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .section-banner {
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 8px;
+  }
+  .section-banner-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #93C5FD;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .section-banner-marks {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: #FCD34D;
+    background: rgba(245, 158, 11, 0.15);
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+  }
+  .section-banner-desc {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.45;
+  }
+
+  .question-card {
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
+    transition: border-color 0.2s;
+    scroll-margin-top: 16px;
+  }
+  .question-card:focus-within {
+    border-color: rgba(59, 130, 246, 0.6);
+  }
+  .q-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .q-badge-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .q-index-pill {
+    background: #2563EB;
+    color: white;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .q-type-pill {
+    background: rgba(255, 255, 255, 0.07);
+    color: var(--text-secondary);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .q-marks-pill {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #FBBF24;
+  }
+  .q-tools-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .jump-stimulus-btn {
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: #38BDF8;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .jump-stimulus-btn:hover {
+    background: rgba(56, 189, 248, 0.25);
+    color: white;
+  }
+  .flag-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 2px 4px;
+    transition: color 0.15s;
+  }
+  .flag-btn.flagged { color: #F59E0B; }
+
+  .q-prompt {
+    font-size: 0.96rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+  }
+  .q-stimulus-quote {
+    background: rgba(15, 23, 42, 0.6);
+    border-left: 3px solid #60A5FA;
+    padding: 8px 12px;
+    border-radius: 0 6px 6px 0;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #CBD5E1;
+    margin-bottom: 14px;
+  }
+
+  .mcq-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .mcq-opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: left;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+  }
+  .mcq-opt:hover:not(.locked) {
+    background: var(--surface-highlight);
+    border-color: #64748B;
+  }
+  .opt-key {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 0.78rem;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--text-secondary);
+  }
+  .opt-text { flex: 1; }
+
+  .mcq-opt.selected {
+    background: rgba(37, 99, 235, 0.15);
+    border-color: #3B82F6;
+  }
+  .mcq-opt.selected .opt-key {
+    background: #2563EB;
+    color: white;
+    border-color: #3B82F6;
+  }
+  .mcq-opt.correct-answer {
+    background: var(--correct-bg) !important;
+    border-color: var(--correct) !important;
+    color: #34D399 !important;
+  }
+  .mcq-opt.correct-answer .opt-key {
+    background: var(--correct) !important;
+    color: #064E3B !important;
+    border-color: var(--correct) !important;
+  }
+  .mcq-opt.wrong-answer {
+    background: var(--incorrect-bg) !important;
+    border-color: var(--incorrect) !important;
+    color: #F87171 !important;
+  }
+  .mcq-opt.wrong-answer .opt-key {
+    background: var(--incorrect) !important;
+    color: white !important;
+    border-color: var(--incorrect) !important;
+  }
+
+  .feedback-box {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    line-height: 1.45;
+    display: none;
+  }
+  .feedback-box.show { display: block; }
+  .feedback-box.is-correct {
+    background: rgba(16, 185, 129, 0.1);
+    border-left: 3px solid #10B981;
+    color: #A7F3D0;
+  }
+  .feedback-box.is-wrong {
+    background: rgba(239, 68, 68, 0.1);
+    border-left: 3px solid #EF4444;
+    color: #FCA5A5;
+  }
+  .feedback-title {
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  /* WRITTEN ANSWERS */
+  .written-area {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .petal-hint-bar {
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 0.76rem;
+    color: #93C5FD;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .petal-tags { display: flex; gap: 4px; }
+  .petal-tag {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-weight: 700;
+    font-family: var(--mono);
+    color: #BFDBFE;
+  }
+  .answer-textarea {
+    width: 100%;
+    min-height: 120px;
+    background: #0D1322;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px;
+    color: var(--text-primary);
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    line-height: 1.5;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .answer-textarea:focus {
+    border-color: #38BDF8;
+    box-shadow: 0 0 0 1px #38BDF8;
+  }
+  .answer-textarea.extended { min-height: 180px; }
+  .written-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+  .word-counter span {
+    font-family: var(--mono);
+    font-weight: 700;
+    color: var(--text-secondary);
+  }
+
+  .exemplar-toggle-btn {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  .exemplar-toggle-btn:hover {
+    background: rgba(255,255,255,0.12);
+    color: white;
+  }
+  .exemplar-drawer {
+    display: none;
+    background: #0B1120;
+    border: 1px solid #1E293B;
+    border-radius: 8px;
+    padding: 14px;
+    margin-top: 10px;
+    font-size: 0.86rem;
+  }
+  .exemplar-drawer.open { display: block; }
+  .exemplar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #1E293B;
+    padding-bottom: 6px;
+  }
+  .exemplar-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #34D399;
+    letter-spacing: 0.05em;
+  }
+  .rubric-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+    font-size: 0.78rem;
+  }
+  .rubric-table th, .rubric-table td {
+    border: 1px solid #1E293B;
+    padding: 6px 8px;
+    text-align: left;
+  }
+  .rubric-table th { background: #131E33; color: #93C5FD; font-weight: 700; }
+  .rubric-table td { color: #CBD5E1; }
+
+  .exemplar-text {
+    background: rgba(16, 185, 129, 0.05);
+    border-left: 3px solid #10B981;
+    padding: 10px 12px;
+    border-radius: 0 4px 4px 0;
+    color: #E2E8F0;
+    line-height: 1.55;
+    font-family: var(--serif);
+  }
+  .annotated-p { margin-bottom: 8px; }
+  .p-tag { color: #60A5FA; font-weight: 700; }
+  .e-tag { color: #FCD34D; font-style: italic; }
+  .t-tag { color: #F472B6; font-weight: 700; }
+  .a-tag { color: #34D399; }
+  .l-tag { color: #A78BFA; font-weight: 600; }
+
+  .self-mark-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--border-subtle);
+  }
+  .self-mark-label { font-size: 0.78rem; color: var(--text-muted); }
+  .mark-btn-group { display: flex; gap: 4px; }
+  .mark-chip {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .mark-chip:hover { border-color: #F59E0B; color: white; }
+  .mark-chip.awarded {
+    background: #F59E0B;
+    border-color: #F59E0B;
+    color: #111827;
+    font-weight: 700;
+  }
+
+  /* MODAL SUMMARY POPUP */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-card {
+    background: #111827;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    max-width: 620px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 24px;
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+  }
+  .modal-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .modal-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 18px 0;
+  }
+  .modal-stat-box {
+    background: #1F2937;
+    border: 1px solid #374151;
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+  }
+  .modal-stat-val {
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-family: var(--mono);
+    color: #38BDF8;
+  }
+  .modal-stat-lbl {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  @media (max-width: 900px) {
+    .exam-workspace { flex-direction: column; }
+    .pane-stimulus { height: 45vh; border-right: none; border-bottom: 2px solid var(--border); }
+    .pane-questions { height: 55vh; }
+  }
+
+  @media print {
+    body { height: auto; overflow: visible; background: white !important; color: black !important; }
+    .app-header, .sub-strip, .stimulus-bar, .section-nav-bar, .q-jump-ribbon, .modal-overlay, .exemplar-toggle-btn, .jump-stimulus-btn {
+      display: none !important;
+    }
+    .exam-workspace { display: block; overflow: visible; }
+    .pane-stimulus, .pane-questions {
+      display: block; width: 100%; border: none; height: auto; overflow: visible; background: white !important; color: black !important;
+    }
+    .stimulus-container, .questions-container { max-width: 100%; }
+    .stimulus-scroll, .questions-scroll { overflow: visible; padding: 0; }
+    .question-card { break-inside: avoid; border: 1px solid #ccc; margin-bottom: 16px; background: white !important; color: black !important; }
+    .story-title { color: black !important; }
+  }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="header-content">
-    <div class="badge">NSW Stage 5 English &bull; Task 3 Exam: Term 4, Week 1A (13&ndash;16 Oct 2026)</div>
-    <h1>Year 10 English Dystopian Reading Comprehension Bank</h1>
-    <p class="subtitle">Complete 25-Passage Bank &bull; First Assessment of Term 4 (Students return Tue 13 Oct)</p>
+<!-- TOP APP BAR -->
+<header class="app-header">
+  <div class="header-left">
+    <a href="../Portal.html" class="back-btn" title="Return to Portal">&larr; Portal</a>
+    
+    <div class="paper-select-box">
+      <span class="paper-select-label">Exam Paper:</span>
+      <select class="paper-dropdown" id="paper-select" onchange="switchPaper(this.value)">
+        <option value="paper1">Paper 1: Scriptorium 4 (Acoustic Biopolitics • 20m / 45min)</option>
+        <option value="paper2">Paper 2: The Dry Reach (Ecological Desolation • 20m / 45min)</option>
+        <option value="paper3">Paper 3: Sector Zero (Linguistic Erasure • 20m / 45min)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="header-right">
+    <div class="timer-pill" id="exam-timer-pill" title="45-Minute Exam Timer">
+      <span>⏱</span>
+      <span id="timer-display">45:00</span>
+      <button class="timer-btn" id="timer-toggle-btn" onclick="toggleTimer()" title="Pause/Play">⏸</button>
+      <button class="timer-btn" onclick="resetTimer()" title="Reset Timer">↺</button>
+    </div>
+
+    <button class="header-action-btn" onclick="toggleTheme()" title="Switch Color Theme">
+      <span id="theme-icon">📜</span> Theme
+    </button>
+    <button class="header-action-btn" onclick="openExamSummary()" style="background:#1D4ED8; color:white; border-color:#2563EB;">
+      Scorecard / Finish
+    </button>
   </div>
 </header>
 
-<div class="score-sticky">
-  <div class="score-container">
-    <div class="score-stat">Answered: <span id="answered-count">0</span> / 25</div>
-    <div class="score-stat">Score: <span id="score-count">0</span> (<span id="score-pct">0%</span>)</div>
-    <div class="score-stat">Accuracy: <span id="accuracy-pct">--</span></div>
-    <button class="reset-btn" onclick="resetQuiz()">Reset Test</button>
-    <div class="progress-bar-bg">
-      <div class="progress-bar-fill" id="progress-fill"></div>
+<!-- SUB STRIP TELEMETRY -->
+<div class="sub-strip">
+  <div class="stat-group">
+    <div class="stat-item">Active Paper: <strong id="stat-paper-title">Paper 1: The Resonance of Scriptorium 4</strong></div>
+    <div class="stat-item">MCQ: <span id="stat-mcq-count">0/5</span></div>
+    <div class="stat-item">Short Answer: <span id="stat-written-count">0/4</span></div>
+    <div class="stat-item">Synthesis: <span id="stat-synthesis-status">Drafting (Q10)</span></div>
+    <div class="stat-item">Total Score: <span id="stat-total-marks">0 / 20</span></div>
+  </div>
+
+  <div class="layout-controls">
+    <span style="font-size:0.75rem; color:var(--text-muted); margin-right:4px;">View:</span>
+    <div class="segmented-control">
+      <button class="seg-btn active" id="layout-split-btn" onclick="setLayout('split')">Split Screen</button>
+      <button class="seg-btn" id="layout-story-btn" onclick="setLayout('story-only')">Text Only</button>
+      <button class="seg-btn" id="layout-questions-btn" onclick="setLayout('questions-only')">Questions Only</button>
     </div>
   </div>
 </div>
 
-<div class="filter-nav">
-  <button class="filter-btn active" onclick="filterQuestions('all', this)">All Passages (25)</button>
-  <button class="filter-btn" onclick="filterQuestions('Surveillance', this)">Surveillance &amp; Propaganda (7)</button>
-  <button class="filter-btn" onclick="filterQuestions('Setting', this)">Atmosphere &amp; Setting (6)</button>
-  <button class="filter-btn" onclick="filterQuestions('Conformity', this)">Enforced Conformity (6)</button>
-  <button class="filter-btn" onclick="filterQuestions('Rebellion', this)">Individuality &amp; Rebellion (6)</button>
-</div>
+<!-- MAIN WORKSPACE -->
+<main class="exam-workspace" id="exam-workspace">
 
-<main class="quiz-container" id="quiz-container">
-  <!-- Generated via JavaScript -->
+  <!-- LEFT PANE: STIMULUS -->
+  <section class="pane-stimulus" id="pane-stimulus">
+    <div class="stimulus-bar">
+      <div class="stimulus-bar-title">
+        <span>📖</span>
+        <span id="stimulus-bar-label">Stimulus Text &bull; Unseen Literary Narrative</span>
+      </div>
+      <div class="highlight-tools">
+        <span style="font-size:0.72rem; color:var(--text-muted);">Highlighter:</span>
+        <button class="hl-color-btn hl-yellow active" onclick="setHighlightColor('hl-y', this)" title="Yellow"></button>
+        <button class="hl-color-btn hl-green" onclick="setHighlightColor('hl-g', this)" title="Green"></button>
+        <button class="hl-color-btn hl-cyan" onclick="setHighlightColor('hl-c', this)" title="Cyan"></button>
+        <button class="hl-clear" onclick="clearHighlights()" title="Clear Highlights">Clear</button>
+      </div>
+    </div>
+
+    <div class="stimulus-scroll" id="stimulus-scroll">
+      <article class="stimulus-container" id="stimulus-container">
+        <!-- Rendered via JS -->
+      </article>
+    </div>
+  </section>
+
+  <!-- RIGHT PANE: QUESTIONS -->
+  <section class="pane-questions" id="pane-questions">
+
+    <nav class="section-nav-bar">
+      <button class="section-tab active" onclick="filterSection('all', this)">
+        <span>All Questions</span>
+        <span class="tab-badge">10</span>
+      </button>
+      <button class="section-tab" onclick="filterSection('sec1', this)">
+        <span>Sec 1: MCQs (Q1–5)</span>
+        <span class="tab-badge">5 Marks</span>
+      </button>
+      <button class="section-tab" onclick="filterSection('sec2', this)">
+        <span>Sec 2: Short Answer (Q6–9)</span>
+        <span class="tab-badge">11 Marks</span>
+      </button>
+      <button class="section-tab" onclick="filterSection('sec3', this)">
+        <span>Sec 3: Synthesis (Q10)</span>
+        <span class="tab-badge">4 Marks</span>
+      </button>
+    </nav>
+
+    <div class="q-jump-ribbon" id="q-jump-ribbon">
+      <!-- Generated via JS for Q1 to Q10 -->
+    </div>
+
+    <div class="questions-scroll" id="questions-scroll">
+      <div class="questions-container" id="questions-container">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </section>
+
 </main>
 
+<!-- SCORECARD MODAL -->
+<div class="modal-overlay" id="summary-modal">
+  <div class="modal-card">
+    <div class="modal-title">
+      <span id="modal-paper-heading">Examination Scorecard</span>
+      <button class="timer-btn" onclick="closeExamSummary()" style="font-size:1.2rem; color:var(--text-muted);">&times;</button>
+    </div>
+    <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:14px;">
+      NSW Stage 5 English Yearly Exam &bull; Section 1 Unseen Reading Comprehension (20 Marks &bull; 45 Mins)
+    </p>
+
+    <div class="modal-stat-grid">
+      <div class="modal-stat-box">
+        <div class="modal-stat-val" id="modal-mcq-score">0 / 5</div>
+        <div class="modal-stat-lbl">Part 1: MCQs (5m)</div>
+      </div>
+      <div class="modal-stat-box">
+        <div class="modal-stat-val" id="modal-written-score">0 / 11</div>
+        <div class="modal-stat-lbl">Part 2: Short Answer (11m)</div>
+      </div>
+      <div class="modal-stat-box">
+        <div class="modal-stat-val" id="modal-essay-score">0 / 4</div>
+        <div class="modal-stat-lbl">Part 3: Synthesis (4m)</div>
+      </div>
+    </div>
+
+    <div style="background:#1F2937; border:1px solid #374151; border-radius:8px; padding:14px; margin-bottom:18px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+        <span style="font-weight:700; font-size:0.95rem;">Overall Aggregated Mark:</span>
+        <span style="font-size:1.3rem; font-weight:800; color:#38BDF8; font-family:var(--mono);" id="modal-total-agg">0 / 20 (0%)</span>
+      </div>
+      <div style="font-size:0.8rem; color:#9CA3AF;" id="modal-feedback-summary">
+        Score assigned.
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:flex-end; gap:10px;">
+      <button class="header-action-btn" onclick="window.print()" style="background:#374151; color:white;">
+        🖨 Print Paper &amp; Responses
+      </button>
+      <button class="header-action-btn" onclick="closeExamSummary()" style="background:#2563EB; color:white;">
+        Continue Reviewing
+      </button>
+    </div>
+  </div>
+</div>
+
 <script>
-const passages = [
-  // ================= SURVEILLANCE & PROPAGANDA (7) =================
-  {
-    module: "Surveillance",
-    extractTitle: "PASSAGE 1: THE WATCHFUL CAMERAS",
-    extract: "\"Every street corner had a camera mounted on a grey steel pole. The black lens turned with a quiet mechanical click, tracking Lucas as he walked quickly to school. A speaker crackled to life above his head: 'Citizen 4492, slow your pace. Hurrying indicates anxiety.' Lucas immediately slowed down and kept his eyes on the pavement.\"",
-    q: "How does the author show that Lucas lives in a strict, controlled society?",
-    options: [
-      "The school requires students to arrive early",
-      "Lucas is watched by cameras and reprimanded simply for walking too fast",
-      "The weather is rainy and cold",
-      "Lucas forgot his school bag at home"
-    ],
-    answer: 1,
-    exp: "In dystopian stories, total surveillance means citizens are constantly monitored, and even ordinary actions like walking fast are controlled by authorities."
-  },
-  {
-    module: "Surveillance",
-    extractTitle: "PASSAGE 2: THE CURFEW SIREN",
-    extract: "\"At eight o'clock, the evening siren wailed across the rooftops like an injured animal. In every living room, television screens turned bright red with the warning: ALL CITIZENS MUST REMAIN INDOORS. DO NOT LOOK OUT THE WINDOWS. Sarah pulled her heavy curtains shut and locked her front door with three separate locks.\"",
-    q: "What technique is used in the phrase 'wailed across the rooftops like an injured animal', and what mood does it create?",
-    options: [
-      "Alliteration; creates a calm, sleepy feeling",
-      "Simile; creates an alarming, fearful mood",
-      "Metaphor; suggests a zoo in the city",
-      "Rhyme; creates a playful tone"
-    ],
-    answer: 1,
-    exp: "Comparing the siren to an 'injured animal' using the word 'like' is a simile. It gives the siren an eerie, unsettling sound that creates tension and fear."
-  },
-  {
-    module: "Surveillance",
-    extractTitle: "PASSAGE 3: THE OMNIPRESENT SCREENS",
-    extract: "\"There was no way of shutting the telescreen off completely. You could turn the volume down, but the large glass square on the living room wall remained permanently active, broadcasting endless statistics of factory production while watching every movement in the room.\"",
-    q: "What effect does having a screen that can never be turned off have on the characters' daily lives?",
-    options: [
-      "It provides free entertainment after work",
-      "It eliminates any possibility of private life or personal sanctuary within the home",
-      "It helps save electricity in the building",
-      "It encourages families to talk to each other more often"
-    ],
-    answer: 1,
-    exp: "Telescreens that cannot be turned off represent the destruction of privacy, ensuring the government can spy on citizens inside their own homes."
-  },
-  {
-    module: "Surveillance",
-    extractTitle: "PASSAGE 4: FORBIDDEN BOOKS",
-    extract: "\"In the central square, a metal bin was filled with old paper books: poetry, history, and novels. Two guards in black helmets poured kerosene over the pile and struck a match. Yellow flames devoured the pages, turning decades of human imagination into floating black ash. A sign on the fence read: 'TRUE PEACE IS FREEDOM FROM CONFUSING THOUGHTS.'\"",
-    q: "What does the slogan 'TRUE PEACE IS FREEDOM FROM CONFUSING THOUGHTS' reveal about the ruling power?",
-    options: [
-      "They want citizens to read faster and more easily",
-      "They believe independent thinking and creativity cause trouble, so they destroy knowledge to keep control",
-      "They are cleaning up recyclable paper from the square",
-      "They want to build a bigger library"
-    ],
-    answer: 1,
-    exp: "Dystopian regimes often burn or ban books because reading encourages critical thinking and questioning of government authority."
-  },
-  {
-    module: "Surveillance",
-    extractTitle: "PASSAGE 5: THE THOUGHT DETECTORS",
-    extract: "\"At the entrance to the train station, commuters had to stand inside a glass scanner for three seconds while a green laser swept across their foreheads. The scanner measured brainwave frequencies and heart rate. If a passenger's pulse was above ninety, an alarm buzzed, and two armed officers escorted them away to the Questioning Centre.\"",
-    q: "Why does the government monitor heart rate and brainwaves at the train station?",
-    options: [
-      "To check if passengers have a common winter cold",
-      "To detect signs of nervousness, guilt, or rebellious thoughts before citizens can act on them",
-      "To ensure passengers do not miss their train",
-      "To test new medical technology for hospitals"
-    ],
-    answer: 1,
-    exp: "In advanced dystopian societies, the state polices not just actions, but inner thoughts and feelings, treating physiological fear or tension as a sign of criminal rebellion."
-  },
-  {
-    module: "Surveillance",
-    extractTitle: "PASSAGE 6: THE SLOGANS ON THE WALLS",
-    extract: "\"Every building bore enormous white banners with the Three Pillars of Unity: 'OBEDIENCE IS STRENGTH. QUESTIONING IS DANGER. SILENCE IS HARMONY.' Children recited these words before lunch, and factory workers repeated them over loudspeakers during shift changes.\"",
-    q: "What is the purpose of having citizens chant these slogans every day?",
-    options: [
-      "To improve children's reading and vocabulary",
-      "To continuously indoctrinate and brainwash the population so they accept control without questioning",
-      "To make lunchtime more enjoyable",
-      "To celebrate national poetry week"
-    ],
-    answer: 1,
-    exp: "Constant repetition of state slogans is a classic psychological tool of indoctrination used to make citizens accept authority as natural and unquestionable."
-  },
-  {
-    module: "Surveillance",
-    extractTitle: "PASSAGE 7: NEIGHBOURS SPYING ON NEIGHBOURS",
-    extract: "\"David never spoke about his opinions with his next-door neighbour, Mr Higgins. The government had established the 'Civic Watcher Reward', where citizens received extra food vouchers and fuel credits for reporting suspicious conversations or forbidden items owned by their friends and family.\"",
-    q: "How does the 'Civic Watcher Reward' damage social relationships in this community?",
-    options: [
-      "It helps neighbours become close friends who share food",
-      "It creates an atmosphere of paranoia and distrust, where nobody can trust even their own neighbours or family",
-      "It reduces the cost of groceries for everyone",
-      "It encourages people to have long conversations over the fence"
-    ],
-    answer: 1,
-    exp: "By rewarding citizens for reporting on one another, totalitarian regimes destroy trust and community bonds, making it impossible for citizens to unite against the government."
-  },
+  const EXAM_PAPERS = [{"id":"paper1","title":"Paper 1: Acoustic Surveillance & Biopolitics","storyTitle":"The Resonance of Scriptorium 4","storyKicker":"NSW Stage 5 English Yearly Examination • Paper 1","authorMeta":"By J. M. Vance • Literary Prose Fiction • The City of Veridia","contextNote":"<strong>Context & Reading Instructions:</strong> Read the narrative below before answering the questions in the right-hand panel. This paper tests biopolitical surveillance, sensory conditioning, and quiet ideological resistance.","paragraphs":[{"id":"p1-l1","marker":"L1","text":"At precisely zero-six-hundred, the sub-audible vibration began. It was not a sound that one heard with the ears so much as an ache registered along the roots of the molars: eighteen hertz, steady and remorseless, pulsing up through the polished slate flagstones of Scriptorium 4. The citizens of Veridia called it the <em>Dampener</em>. State literature praised it as an acoustic triumph of public hygiene—a civic blanket engineered to suppress the unpredictable peaks and valleys of human vocal cadence, smoothing conversational friction until every voice in the Ministry sounded as mild and harmless as powdered chalk."},{"id":"p1-l19","marker":"L19","text":"Silas Vance adjusted his celluloid visor and pulled on his lint-free linen gloves. His workstation was Cube 88: a perimeter cubicle constructed of ribbed fluted glass that blurred the shapes of his fellow archivists into indistinct grey shadows. Overhead, suspended from a bronze gimbal, the ocular reticle hummed. Every twelve seconds, its faint amber sensor-beam washed across Silas’s temples, measuring corneal dilation, blink velocity, and subcutaneous temperature. A pulse rate exceeding eighty-two beats per minute would trigger a chime; ninety beats would summon a Proctor with a vial of calming saline. Silas had maintained a steady seventy-one for four consecutive quarters. His compliance badge gleamed with three silver stars."},{"id":"p1-l39","marker":"L39","text":"His duty was deceptively simple: auditory redaction. Each morning, pneumatic copper canisters thudded into his receiving hopper, carrying corroded magnetic spools, wax cylinders, and wire recordings confiscated from the Outer Sectors during dawn sanitisation sweeps. Silas would feed each spool onto the spindle of his playback deck, monitor the spectral waveform on a green phosphor cathode screen, and apply the magnetic eraser to erase any frequency deemed \"eccentric.\" Unauthorised laughter, regional idioms, improvised song, church bells, the untamed babble of market haggling—all were planed flat into uniform white noise before the tape was recycled for state civic broadcasts."},{"id":"p1-l59","marker":"L59","text":"Canister thirty-three was heavier than the others. When Silas twisted its bayonet cap, the canister did not release the customary smell of ozone and disinfectant; instead, it exhaled an odour that made his fingers freeze on the brass latch: the damp, pungent musk of wet river silt and rotting birch leaves. Inside lay a spool no wider than a silver crown. It was not industrial magnetic tape, but hair-thin tungsten-steel wire, darkened with age. Bound around the spool with a strand of unbleached hemp was a slip of fibrous rag paper. On it, written in violet fountain-pen ink now faded to sepia, were four words in an unsteady hand: <em>Listen before the rain.</em>"},{"id":"p1-l83","marker":"L83","text":"Silas’s chest tightened. Standard protocol was absolute: any organic substrate or handwritten annotation must be dumped directly into the thermal chute without inspection. He glanced upward. The bronze ocular gimbal was pivoting toward Cube 87; he had exactly eleven seconds of uncalibrated blind angle. With fingers suddenly numb, he slotted the tungsten spool onto the auxiliary playback head and slid the heavy horn earphones over his ears."},{"id":"p1-l109","marker":"L109","text":"What came through the copper coils was not words. It began as a chaotic, unmetered percussion—a sharp, erratic patter that rattled like dried seeds thrown against a pane of glass. It took Silas four full seconds to comprehend: <em>rain</em>. Real rain, uncollected by municipal storm sluices, falling through open sky onto corrugated tin. And then, riding beneath the water's percussion, an acoustic texture that seemed to strike Silas directly in the sternum: a woman’s voice. She was not chanting state maxims or delivering rhythmic pledges. She was humming. The melody wandered with careless syncopation, rising into an aching falsetto, pausing while she took an audible breath, then dipping into a low, resonant murmur that vibrated with grief and fierce, untamed tenderness."},{"id":"p1-l139","marker":"L139","text":"A visceral jolt raced through Silas's limbs. In all his thirty-four years in Veridia, he had never heard an unmeasured human breath reproduced with such naked clarity. The sound was not sanitary; it was thick with mortal imperfection, ragged with sorrow, yet pulsing with an electric vitality that made the sterile humming of Scriptorium 4 feel like a tomb. Above his forehead, the ocular sensor clicked. The amber glow shifted abruptly to a warning orange. <em>Pulse: 84. Dilation: 1.4.</em>"},{"id":"p1-l167","marker":"L167","text":"On the mezzanine catwalk above, the steel-capped soles of an Inspector's boots rang against the grated iron. <em>Clack. Clack. Clack.</em> It was Inspector Kroll. Kroll had the posture of an artillery piece: tall, rigid, his uniform buttoned so tightly beneath his chin that his throat seemed made of vulcanised rubber. Silas had seven seconds. To throw the spool into the incinerator now would clear the biometric alarm; the spool would vanish into ash, and his compliance rating would survive."},{"id":"p1-l197","marker":"L197","text":"Instead, Silas did something entirely illogical. With his right hand, he pressed the eraser button against an empty dummy spindle, sending a spike of synthetic white noise into the monitor console. With his left hand, beneath the fluted shadow of his desk apron, he slipped the spool of tungsten wire into the hollow cuff of his linen sleeve, pressing it against his inner wrist. The metal wire bit cold into his flesh."},{"id":"p1-l225","marker":"L225","text":"\"Archivist 88,\" Kroll's voice sliced through the glass partition. It was perfectly modulated, devoid of dynamic inflection, flattened by thirty years of the Dampener. \"Your retinal telemetry registered an erratic harmonic at zero-six-fourteen. Explain the deviation.\""},{"id":"p1-l257","marker":"L257","text":"Silas did not look at Kroll’s eyes; protocol demanded gaze-submission to the silver insignia on the Inspector's lapel. He forced his lungs to empty slowly, reciting the first principle of Acoustic Health in the flat, monotone cadence taught in primary school: \"A transient magnetic pop on spindle three, Inspector. An oxide burst during initial pass. Rectified and neutralised.\""},{"id":"p1-l285","marker":"L285","text":"Kroll stepped closer. His gloved hand hovered over Silas's cathode screen. For five agonising seconds, the only sound was the 18-hertz drone pulsing through the floorboards. Kroll’s dark pupils drifted from the screen to Silas’s throat, where a vein twitched beneath the pale skin. Silas held his breath, willing the cold circle of tungsten wire in his cuff to absorb the heat of his racing blood."},{"id":"p1-l313","marker":"L313","text":"\"The state requires clarity, Vance,\" Kroll murmured, his gloved fingers tapping the glass partition once. \"Irregularity is the root of friction. Friction is the seed of dissent.\" The Inspector turned on his heel, his iron-rimmed heels clicking away down the gantry toward Cube 92."},{"id":"p1-l341","marker":"L341","text":"The shift ended at eighteen-hundred. When the curfew sirens discharged their long, mechanical bleat, Silas filed out into the avenue alongside five thousand identical workers in grey drill smocks. Overhead, colossal searchlights swept across the cloudless, concrete sky of Veridia. The city remained vast, monolithic, and absolute. Not a single stone had fallen. But as Silas plunged his hands deep into his coat pockets, his thumb found the hard, sharp rim of the tungsten spool. As he walked toward the barracks through the smothering hum of the Dampener, he silently replayed the irregular rhythm of the woman’s melody in the sanctuary of his skull. The streetlights flickered in their rigid rows, but inside the dark chamber of his mind, the rain continued to fall."}],"mcqs":[{"id":1,"type":"Comprehension & Ideology","jumpId":"p1-l1","prompt":"In lines 1–18, what does the depiction of the 'Dampener' reveal about the fundamental nature of state control in Veridia?","options":["The state relies on overt military intimidation to discourage political assembly and suppress physical rebellions.","The state employs sensory sanitisation to homogenise speech patterns and neutralise individual emotional resonance.","The state manipulates public utilities to conserve electrical reserves while maintaining strict curfew restrictions.","The state enforces industrial efficiency by conditioning citizens to ignore chronic physiological hearing disorders."],"correct":1,"exp":"The text explicitly reveals that the 18-hertz hum functions as 'public hygiene' engineered to smooth vocal cadence, deliberately stripping speech of impassioned individuality and emotional variance."},{"id":2,"type":"Figurative Language & Motif","jumpId":"p1-l1","quote":"\"...smoothing conversational friction until every voice in the Ministry sounded as mild and harmless as powdered chalk.\"","prompt":"How does the simile in lines 14–18 characterise the consequences of the state's acoustic intervention?","options":["It evokes the soothing, gentle domestic atmosphere created by collective ideological compliance across the public workforce.","It highlights the fragile, highly perishable quality of written archival documentation under humid and acidic conditions.","It conveys the total desiccation of human vitality, rendering language dry, brittle, uniform, and devoid of spirit.","It criticises the abrasive physical environment of the Ministry that causes chronic throat ailments for archival workers."],"correct":2,"exp":"Comparing human voices to 'powdered chalk' connotes extreme dryness, brittleness, and bleaching, illustrating how state intervention drains language of emotional colour and vital humanity."},{"id":3,"type":"Surveillance & Biopolitics","jumpId":"p1-l19","prompt":"How does the description of Silas’s workstation (lines 19–38) establish the psychological mechanism of the regime's power?","options":["It highlights how involuntary biological reflexes are pathologised and monitored to enforce perpetual self-policing.","It reveals that technological failures allow rogue archivists to freely collude behind translucent glass partitions.","It demonstrates that compliance is secured through economic incentives and regular promotions between quarterly audits.","It implies that the state fears manual workers and maintains constant military guards outside each individual cubicle."],"correct":0,"exp":"By measuring involuntary telemetry (corneal dilation, pulse rate, temperature) and penalising physical deviations with sedative drugs, the regime forces citizens to actively suppress their bodily responses."},{"id":4,"type":"Sensory Juxtaposition","jumpId":"p1-l59","prompt":"What is the structural and thematic significance of the olfactory shift introduced when canister thirty-three is opened (lines 59–68)?","options":["It signals the imminent toxic chemical contamination of the archives, establishing sudden physical danger.","It contrasts sterile chemical decontamination with primal organic decomposition, reawakening buried sensory memory.","It emphasizes Silas's profound professional incompetence in mishandling hazardous industrial waste canisters.","It highlights the physical rot of the government's ventilation conduits that threatens the building's infrastructure."],"correct":1,"exp":"The abrupt contrast between the customary chemical smells ('ozone and disinfectant') and the rich earthy decay ('wet river silt and rotting birch leaves') ruptures the artificial sterility of the setting."},{"id":5,"type":"Symbolism & Materiality","jumpId":"p1-l59","quote":"\"On it, written in violet fountain-pen ink now faded to sepia, were four words in an unsteady hand: Listen before the rain.\"","prompt":"In lines 75–82, what does the handwritten slip of fibrous rag paper symbolise within the context of Veridia?","options":["The obsolete clerical protocols of an incompetent previous administration that failed to modernise record-keeping.","A deceptive trap deliberately planted by internal state security to identify politically disloyal archival staff.","The enduring presence of artisanal human craft and personal intimacy that resists total mechanical erasure.","The inevitable ecological collapse of natural forest resources caused by irresponsible industrial paper mills."],"correct":2,"exp":"The tactile, imperfect qualities—rag paper, fading fountain-pen ink, unsteady handwriting—stand as powerful symbols of tactile human individuality and unregimented history."}],"written":[{"id":6,"marks":2,"type":"Sensory Analysis","jumpId":"p1-l1","prompt":"Examine how the composer uses sensory imagery in lines 1–18 to establish the oppressive atmosphere of Scriptorium 4. (2 Marks)","rubric":[{"marks":"2 Marks","desc":"Accurately identifies a sensory device (tactile/auditory imagery) with precise textual evidence, and perceptively explains how it creates an oppressive, stifling atmosphere."},{"marks":"1 Mark","desc":"Identifies a technique or quote with a general description of the atmosphere, or lacks specific analytical connection."}],"exemplar":{"point":"Vance establishes an oppressive atmosphere by rendering sound as an invasive physical burden.","evidence":"This is illuminated through the tactile imagery of the 18-hertz drone, described as \"an ache registered along the roots of the molars\".","analysis":"By framing the sound not as an auditory phenomenon but as visceral dental discomfort, Vance underscores how the totalitarian state physically infiltrates the citizen’s nervous system,","link":"transforming the acoustic environment into a suffocating mechanism of systemic subjugation."}},{"id":7,"marks":3,"type":"Plot & Character Transformation","jumpId":"p1-l59","prompt":"Explain how the discovery of canister thirty-three (lines 59–82) acts as a catalyst for Silas's internal transformation. (3 Marks)","rubric":[{"marks":"3 Marks","desc":"Perceptively explains how the organic anomaly disrupts Silas's conditioned compliance, integrating well-chosen textual evidence and literary techniques (e.g. olfactory contrast, symbolism)."},{"marks":"2 Marks","desc":"Explains the change in Silas with relevant evidence, but analysis of technique or thematic implication is descriptive."},{"marks":"1 Mark","desc":"Basic identification of the canister's contents with minimal explanation of transformation."}],"exemplar":{"point":"Canister thirty-three operates as a profound sensory and ideological catalyst, rupturing Silas’s conditioned compliance.","evidence":"The composer utilizes olfactory juxtaposition when the canister exhales the \"pungent musk of wet river silt and rotting birch leaves\" rather than customary \"ozone and disinfectant\".","analysis":"This tactile intrusion of the organic natural world shatters the sterile mechanical monotony of Scriptorium 4, reawakening Silas’s latent sensory curiosity. Furthermore, the imperative note \"Listen before the rain\" directly appeals to his lost autonomy, prompting him to defy protocol by exploiting the \"uncalibrated blind angle\".","link":"Consequently, this discovery acts as the turning point that shifts Silas from a passive bureaucrat into an active agent of intellectual insubordination."}},{"id":8,"marks":3,"type":"Structure & Pacing","jumpId":"p1-l167","prompt":"Analyse how the author uses syntax, sentence structure, and auditory imagery in lines 167–196 to build narrative tension during Inspector Kroll’s approach. (3 Marks)","rubric":[{"marks":"3 Marks","desc":"Thoroughly analyses how the manipulation of syntax (truncated sentences, monosyllabic rhythm) works in tandem with auditory imagery to create escalating suspense and temporal urgency."},{"marks":"2 Marks","desc":"Discusses syntax or auditory imagery with relevant quotes, but does not fully link structural pacing to the psychological escalation of tension."},{"marks":"1 Mark","desc":"Identifies that the inspector's arrival is suspenseful without analysing linguistic or structural techniques."}],"exemplar":{"point":"The author orchestrates acute narrative tension through the deliberate fragmentation of syntax and unrelenting auditory motifs.","evidence":"Vance deploys isolated onomatopoeic minor sentences—\"Clack. Clack. Clack.\"—to capture the steel soles of Kroll’s boots upon the iron catwalk.","analysis":"This stark, staccato syntax abruptly disrupts the previously fluid descriptive cadence, replicating the inexorable march of a mechanical executioner. By juxtaposing this auditory countdown with urgent temporal constraints (\"Silas had seven seconds\"), the author compresses time, forcing the audience into Silas’s hyper-vigilant psychological state where every fractional beat signals imminent annihilation.","link":"Through these structural choices, the narrative pacing accelerates, dramatically heightening the stakes of Silas’s decision to conceal the spool."}},{"id":9,"marks":3,"type":"Dialogue & Subtext","jumpId":"p1-l225","prompt":"Explain how the dialogue and subtext in lines 225–284 highlight the central conflict between individual autonomy and totalitarian state control. (3 Marks)","rubric":[{"marks":"3 Marks","desc":"Demonstrates insightful understanding of subtext and vocal cadence, contrasting Kroll’s authoritarian axioms with Silas’s strategic mimicry of conformity to preserve internal freedom."},{"marks":"2 Marks","desc":"Describes the confrontation between Silas and Kroll with supporting evidence, but analysis of subtext or linguistic control remains broad."},{"marks":"1 Mark","desc":"Provides basic narrative retelling of what the characters say without analytical depth."}],"exemplar":{"point":"The dialogue illuminates the profound chasm between total state surveillance and concealed human autonomy through dramatic irony and linguistic subtext.","evidence":"While Kroll speaks with a voice \"devoid of dynamic inflection\" to assert the regime’s maxim that \"Irregularity is the root of friction\", Silas defensively counters by weaponising the state’s own dogma. He delivers his explanation in the \"flat, monotone cadence taught in primary school\", falsely claiming an \"oxide burst during initial pass\".","analysis":"By adopting the linguistic monotony enforced by the Dampener, Silas transforms enforced conformity into a protective psychological mask. The subtext reveals that while the totalitarian regime commands external verbal submission, it remains fundamentally incapable of penetrating the covert internal sanctuary where Silas physically conceals the contraband spool against his pulse.","link":"Thus, the exchange exposes the limits of totalitarian power when confronted with calculated human duplicity."}},{"id":10,"marks":4,"type":"Symbolism & Theme","jumpId":"p1-l341","prompt":"How does the author use symbolism and the recurring motif of sound in lines 341–370 to convey the endurance of human memory and individuality against systemic suppression? (4 Marks)","rubric":[{"marks":"4 Marks","desc":"Provides an insightful, comprehensive analysis of how acoustic motifs and tactile symbolism communicate the resilience of individuality. Integrates sophisticated textual evidence, evaluates authorial purpose, and demonstrates controlled analytical phrasing."},{"marks":"3 Marks","desc":"Sound analysis of symbolism and sound motifs with relevant textual citations, though discussion of human memory and systemic power may lack deep conceptual nuance."},{"marks":"2 Marks","desc":"Explains the symbolism or the ending of the story with basic supporting evidence, lacking depth in textual analysis."},{"marks":"1 Mark","desc":"Simple descriptive recount of the conclusion with minimal or inaccurate technical references."}],"exemplar":{"point":"In the concluding movement of the narrative, Vance marshals the central acoustic motif and tactile symbolism to celebrate the inextinguishable resilience of individual consciousness.","evidence":"The composer sets up a powerful spatial and auditory juxtaposition between the external cityscape—characterised by \"colossal searchlights\", \"rigid rows\" of streetlights, and the \"smothering hum of the Dampener\"—and Silas’s internal sanctuary. While Veridia remains physically \"monolithic and absolute\", Silas retains the physical anchor of the \"hard, sharp rim of the tungsten spool\" inside his pocket.","analysis":"Here, the spool functions as a potent symbol of uncurated history and organic human feeling. The final metaphorical declaration that \"inside the dark chamber of his mind, the rain continued to fall\" subverts the totalitarian assumption that total environmental control equals total psychological ownership. By actively replaying the woman’s unmetered melody in defiance of the curfew sirens, Silas establishes an inviolable psychological refuge.","link":"Ultimately, Vance leaves the reader with the poignant warning that while tyranny may homogenise civic structures, the resonance of authentic human memory and aesthetic beauty endures as an uncontainable catalyst for internal freedom."}}],"essay":{"id":16,"marks":15,"promptQuote":"\"Totalitarian regimes depend on the eradication of individual nuance, historical memory, and organic expression; yet the human spirit discovers quiet resistance within the smallest anomalies.\"","prompt":"To what extent does this statement reflect the representation of power, surveillance, and defiance in <em>The Resonance of Scriptorium 4</em>?<br><br>In your response, analyse how the author utilises literary techniques, sensory motifs, and narrative structure to explore the tension between systemic oppression and individual consciousness. (15 Marks)","exemplarText":"Totalitarian governance inherently hinges upon the systematic eradication of individual nuance, emotional variation, and uncurated historical memory. In J. M. Vance’s speculative narrative *The Resonance of Scriptorium 4*, this oppressive paradigm is compellingly manifested through an acoustic and biopolitical regime designed to enforce absolute conformity. Yet, through the protagonist Silas Vance’s encounter with an organic audio artefact, the text persuasively validates the prompt: true human defiance does not inevitably arise from grand, macroscopic warfare, but crystallises within small, uncalibrated anomalies that reignite individual consciousness.\n\nInitially, Vance establishes how systemic power maintains dominance by flattening both the physical environment and the internal psychological landscape of its citizens. Scriptorium 4 is dominated by the omnipresent acoustic motif of the \"Dampener\", characterised through tactile imagery as an *\"eighteen hertz... ache registered along the roots of the molars\"*. Rather than relying solely upon overt violence, the state weaponises sensory hygiene to smooth *\"conversational friction until every voice... sounded as mild and harmless as powdered chalk\"*. Here, the simile underscores how the regime pathologises impassioned speech, converting human dialogue into lifeless, disposable dust. This acoustic control is further compounded by biopolitical surveillance: the overhead ocular reticle actively monitors *\"corneal dilation, blink velocity, and subcutaneous temperature\"*. By transforming involuntary physiological reflexes into criteria for disciplinary intervention, Vance illuminates how dystopian regimes strip subjects of bodily autonomy, compelling workers into calculated self-policing to sustain the illusion of sterile stability.\n\nHowever, this monolithic façade is profoundly disrupted when Silas uncovers canister thirty-three, demonstrating how organic anomalies puncture ideological indoctrination. The composer employs vivid olfactory and material juxtaposition to demarcate this discovery; while the Ministry reeks of sterile *\"ozone and disinfectant\"*, the forbidden canister releases the *\"pungent musk of wet river silt and rotting birch leaves\"*. This sensory intrusion immediately dissolves Silas’s mechanical conditioning, linking him to a primal, unregimented ecosystem that predates the city’s concrete architecture. Furthermore, the unspooling tungsten wire introduces an unmetered auditory reality: the erratic patter of genuine rain and a woman’s humming that vibrates with *\"careless syncopation\"* and *\"mortal imperfection\"*. Through this auditory contrast, Vance symbolises the irrepressible richness of authentic human experience. Silas’s visceral cardiac spike illustrates that aesthetic beauty and emotional memory cannot be fully excised by bureaucratic mandates; when confronted with authentic art, human consciousness instinctively recoils against totalitarian sterility.\n\nCrucially, the climax and resolution underscore that enduring resistance resides in private, subversive awareness rather than immediate civic revolt. When confronted by Inspector Kroll—metaphorically depicted with the *\"posture of an artillery piece\"* to encapsulate cold, militaristic orthodoxy—Silas does not openly rebel. Instead, he executes a calculated performance of compliance, reciting state doctrine in the *\"flat, monotone cadence taught in primary school\"*. By adopting the regime’s enforced monotony as protective camouflage, Silas weaponises compliance to preserve the contraband spool pressed against his inner wrist. The resolution poignantly captures this internal victory: though the city outside remains *\"monolithic and absolute\"*, Vance concludes with the resonant metaphor that *\"inside the dark chamber of his mind, the rain continued to fall\"*.\n\nUltimately, *The Resonance of Scriptorium 4* powerfully affirms the proposition. While oppressive regimes can construct vast citadels of surveillance and silence public discourse, they remain powerless against the inviolable sanctuary of private memory. Through subtle anomalies, the human soul preserves its capacity for resonance, ensuring that the spark of individuality outlives the machinery that seeks to extinguish it."},"totalMarks":20,"timeMinutes":45},{"id":"paper2","title":"Paper 2: Ecological Dystopia & Corporate Scarcity","storyTitle":"The Salt-Pillars of the Dry Reach","storyKicker":"NSW Stage 5 English Yearly Examination • Paper 2","authorMeta":"By E. R. Sterling • Post-Apocalyptic Speculative Prose • The Desiccated Shelf","contextNote":"<strong>Context & Reading Instructions:</strong> Read the narrative below before answering the questions in the right-hand panel. This paper explores environmental desolation, corporate resource monopolisation, and ethical complicity.","paragraphs":[{"id":"p2-l1","marker":"L1","text":"The sun did not rise over the Dry Reach so much as ignite, casting a flat, blinding glare across twenty thousand square leagues of calcified seabed. Mara adjusted the brass valves of her condenser suit, feeling the rubber seals pinch into the raw skin at the base of her collarbone. The suit wheezed—a rhythmic, asthmatic rasp as it pulled moisture from her shallow breath, condensed the droplets through ceramic filtration coils, and pumped a bitter, lukewarm trickle of recycled saline back through the drinking reed resting between her teeth. In the ledger of the Meridian Hydrology Syndicate, this was known as <em>Hydrological Equilibrium</em>. On the salt flats, the salvage divers called it drinking your own ghost."},{"id":"p2-l20","marker":"L20","text":"Mara’s assignment was Sector 14: the drowned ruins of Santa Lucia, a coastal cathedral city submerged during the Great Deluge three centuries ago and subsequently baked dry when the continental aquifer collapsed. What remained was a forest of calcified limestone pinnacles, rising like bleached ribcages from the alkaline crust. Where schools of pelagic cod had once darted through vaulted nave windows, there was now only the low, abrasive whistle of the thermal wind scraping across salt beds. The ground crunched beneath Mara’s iron-shod boots—a sound like dry bone snapping under a millstone."},{"id":"p2-l42","marker":"L42","text":"Her tether was locked to a rusted bronze bollard at the lip of the Chasm. Her duties as an Unbonded Scavenger were explicit: descend into the subterranean fissures, locate residual pockets of subterranean moisture, and drive pneumatic telemetry spikes into the rock face. Directive 409 of the Syndicate Code was painted in red lead on the breastplate of her harness: <em>WATER IS COMMON STOCK; UNREGISTERED MOISTURE IS AN INJURY TO THE COMMONWEALTH.</em> Any diver who concealed an unmetered spring faced five years of dry penal labour in the lithium refineries."},{"id":"p2-l63","marker":"L63","text":"At thirty fathoms below the bleached seabed, the ambient temperature plummeted. Mara squeezed through a collapsed choir stall, her headlamp cutting through curtains of suspended gypsum dust. The cavern walls were not stone, but ancient fossilized oyster reefs, their razor-sharp shells petrified into glittering tiers. And then, her acoustic sensor began to flutter. It was not the dry clicking of shifting shale; it was a rhythmic, liquid pulse—a subterranean drip that resonated against the hollow limestone with the musical cadence of a bronze bell: <em>Plink. Plink. Plink.</em>"},{"id":"p2-l85","marker":"L85","text":"Mara froze. She dropped to her knees, pulling off her vulcanised gauntlets despite the caustic sting of the floor. In a natural basin sheltered beneath a collapsed marble altarpiece lay a pool of water no wider than a cartwheel. Her beam struck the surface, and her breath hitched in her throat. The pool was not bitter alkali brine; it was limpid, crystalline, so pure that the beam penetrated ten feet to a bed of quartz pebbles. Floating upon the surface were three miniature water lilies, their emerald leaves intact, and darting between their hair-thin stems were half a dozen translucent blind-fish, their silver scales glowing with faint bioluminescence. It was a sealed, living aquifer—an unviolated remnant of the world before the drought."},{"id":"p2-l110","marker":"L110","text":"A sharp electronic static tore through Mara’s earpiece. \"Diver 412, report status,\" the voice of Chief Overseer Thorne barked from the rim gantry above. Thorne’s voice had the dry, gravelly snap of a man who drank Grade-A mountain glacier run-off while inspecting workers from air-conditioned observation pods. \"Your telemetry spike has been idle for eight minutes. Our surface seismographs detect a subterranean density drop in your grid. Have you struck a conduit?\""},{"id":"p2-l132","marker":"L132","text":"Mara looked down at her right hand. Clutched in her grip was the steel telemetry spike. If she drove the spike into the bedrock, the Syndicate’s pneumatic drills would breach the ceiling within four hours. High-pressure suction lines would drop from the sky; industrial chlorine would be injected to sanitize the basin; the blind-fish would float belly-up in toxic bleach; and within forty-eight hours, the lilies would wither into brown sludge as sixty thousand gallons of pristine water were sucked upward to fill the private irrigation tanks of the Meridian High-Altitude Citadel. For her discovery, Mara would receive eighty ration tokens—enough to buy four litres of unmineralised water and two weeks of exemption from the salt pans."},{"id":"p2-l158","marker":"L158","text":"\"Diver 412!\" Thorne’s voice sharpened, the radio frequency whining with irritation. \"Confirm contact or face immediate tether disconnection. We have a seismic reading.\""},{"id":"p2-l172","marker":"L172","text":"Mara looked at the lilies. A translucent blind-fish brushed against the reflection of her face in the still pool. She took a slow, deliberate breath of her own recycled, salty air. With a swift, violent motion, she swung her geological hammer—not into the rock, but against the telemetry spike’s internal crystal oscillator. The delicate glass sensor inside shattered with a muted crunch. She then plunged the dead spike into a dry, barren fissure of gypsum fifty yards away from the pool."},{"id":"p2-l194","marker":"L194","text":"She clicked her radio transmitter twice, forcing her throat to produce a rasp of exhausted frustration: \"False harmonic, Overseer. Collapsed gypsum pocket. Zero hydration. Sensor crystal cracked on shale impact. Recommending grid cancellation and immediate ascent.\""},{"id":"p2-l210","marker":"L210","text":"A long silence hung over the radio, heavy with suspicion. Then came Thorne’s dismissive grunt: \"Incompetent scavenger. Pack your rig and hook to the winch. We move the crane to Sector 15 before noon.\" Mara stepped back into the shadows of the choir stall as the winch cable jerked her harness upward toward the scorching daylight. Far below in the subterranean gloom, shielded by stone and silence, the miniature lilies drifted across the crystalline surface, and the water continued to rise, drop by solitary drop."}],"mcqs":[{"id":1,"type":"Setting & Sensory Atmosphere","jumpId":"p2-l1","prompt":"In lines 1–19, how does the description of the condenser suit and the 'Hydrological Equilibrium' establish the setting?","options":["It portrays an innovative ecological cooperative where workers manage scarce water resources through civic consensus.","It reveals a corporate regime that exploits human biology, commodifying bodily fluids under euphemistic slogans.","It illustrates a primitive agrarian settlement struggling to adapt to temporary seasonal drought conditions.","It highlights the technological liberation of deep-sea explorers operating advanced aquatic breathing apparatus."],"correct":1,"exp":"Describing the recycling of breath into bitter saline as 'Hydrological Equilibrium'—which workers call 'drinking your own ghost'—critiques how corporate bureaucracy sanitises bodily exploitation."},{"id":2,"type":"Imagery & Biblical Motif","jumpId":"p2-l20","quote":"\"What remained was a forest of calcified limestone pinnacles, rising like bleached ribcages from the alkaline crust.\"","prompt":"What is the primary rhetorical effect of the simile comparing the pinnacles to 'bleached ribcages' in lines 20–35?","options":["It evokes the sacred architectural splendour of ancient religious cathedrals before the sea waters receded.","It emphasizes the total death of the oceanic ecosystem, transforming the landscape into an immense skeletal graveyard.","It suggests that large prehistoric aquatic predators once nested inside the submerged limestone caves.","It indicates that the cathedral ruins pose severe structural danger to divers walking across the fragile seabed."],"correct":1,"exp":"Comparing the mineral pinnacles to 'bleached ribcages' uses skeletal, macabre imagery to evoke a post-apocalyptic necropolis, emphasising ecological death and desiccation."},{"id":3,"type":"Ideological Critique","jumpId":"p2-l42","quote":"\"WATER IS COMMON STOCK; UNREGISTERED MOISTURE IS AN INJURY TO THE COMMONWEALTH.\"","prompt":"How does the Syndicate slogan painted on Mara’s harness (lines 42–55) exemplify dystopian propaganda?","options":["It promotes authentic socialist egalitarianism by ensuring that scarce water supplies are distributed equally among workers.","It appropriates the rhetoric of shared civic duty to criminalise natural existence and justify corporate monopolistic control.","It warns divers about the lethal biological dangers of unchlorinated pathogens lurking within stagnant limestone cave pools.","It encourages industrial innovation by rewarding salvage workers who discover unmapped geographic features in deep chasms."],"correct":1,"exp":"The slogan uses the high-minded rhetoric of the 'commonwealth' to disguise corporate theft, redefining unmetered nature as a criminal injury against the monopoly."},{"id":4,"type":"Sensory Juxtaposition","jumpId":"p2-l63","prompt":"In lines 63–84, what sensory contrast signifies Mara’s transition from the surface wasteland to the deep cavern?","options":["The blinding visual glare of the white sun shifts to the complete, disorienting sensory deprivation of cave gloom.","The abrasive scraping of dry wind and shale gives way to the rhythmic, bell-like resonance of dripping moisture.","The suffocating heat of the desert shifts to an unbearable sub-zero freezing temperature that disables machinery.","The deafening roar of industrial suction cranes is replaced by the complete silence of petrified oyster beds."],"correct":1,"exp":"The text shifts from the harsh auditory grating of dry wind and crunching bone-like salt to the acoustic wonder of liquid dripping like a bronze bell ('Plink. Plink. Plink.')."},{"id":5,"type":"Symbolism & Living Relic","jumpId":"p2-l85","prompt":"What is the symbolic function of the miniature water lilies and bioluminescent blind-fish in lines 85–109?","options":["They represent dangerous biological mutations caused by industrial chemical runoff leaking from distant high-altitude refineries.","They function as living relics of an uncorrupted primordial world that persists beyond the reach of corporate ownership.","They signify the economic wealth that Mara can unlock by selling rare aquatic specimens to scientific black-market merchants.","They prove that the cathedral was submerged only recently and that the sea will soon return across the dry plateau."],"correct":1,"exp":"The emerald lilies and glowing blind-fish exist as an uncontaminated pocket of life, embodying the sacred persistence of the natural world in opposition to corporate desecration."}],"written":[{"id":6,"marks":2,"type":"Atmosphere & Setting","jumpId":"p2-l1","prompt":"Examine how the composer uses visceral tactile imagery in lines 1–19 to convey the physical brutality of the Dry Reach. (2 Marks)","rubric":[{"marks":"2 Marks","desc":"Identifies specific tactile imagery with relevant evidence and perceptively explains how it creates a brutal, inhospitable atmosphere."},{"marks":"1 Mark","desc":"Identifies a quote or describes the setting broadly without detailed analysis of sensory technique."}],"exemplar":{"point":"Sterling establishes a brutal, inhospitable environment through visceral tactile imagery that emphasizes physical suffering.","evidence":"This is highlighted when Mara feels the condenser suit's \"rubber seals pinch into the raw skin at the base of her collarbone\" while drinking a \"bitter, lukewarm trickle of recycled saline\".","analysis":"By depicting the technology of survival as an abrasive burden that rubs skin raw and forces workers to drink their own sweat, the author underscores how the desiccated world reduces human existence to painful endurance,","link":"reinforcing the dehumanising toll of corporate environmental collapse."}},{"id":7,"marks":3,"type":"Religious & Skeletal Symbolism","jumpId":"p2-l20","prompt":"Explain how the description of the drowned cathedral city in lines 20–41 functions as a symbolic commentary on environmental collapse. (3 Marks)","rubric":[{"marks":"3 Marks","desc":"Perceptively analyses how religious/skeletal motifs and imagery critique human hubris and planetary ruin, supported by precise textual quotes."},{"marks":"2 Marks","desc":"Explains the symbolism of the cathedral with evidence, but analysis remains somewhat general."},{"marks":"1 Mark","desc":"Descriptive recount of the setting with minimal symbolic interpretation."}],"exemplar":{"point":"The ruined cathedral of Santa Lucia functions as a poignant monument to civilisational hubris and ecological extinction.","evidence":"The author deploys morbid skeletal imagery, describing limestone pinnacles that rise \"like bleached ribcages from the alkaline crust\" where \"the ground crunched... like dry bone snapping under a millstone\".","analysis":"By transforming a once-sacred place of spiritual worship into a petrified bone-yard, Sterling suggests that humanity’s religious and cultural monuments are meaningless when detached from the living biosphere. The total inversion from deep oceanic abundance to calcified desert underscores the absolute permanence of ecological loss,","link":"serving as a severe warning against the anthropogenic exploitation of the natural world."}},{"id":8,"marks":3,"type":"Juxtaposition & Corporate Diction","jumpId":"p2-l42","prompt":"Analyse how the author uses juxtaposition between corporate bureaucratic language and natural imagery in lines 42–84 to critique resource exploitation. (3 Marks)","rubric":[{"marks":"3 Marks","desc":"Insightfully analyses the contrast between bureaucratic euphemisms and organic imagery, evaluating authorial critique with strong textual evidence."},{"marks":"2 Marks","desc":"Identifies the contrast between the corporation and the water pool with relevant quotes, but analysis is broad."},{"marks":"1 Mark","desc":"Basic summary of the scene without analytical depth."}],"exemplar":{"point":"Sterling critiques resource exploitation by sharply contrasting clinical corporate jargon with the organic purity of the hidden spring.","evidence":"While the Syndicate conceptualises moisture through punitive bureaucratic maxims such as \"COMMON STOCK\" and \"UNREGISTERED MOISTURE IS AN INJURY\", the subterranean pool is characterised through lyrical acoustic imagery as a \"rhythmic, liquid pulse\" that resonates like a \"bronze bell\".","analysis":"This stark juxtaposition illuminates the moral perversion of corporate capitalism, which reduces a sacred life-giving element into criminalised inventory to be hoarded. The delicate living ecosystem of the lilies directly refutes the sterile logic of the Commonwealth,","link":"demonstrating that true life exists in opposition to corporatised commodification."}},{"id":9,"marks":3,"type":"Suspense & Syntactical Pacing","jumpId":"p2-l158","prompt":"How does the author manipulate sentence structure and pacing in lines 158–193 to dramatise Mara’s moral decision? (3 Marks)","rubric":[{"marks":"3 Marks","desc":"Thoroughly analyses how syntactical pacing, truncated imperatives, and deliberate pacing heighten dramatic tension during Mara’s moral defiance."},{"marks":"2 Marks","desc":"Discusses the pacing or the choice Mara makes with supporting quotes, but lacks sharp syntactical analysis."},{"marks":"1 Mark","desc":"Brief narrative retelling of what happens when Mara smashes the spike."}],"exemplar":{"point":"The author builds acute moral tension by accelerating narrative pacing through urgent dialogue before decelerating into deliberate, resolute action.","evidence":"Thorne’s sharp radio ultimatums (\"Diver 412! Confirm contact or face immediate tether disconnection\") introduce rapid temporal pressure. In contrast, Mara's internal response is framed through measured, deliberate syntax: \"She looked at the lilies... She took a slow, deliberate breath... With a swift, violent motion, she swung her geological hammer\".","analysis":"This structural deceleration allows the reader to experience Mara’s moment of clarity. By placing the physical destruction of the sensor (\"muted crunch\") immediately after her contemplation of the lilies, the syntax mirrors her decisive moral choice to reject self-preservation in favour of ecological stewardship,","link":"rendering her insubordination a conscious, ethical triumph."}},{"id":10,"marks":4,"type":"Thematic Synthesis & Ending","jumpId":"p2-l194","prompt":"Evaluate how the resolution in lines 194–225 conveys the enduring conflict between systemic commodification and private moral resistance. (4 Marks)","rubric":[{"marks":"4 Marks","desc":"Presents a perceptive, sustained evaluation of how the resolution uses irony, contrast, and lyrical symbolism to explore ethical defiance against systemic exploitation. Employs sophisticated analytical register and textual integration."},{"marks":"3 Marks","desc":"Sound evaluation of the ending with relevant quotes and techniques, but analysis of systemic power vs moral autonomy may be less nuanced."},{"marks":"2 Marks","desc":"Explains Mara's lie and the survival of the pool with basic textual references."},{"marks":"1 Mark","desc":"Simple narrative recap of the conclusion."}],"exemplar":{"point":"In the narrative’s conclusion, Sterling harnesses dramatic irony and evocative spatial imagery to celebrate the quiet supremacy of moral integrity over institutional greed.","evidence":"The interaction closes with Thorne’s patronising dismissal (\"Incompetent scavenger\"), while the final tableau depicts the subterranean cavern where \"shielded by stone and silence, the miniature lilies drifted... and the water continued to rise, drop by solitary drop\".","analysis":"The dramatic irony highlights the profound blindness of totalitarian capitalism: because the Syndicate measures reality solely through quantitative sensor telemetry, it is incapable of perceiving Mara’s sophisticated subversion. By choosing to forfeit her water tokens and accept verbal humiliation, Mara preserves an untouched sanctuary of biodiversity. The upward movement of the winch cable contrasts with the downward persistence of the water, symbolising that authentic resistance operates out of sight,","link":"affirming that individual moral courage can carve out sanctuaries of hope even amidst systemic ecological devastation."}}],"essay":{"id":16,"marks":15,"promptQuote":"\"In speculative literature, environmental ruin is rarely merely a physical backdrop; it is an ideological manifestation of human greed and moral bankruptcy.\"","prompt":"To what extent does this statement reflect the representation of scarcity, corporate power, and ethical agency in <em>The Salt-Pillars of the Dry Reach</em>?<br><br>In your response, analyse how the author utilises literary techniques, setting, and characterisation to explore the exploitation of nature and the possibility of moral resistance. (15 Marks)","exemplarText":"Environmental desolation within speculative literature functions fundamentally not as passive scenery, but as a scathing indictment of institutional exploitation and spiritual decay. In E. R. Sterling’s post-apocalyptic narrative *The Salt-Pillars of the Dry Reach*, this thematic imperative is powerfully articulated through the depiction of a desiccated world where water is corporatised and human biology is reduced to commodity. Yet, while the physical environment embodies the devastating consequences of human greed, the narrative compellingly demonstrates that individual ethical agency can resist systemic corruption through deliberate acts of moral defiance.\n\nSterling immediately establishes that the ruined landscape of the Dry Reach is an ideological construct born of ruthless economic monopolisation. The setting of the former Southern Shelf is introduced through visceral tactile and skeletal imagery: the limestone pinnacles rise *\"like bleached ribcages from the alkaline crust\"*, while the ground crunches *\"like dry bone snapping under a millstone\"*. By transmuting the oceanic seabed into an immense necropolis, Sterling illustrates the terminal consequences of environmental extraction. Furthermore, this ruin is sustained through institutional violence disguised as civic welfare. The Meridian Hydrology Syndicate’s painted maxim—*\"WATER IS COMMON STOCK; UNREGISTERED MOISTURE IS AN INJURY TO THE COMMONWEALTH\"*—employs insidious double-speak to criminalise the natural water cycle. This corporate subjugation extends directly into the biological bodies of the workers; Mara’s condenser suit recycles her breath into *\"bitter, lukewarm... saline\"*, a process euphemistically termed *\"Hydrological Equilibrium\"* but recognised by divers as *\"drinking your own ghost\"*. Here, the metaphor illuminates how corporate monopolies dehumanise their workforce, extracting bodily fluids to enrich distant elites while forcing laborers to exist in a state of perpetual dehydration.\n\nHowever, the discovery of the subterranean aquifer in the sunken ruins of Santa Lucia exposes the limits of corporate commodification, presenting nature as a sacred entity that transcends economic valuation. When Mara breaches the petrified oyster reef, Sterling deploys delicate auditory and visual contrast to demarcate the living spring: the water produces a *\"rhythmic, liquid pulse\"* that sounds like a *\"bronze bell\"*, sheltering miniature water lilies and bioluminescent blind-fish. The pool functions as a vital symbol of uncorrupted primordial life, sheltered beneath the collapsed altar of a dead civilisation. By juxtaposing this crystalline sanctuary with the dry, toxic salt flats above, the text underscores that natural vitality endures in the margins. The aquifer is not merely an economic resource; it is an ecological sanctuary whose intrinsic value refutes the Syndicate’s reductionist worldview.\n\nCrucially, Mara’s moral dilemma dramatises the conflict between complicit self-preservation and ethical stewardship. Chief Overseer Thorne represents the moral bankruptcy of corporate hegemony, his voice characterised by *\"the dry, gravelly snap of a man who drank Grade-A mountain glacier run-off\"* while barking orders through radio frequencies. When presented with the choice to claim eighty life-saving ration tokens by registering the spring, Mara recognises the lethal consequence: industrial chlorine would sanitize the basin and siphon sixty thousand gallons upward to elite private reservoirs. Rather than participating in this extraction, Mara exercises transformative ethical agency. Through the deliberate destruction of the telemetry spike’s crystal oscillator and her fabricated report of *\"zero hydration\"*, she weaponises the regime’s own prejudices against it. The dramatic irony of Thorne dismissing her as an *\"incompetent scavenger\"* underscores the moral victory of her choice: while the corporation views the land solely through profit, Mara embraces self-sacrifice to preserve life.\n\nUltimately, *The Salt-Pillars of the Dry Reach* provides profound validation of the prompt. Sterling demonstrates that environmental collapse is the direct physical consequence of an ideology that commodifies the biosphere. Yet, by depicting how an unbonded salvage diver can outmanoeuvre an all-seeing corporate monopoly, the text affirms that true morality survives when individuals refuse to sacrifice the sacredness of the natural world for personal survival."},"totalMarks":20,"timeMinutes":45},{"id":"paper3","title":"Paper 3: Totalitarian Semiotics & Linguistic Erasure","storyTitle":"The Lexicon of Sector Zero","storyKicker":"NSW Stage 5 English Yearly Examination • Paper 3","authorMeta":"By A. K. Mercer • Kafkaesque Political Prose • The Department of Semantic Reduction","contextNote":"<strong>Context & Reading Instructions:</strong> Read the narrative below before answering the questions in the right-hand panel. This paper examines linguistic engineering, semantic censorship, and memory preservation.","paragraphs":[{"id":"p3-l1","marker":"L1","text":"The Ministry of Orthodoxy operated on an axiom engraved in cold nickel across the pediment of Sector Zero: <em>LIMIT THE LEXICON, PRECLUDE THE PERIL.</em> Julian Chen sat at Desk 44 in the Sub-Department of Semantic Reduction, his horn-rimmed magnifying lens hovering over page 842 of the Fourth Edition Standard Lexicon. His implement of labour was not a pen, but a red vulcanite stylus equipped with an electric heating filament. With a slow, practiced stroke, he drew the burning tip across the entry for <em>Solitude (noun)</em>. The thin vellum hissed; the black printer's ink flared into a momentary yellow spark; and the word dissolved into a neat ribbon of grey smoke that was sucked instantly into the pneumatic desk vent."},{"id":"p3-l22","marker":"L22","text":"Julian’s duty for the morning was the preparation of Redaction Decree 411. In the forthcoming Fifth Edition, the word <em>Solitude</em> would cease to exist in civil speech. Its definition—<em>the state or situation of being alone, especially when viewed as pleasant or restorative</em>—had been determined by the Central Syntactic Directorate to possess \"divergent emotional vectors.\" Under the new Lexicon, any individual discovered seeking time away from collective labour would be categorized under the sole approved rubric: <em>Anti-Civic Detachment (Grade 2)</em>. The vocabulary of human experience was shrinking by fifty words per week. In the First Edition, published after the Consolidation Wars, the language contained sixty-four thousand approved terms. The Fifth Edition would contain four thousand one hundred. Chief Commissioner Vane had promised that by the Seventh Edition, human communication would achieve \"frictionless perfection\": nine hundred words, all monosyllabic, with no adjectives permitted without state-stamped permits."},{"id":"p3-l48","marker":"L48","text":"To Julian, the work had always possessed the clean, sterilised satisfaction of surgery. He considered himself a surgeon of thought, amputating the gangrenous redundancies of human speech so that the collective social organism could function without psychological fever. But at ten-forty, pneumatic delivery tube seven thumped, dropping a heavy buckram-bound folio into his wire tray. It was an uncatalogued cross-reference ledger from the Pre-Consolidation Archives, discovered during the demolition of an old municipal library in the Old Quarter."},{"id":"p3-l70","marker":"L70","text":"Julian cracked the spine. The volume was a dictionary printed a hundred years earlier, its pages foxed and brittle as dry onion skin. But it was not the printed text that made Julian’s hand tremble on his vulcanite stylus. In the wide paper margins, written in meticulous copperplate script in blue aniline ink, were hundreds of handwritten annotations. The signature on the inside board belonged to Dr. Clara Lin—the Department’s inaugural Chief Lexicographer, who had vanished during the Great Semantic Cleansing twenty years ago."},{"id":"p3-l92","marker":"L92","text":"Lin had not written administrative notes; she had transcribed forbidden definitions of the human interior. Beside the printed word <em>Melancholy</em>, she had written: <em>The blue shadow cast by joy when the afternoon light changes; a sweetness that hurts the chest; the proof that we love what must die.</em> Beside <em>Yearning</em>: <em>A moth beating against the glass of the future.</em> Beside <em>Solitude</em>: <em>The quiet room inside the ribcage where the soul sits down to listen to its own heartbeat.</em>"},{"id":"p3-l115","marker":"L115","text":"The words struck Julian with the force of physical blows. In the sterile, fluorescent quiet of Sector Zero, where speech was restricted to metric commands and civic affirmations, these sentences did not merely convey information; they radiated warmth, texture, and an excruciating depth of colour. They suggested that human emotions were not industrial defects to be planed flat, but vast internal oceans whose tides could never be measured by state calipers."},{"id":"p3-l138","marker":"L138","text":"A sharp metallic buzz cut the silence. Julian snapped the ledger shut as the frosted glass door of the office slide open. Chief Commissioner Vane stepped into the aisle. Vane was a small, precise man with eyes like polished ball-bearings and fingers permanently stained with carbon ink. He paused at Desk 44, his gaze dropping to the heavy, uncatalogued volume lying beside Julian’s heating stylus. \"Desk 44,\" Vane’s voice was as dry as parchment rubbing against stone. \"The morning quota for Redaction Decree 411 is five minutes overdue. Why is this unindexed volume still intact on your desk?\""},{"id":"p3-l162","marker":"L162","text":"Julian’s throat seized. Standard operating procedure required immediate submission of unsanctioned text to the thermal disintegrator beneath the floor. To hesitate for more than three seconds was classified as <em>Semantic Complicity</em>, carrying an immediate penalty of lexical demotion to a manual quarry. Vane took a half-step closer, his index finger resting upon the buckram binding of Lin's dictionary. \"You appear hesitant, Chen. Hesitation indicates linguistic turbulence. Linguistic turbulence precedes ideological divergence.\""},{"id":"p3-l185","marker":"L185","text":"Julian forced his fingers to maintain absolute steadiness. With his right hand, he pressed the release latch on his desk chute, dropping a sheaf of blank requisition forms down the incinerator tube with a loud, satisfying roar of burning gas. With his left hand, beneath the ledge of his desk blotter, he slid Dr. Lin’s volume into the deep leather pouch of his winter overcoat hanging from the chair post. He looked Vane directly in the tie-pin, his voice perfectly adopting the flat, mechanical syntax of official reportage: \"Verification completed, Commissioner. A minor orthographic discrepancy on the root etymology of 'Isolation'. Rectified according to Fifth Edition directives. The obsolete ledger has been committed to thermal reclamation.\""},{"id":"p3-l208","marker":"L208","text":"Vane stared at Julian for five breathless seconds, the ball-bearing eyes searching for a tremor in Julian’s jaw. The pneumatic fans hummed overhead. Finally, Vane nodded once—a clipped, mechanical gesture. \"Productivity is purity, Chen. Complete the redaction of 'Solitude' before twelve-hundred.\" Vane turned and marched down the linoleum corridor toward the Directorate."},{"id":"p3-l225","marker":"L225","text":"When the bell rang for the midday ration recess, Julian joined the grey column of lexicographers marching down into the subterranean mess hall. All around him, workers conversed in the clipped, monosyllabic phrases of the Fifth Edition, their faces blank and calm as unprinted vellum. But under the heavy fold of Julian’s overcoat, pressed tightly against his ribs, lay the heavy ledger of Dr. Clara Lin. As he chewed his synthetic grain cake in silence, he repeated Lin’s forbidden marginalia like a secret liturgy: <em>The quiet room inside the ribcage where the soul sits down to listen...</em> The state could incinerate sixty thousand words from the paper pages of the empire, but within the hidden margins of his living memory, language remained alive, wild, and unconquered."}],"mcqs":[{"id":1,"type":"Totalitarian Philosophy","jumpId":"p3-l1","quote":"\"LIMIT THE LEXICON, PRECLUDE THE PERIL.\"","prompt":"In lines 1–21, what foundational premise of totalitarian linguistics is encapsulated by the motto of Sector Zero?","options":["Restricting linguistic vocabulary directly constrains human cognition, making ideological dissent literally impossible to formulate.","Standardising spelling and grammar increases industrial efficiency across state manufacturing factories and trade bureaus.","Eliminating foreign loanwords preserves the historical purity of the national language from external cultural subversion.","Encouraging concise communication prevents bureaucratic backlog during high-pressure military and civil emergency situations."],"correct":0,"exp":"The state operates on the Orwellian linguistic premise that reducing vocabulary limits the boundaries of human thought, eradicating the conceptual tools needed to conceive rebellion."},{"id":2,"type":"Irony & Euphemism","jumpId":"p3-l22","prompt":"In lines 22–47, how does the state’s redefinition of 'Solitude' as 'Anti-Civic Detachment (Grade 2)' function rhetorically?","options":["It offers psychiatric medical rehabilitation to citizens suffering from chronic depression and severe social anxiety.","It pathologises restorative introspection, reframing private personal reflection as an active crime against the collective.","It simplifies complex legal terminology to ensure illiterate factory workers can understand administrative court rulings.","It demonstrates the state's progressive commitment to creating inclusive civic communities free from alienation."],"correct":1,"exp":"By rebranding peaceful personal solitude as 'Anti-Civic Detachment', the state transforms a natural human emotional state into a punishable civic offense, eliminating personal interiority."},{"id":3,"type":"Metaphor & Internalisation","jumpId":"p3-l48","quote":"\"He considered himself a surgeon of thought, amputating the gangrenous redundancies of human speech...\"","prompt":"What does the surgical metaphor in lines 48–69 reveal about Julian’s initial relationship with the regime?","options":["He resents the physical injuries sustained from working long hours with the electric heating stylus.","He secretly sabotages state directives while pretending to perform administrative duties at Desk 44.","He has thoroughly internalised the ideology, viewing the destruction of human expression as beneficial hygiene.","He desires to transfer to the Ministry of Health to practice clinical medicine instead of linguistics."],"correct":2,"exp":"Viewing himself as a 'surgeon of thought' amputating 'gangrenous redundancies' demonstrates Julian’s initial complicity: he views the violent destruction of words as benevolent medical purification."},{"id":4,"type":"Sensory & Emotional Contrast","jumpId":"p3-l70","prompt":"In lines 70–91, what physical details distinguish Dr. Lin’s ledger from the state’s Fourth Edition Lexicon?","options":["The ledger is bound in industrial steel plating and printed with mass-produced carbon dye on synthetic parchment.","The ledger features foxed brittle pages inscribed with flowing blue copperplate script rather than burnt vellum.","The ledger contains encrypted numerical barcodes designed to be processed by pneumatic sorting machines.","The ledger is written in an ancient dead foreign language that requires high-level clearance to decipher."],"correct":1,"exp":"The text emphasizes the physical, artisanal humanity of Lin's ledger—brittle foxed paper and blue aniline ink written in careful copperplate script—contrasting with the sterile red stylus that burns vellum."},{"id":5,"type":"Poetic Definition & Resistance","jumpId":"p3-l92","quote":"\"Beside Solitude: The quiet room inside the ribcage where the soul sits down to listen to its own heartbeat.\"","prompt":"How does Dr. Lin’s marginal definition of 'Solitude' (lines 92–114) directly subvert state doctrine?","options":["It outlines a tactical military blueprint for organizing covert rebel cells inside urban residential wards.","It reclaims the human heart as a private, sovereign sanctuary inaccessible to institutional surveillance.","It confirms the medical diagnosis that individuals who remain alone suffer from severe cardiovascular diseases.","It argues that citizens should permanently abandon urban civilization to build self-sustaining rural communes."],"correct":1,"exp":"Lin’s poetic metaphor redefines solitude as an inviolable inner sanctuary ('the quiet room inside the ribcage'), directly refuting the state's claim that human beings are mere collective cogs."}],"written":[{"id":6,"marks":2,"type":"Institutional Diction & Euphemism","jumpId":"p3-l1","prompt":"Examine how the composer uses bureaucratic jargon and euphemism in lines 1–21 to establish the nature of the regime. (2 Marks)","rubric":[{"marks":"2 Marks","desc":"Identifies specific bureaucratic/euphemistic phrasing with relevant evidence, explaining how it establishes clinical totalitarian control."},{"marks":"1 Mark","desc":"Identifies a quote with general commentary on the regime's strict rules."}],"exemplar":{"point":"Mercer establishes a chilling institutional authority through clinical bureaucratic euphemisms that sterilise the violence of censorship.","evidence":"This is evidenced by the state motto \"LIMIT THE LEXICON, PRECLUDE THE PERIL\" and the administrative department named the \"Sub-Department of Semantic Reduction\".","analysis":"By framing the violent eradication of language as a clinical procedure of public safety (\"preclude the peril\"), the author underscores how the regime employs technocratic jargon to disguise ideological oppression as necessary civic order,","link":"normalising the eradication of human thought."}},{"id":7,"marks":3,"type":"Metaphor & Cognitive Violence","jumpId":"p3-l22","prompt":"Explain how the metaphor of language as an organism undergoing \"surgery\" in lines 22–69 illustrates the regime's control over human consciousness. (3 Marks)","rubric":[{"marks":"3 Marks","desc":"Perceptively analyses the surgical metaphor with precise textual quotes, explaining how linguistic stripping functions as cognitive violence."},{"marks":"2 Marks","desc":"Explains the metaphor with evidence, but analytical depth on linguistic manipulation is broad."},{"marks":"1 Mark","desc":"Basic paraphrase of Julian's work without technique analysis."}],"exemplar":{"point":"The author deploys a chilling medical metaphor to reveal how the regime weaponises linguistic pruning as cognitive violence.","evidence":"Julian conceptualises his role as a \"surgeon of thought, amputating the gangrenous redundancies of human speech so that the collective social organism could function without psychological fever\".","analysis":"By equating poetic vocabulary with diseased tissue (\"gangrenous redundancies\"), Mercer illuminates the regime’s twisted philosophical premise: that emotional nuance is an infection that destabilises social cohesion. The systematic reduction of sixty-four thousand words down to four thousand demonstrates that by surgically severing words, the state amputates the citizen's very capacity to conceive alternative realities,","link":"effectively rendering ideological dissent cognitively impossible."}},{"id":8,"marks":3,"type":"Contrast & Poetic Imagery","jumpId":"p3-l70","prompt":"Analyse how the author uses poetic imagery in lines 70–114 to contrast Dr. Lin’s handwritten definitions with official state speech. (3 Marks)","rubric":[{"marks":"3 Marks","desc":"Insightfully analyses how lyrical, sensory imagery contrasts with clinical state language, evaluating how Dr. Lin reclaims human interiority."},{"marks":"2 Marks","desc":"Discusses Dr. Lin's definitions with relevant evidence, but comparison to state language remains descriptive."},{"marks":"1 Mark","desc":"Simple quote recitation without analytical evaluation."}],"exemplar":{"point":"Mercer uses rich poetic imagery and sensory metaphors to expose the vast gulf between authentic emotional experience and clinical state speech.","evidence":"While the state reduces language to monosyllabic utility, Dr. Lin's marginalia define melancholy as the \"blue shadow cast by joy\" and yearning as \"a moth beating against the glass of the future\".","analysis":"Through these synesthetic, evocative metaphors, the author captures the fragile beauty, sorrow, and longing inherent to human existence. The imagery restores tactile warmth and emotional dimensionality to words that the regime pathologises as dangerous, proving that human consciousness cannot be reduced to mechanical commands without destroying the soul itself,","link":"thereby validating poetic language as an inherent form of resistance."}},{"id":9,"marks":3,"type":"Syntactical Pacing & Suspense","jumpId":"p3-l138","prompt":"How does the author create suspense during Commissioner Vane’s audit (lines 138–184) through characterisation and sentence structure? (3 Marks)","rubric":[{"marks":"3 Marks","desc":"Thoroughly analyses the interplay between mechanical characterisation, truncated syntax, and high-stakes pacing to generate suspense."},{"marks":"2 Marks","desc":"Discusses the confrontation with quotes, but lacks deep analysis of pacing or characterisation techniques."},{"marks":"1 Mark","desc":"Recounts the confrontation without analytical focus."}],"exemplar":{"point":"The author builds suffocating suspense by contrasting Commissioner Vane’s mechanized demeanor with the urgent, compressed syntax of Julian’s terror.","evidence":"Vane is characterised through dehumanising machine motifs—possessing eyes like \"polished ball-bearings\"—who delivers clipped deductive ultimatums: \"Hesitation indicates linguistic turbulence. Linguistic turbulence precedes ideological divergence.\"","analysis":"The rigid, syllogistic structure of Vane's speech reflects the inescapable net of totalitarian surveillance. By juxtaposing this cold interrogation with the physical stakes (\"To hesitate for more than three seconds was classified as Semantic Complicity\"), Mercer suspends time, immersing the reader in Julian’s acute physiological peril as he calculates his split-second deception,","link":"dramatically escalating the stakes of his decision to conceal the forbidden ledger."}},{"id":10,"marks":4,"type":"Thematic Synthesis & Conclusion","jumpId":"p3-l208","prompt":"Evaluate how lines 208–235 use symbolism and contrast to communicate the theme that human consciousness cannot be fully conquered by linguistic engineering. (4 Marks)","rubric":[{"marks":"4 Marks","desc":"Insightfully evaluates how the ending uses symbolism, contrast, and litany to assert the irrepressible autonomy of memory against totalitarian control. Employs sophisticated analytical expression."},{"marks":"3 Marks","desc":"Sound evaluation of the conclusion with relevant evidence and technique identification, though thematic discussion may be less nuanced."},{"marks":"2 Marks","desc":"Describes Julian keeping the book with basic quotes."},{"marks":"1 Mark","desc":"Simple summary of the final paragraph."}],"exemplar":{"point":"In the concluding movement of the narrative, Mercer harnesses potent tactile symbolism and ideological contrast to affirm that genuine human consciousness transcends systemic censorship.","evidence":"The author contrasts the outer world—where workers march with faces \"blank and calm as unprinted vellum\" speaking \"clipped, monosyllabic phrases\"—with Julian’s internal sanctuary, where he repeats Lin’s definition like a \"secret liturgy: The quiet room inside the ribcage where the soul sits down to listen...\".","analysis":"The concealed ledger pressed physically against Julian’s ribs symbolises the enduring flame of uncurated human truth. While the state possesses the power to incinerate paper dictionaries, it cannot police the private memory of the individual who cherishes poetic meaning. By internalising the forbidden words, Julian transforms his own body into a living archive, demonstrating that the human spirit possesses an irrepressible capacity to preserve nuance and dignity in defiance of systemic linguistic violence,","link":"ultimately proving that thought can outlive the state that seeks to extinguish it."}}],"essay":{"id":16,"marks":15,"promptQuote":"\"He who commands the limits of language commands the boundaries of human consciousness.\"","prompt":"To what extent does this statement reflect the representation of linguistic manipulation, institutional power, and personal resistance in <em>The Lexicon of Sector Zero</em>?<br><br>In your response, analyse how the author utilises literary techniques, characterisation, and thematic motifs to explore the relationship between vocabulary and human freedom. (15 Marks)","exemplarText":"Totalitarian regimes have long recognized that the most insidious form of tyranny operates not through external physical confinement, but through the systematic colonization of human cognition. In A. K. Mercer’s dystopian prose narrative *The Lexicon of Sector Zero*, this premise is rigorously explored through a regime that purges language to preclude the very possibility of ideological dissent. Yet, while the narrative demonstrates that the state can severely contract the public boundaries of thought, it ultimately rejects the absolute finality of the prompt: authentic human consciousness possesses an innate, resilient capacity for poetic nuance that can subversively outlive institutional erasure.\n\nFrom the outset, Mercer validates the prompt by illustrating how the Orthocracy enforces control through calculated semantic reduction. Sector Zero's guiding axiom—*\"LIMIT THE LEXICON, PRECLUDE THE PERIL\"*—encapsulates the Orwellian premise that by amputating vocabulary, the state eliminates the conceptual scaffolding required for rebellion. This ideological surgery is manifested in the work of the protagonist, Julian Chen, who uses a heated stylus to incinerate entries in the Standard Lexicon. The regime’s linguistic engineering is underscored when the word *Solitude* is replaced with the clinical, pathologising label *Anti-Civic Detachment (Grade 2)*. Through this bureaucratic euphemism, Mercer illustrates how the state strips language of its restorative, introspective dimensions, reframing personal autonomy as an active crime against the collective. Julian initially conceptualises his labor through a chilling medical metaphor, viewing himself as a *\"surgeon of thought, amputating the gangrenous redundancies of human speech\"*. This reveals how deeply institutional indoctrination penetrates the psyche; by redefining emotional expression as a pathology, the state convinces its subjects that linguistic self-mutilation is essential for communal health.\n\nHowever, the narrative disrupts this totalitarian hegemony through the introduction of Dr. Clara Lin’s subversive archival dictionary. In sharp contrast to the clinical brevity of Fifth Edition decrees, Lin’s handwritten marginalia employ lush sensory metaphors and synesthesia: melancholy is defined as the *\"blue shadow cast by joy\"*, while solitude is reclaimed as *\"the quiet room inside the ribcage where the soul sits down to listen to its own heartbeat\"*. These poetic formulations do not merely communicate semantic data; they restore emotional resonance, interiority, and vulnerability to human experience. By comparing the words to *\"physical blows\"* that radiate *\"warmth, texture, and an excruciating depth of colour\"*, Mercer demonstrates that language is inherently tied to human embodiment and aesthetic perception. The discovery awakens Julian’s dormant humanity, exposing the regime’s monosyllabic vocabulary as a hollow, synthetic prison that fails to account for the boundless complexity of the human spirit.\n\nFurthermore, the climax highlights how personal resistance operates through the strategic preservation of memory in the face of brutal institutional audit. Commissioner Vane—characterised with eyes like *\"polished ball-bearings\"* to symbolise the unfeeling mechanics of the surveillance state—warns Julian that *\"Hesitation indicates linguistic turbulence. Linguistic turbulence precedes ideological divergence.\"* This rigid deductive logic demonstrates how the regime treats involuntary psychological pauses as existential threats. When Julian feigns compliance by burning blank forms while concealing Lin's ledger in his overcoat, he enacts a profound subversion of the state’s monopoly. The resolution poignantly juxtaposes the exterior conformity of workers whose faces are *\"blank and calm as unprinted vellum\"* with Julian’s internal defiance as he recites Lin’s definitions as a *\"secret liturgy\"*. By turning his own memory into a living sanctuary, Julian demonstrates that the boundaries of consciousness cannot be permanently dictated by official vocabularies.\n\nUltimately, *The Lexicon of Sector Zero* presents a nuanced evaluation of the proposition. While oppressive powers can burn dictionaries and impoverish public discourse, they remain fundamentally incapable of extinguishing the human need for resonance and self-reflection. Through private remembrance and the quiet preservation of poetic truth, the human soul retains its freedom, proving that authentic consciousness can never be fully conquered by the state."},"totalMarks":20,"timeMinutes":45}];
 
-  // ================= ATMOSPHERE & SETTING (6) =================
-  {
-    module: "Setting",
-    extractTitle: "PASSAGE 8: THE SMOGGY HORIZON",
-    extract: "\"Mark stepped outside and pulled his face mask tightly over his nose. The sky wasn't blue; it was a murky yellowish-grey, choked with smoke from the government chemical factories. The air tasted of burnt metal and stale dust. It had been seven years since the city had seen natural sunlight.\"",
-    q: "Which sense is mainly targeted by the phrase 'tasted of burnt metal and stale dust'?",
-    options: [
-      "Auditory (sound)",
-      "Gustatory (taste)",
-      "Visual (sight)",
-      "Kinesthetic (movement)"
-    ],
-    answer: 1,
-    exp: "Describing the taste of the polluted air uses gustatory imagery, helping the reader physically experience how ruined the environment is."
-  },
-  {
-    module: "Setting",
-    extractTitle: "PASSAGE 9: THE STERILE APARTMENTS",
-    extract: "\"Inside the apartment block, everything was made of white plastic and stainless steel. There were no pictures on the walls, no rugs on the floor, and no curtains on the windows. The fluorescent strip on the ceiling buzzed with a harsh white glare that cast no shadows. It felt less like a home and more like an operating theatre.\"",
-    q: "Why does the narrator describe the apartment as feeling 'more like an operating theatre'?",
-    options: [
-      "The apartment is very messy and needs cleaning",
-      "To emphasize how cold, sterile, and uninviting the living space is, lacking warmth and personality",
-      "Because the main character is a surgeon",
-      "To show that the apartment was recently built"
-    ],
-    answer: 1,
-    exp: "An operating theatre is clean, clinical, and impersonal. Comparing the apartment to one emphasizes that the regime does not care about comfort, warmth, or homely feelings."
-  },
-  {
-    module: "Setting",
-    extractTitle: "PASSAGE 10: SYNTHETIC RATIONS",
-    extract: "\"Dinner was a small plastic cube of grey protein paste and a cup of lukewarm recycled water. Tom took a bite; it had the rubbery texture of an eraser and no flavour whatsoever. A poster on the cafeteria wall reminded workers: 'Fuel the Body. Serve the State.'\"",
-    q: "How does the author's description of food reinforce the dystopian setting?",
-    options: [
-      "It proves that people in this city enjoy eating simple food",
-      "It shows that food has been reduced to purely functional fuel, showing the loss of cultural pleasure and personal comfort",
-      "It explains how to cook a healthy protein meal",
-      "It shows that Tom is on a personal fitness diet"
-    ],
-    answer: 1,
-    exp: "In dystopian texts, food is often bland, synthetic, and rationed to show that the regime views human beings as machines or tools rather than people."
-  },
-  {
-    module: "Setting",
-    extractTitle: "PASSAGE 11: ACID RAIN",
-    extract: "\"Rain began to fall, but none of the children ran outside to play. The droplets hissed as they struck the metal roof, leaving small pitted rust marks on the gutters. 'Keep inside!' called Mrs Davis, pulling the window shut. 'The rain burns today.'\"",
-    q: "How does the author subvert (change) the traditional meaning of rain in this passage?",
-    options: [
-      "Rain usually represents joy and farming, but here it is dangerous and toxic due to industrial pollution",
-      "Rain is described as warm and pleasant",
-      "The rain causes floods that destroy houses",
-      "The passage proves that rain cleans the city streets"
-    ],
-    answer: 0,
-    exp: "Normally in stories, rain brings life and refreshment. In this dystopian setting, it is inverted into toxic acid rain that burns, reinforcing environmental destruction."
-  },
-  {
-    module: "Setting",
-    extractTitle: "PASSAGE 12: THE CONCRETE WASTELAND",
-    extract: "\"Beyond the perimeter fence lay the Dead Zone—an endless expanse of cracked concrete, rusting car chassis, and piles of discarded computer monitors. Not a single tree grew. Not a blade of grass sprouted. The only motion was the wind swirling dirty plastic wrappers against the barbed wire.\"",
-    q: "What mood is established through this visual description of the Dead Zone?",
-    options: [
-      "Excitement and adventure",
-      "Desolation, decay, and hopelessness",
-      "Cheerfulness and humor",
-      "Relief and relaxation"
-    ],
-    answer: 1,
-    exp: "Describing rusting metal, dead ground, and barbed wire creates a desolate, grim mood typical of post-apocalyptic and dystopian wasteland settings."
-  },
-  {
-    module: "Setting",
-    extractTitle: "PASSAGE 13: THE CONSTANT ARTIFICIAL HUM",
-    extract: "\"The city was never truly silent. Even at three in the morning, a low, continuous electrical hum vibrated through the floorboards and water pipes. It came from the enormous subterranean ventilation fans that pumped filtered air into the dome. It was a mechanical heartbeat that reminded every resident they were trapped inside a machine.\"",
-    q: "What technique is used in calling the fans a 'mechanical heartbeat', and what does it suggest?",
-    options: [
-      "Personification / metaphor; suggests the city is a cold, artificial organism that controls and keeps the people alive like prisoners",
-      "Hyperbole; suggests the fans are completely broken",
-      "Rhyme; creates a musical rhythm in the sentence",
-      "Onomatopoeia; imitates the sound of water dripping"
-    ],
-    answer: 0,
-    exp: "Describing the fans as a 'mechanical heartbeat' uses metaphor and personification to picture the entire city as a giant artificial machine that controls human survival."
-  },
+  let currentPaperId = "paper1";
+  const papersState = {
+    paper1: { mcqAnswers: {}, selfMarks: {}, flagged: new Set(), responses: {}, timerSeconds: 45 * 60 },
+    paper2: { mcqAnswers: {}, selfMarks: {}, flagged: new Set(), responses: {}, timerSeconds: 45 * 60 },
+    paper3: { mcqAnswers: {}, selfMarks: {}, flagged: new Set(), responses: {}, timerSeconds: 45 * 60 }
+  };
 
-  // ================= ENFORCED CONFORMITY (6) =================
-  {
-    module: "Conformity",
-    extractTitle: "PASSAGE 14: UNIFORM CLOTHING",
-    extract: "\"Thousands of office workers filed out of the station. Every man, woman, and teenager wore the exact same dark grey tunic, buttoned up to the chin. No jewelry was permitted. No bright colors were allowed. The crowd moved forward like a slow grey river, with nobody speaking a word to each other.\"",
-    q: "Why does the government in this story make all citizens wear identical grey tunics?",
-    options: [
-      "To save money on manufacturing clothes",
-      "To strip away individual identity and force everyone to conform",
-      "Because grey is the most fashionable color in the city",
-      "To keep everyone warm in the cold weather"
-    ],
-    answer: 1,
-    exp: "A core convention of dystopian fiction is enforced conformity. Removing personal choices like clothing and jewelry suppresses individuality."
-  },
-  {
-    module: "Conformity",
-    extractTitle: "PASSAGE 15: MANDATORY NUMBER NAMES",
-    extract: "\"Names had been phased out twenty years ago to promote collective equality. Jack was officially registered as Unit 774-B. When the school teacher called attendance, she called out numbers: '601-A? Present. 602-A? Present.' Nobody had a family surname, and nobody had a nickname.\"",
-    q: "What is the psychological effect of replacing human names with numbers?",
-    options: [
-      "It helps students learn mathematics faster",
-      "It completely dehumanizes people, reducing unique individuals to barcode numbers on a government spreadsheet",
-      "It prevents people from forgetting their names",
-      "It helps teachers mark rolls more quickly"
-    ],
-    answer: 1,
-    exp: "Names are fundamental to personal identity and family heritage. Replacing names with numbers is an effective way dystopian regimes strip away humanity and uniqueness."
-  },
-  {
-    module: "Conformity",
-    extractTitle: "PASSAGE 16: REGULATED EMOTIONS",
-    extract: "\"Crying in public was classified as Emotional Irresponsibility. When young Leo scraped his knee on the concrete, his mother did not comfort him with a hug. She pulled a small blue pill from her tin dispenser and commanded: 'Take your Calmant. Calmness is stability.' Leo swallowed the pill, and within thirty seconds his tears stopped and his face went blank.\"",
-    q: "Why does this society drug citizens to suppress sadness and anger?",
-    options: [
-      "Because medicines taste sweet like candy",
-      "Because strong genuine emotions can lead to discontent, rebellion, and questioning of the social order",
-      "To prevent people from catching common colds",
-      "Because mothers do not love their children"
-    ],
-    answer: 1,
-    exp: "Dystopian regimes often drug or condition citizens to keep them emotionally flat. If citizens cannot feel grief or anger, they will never feel passionate enough to rebel."
-  },
-  {
-    module: "Conformity",
-    extractTitle: "PASSAGE 17: SYNCHRONISED MARCHING",
-    extract: "\"At 7:00 AM sharp, the siren sounded and the student dormitories emptied onto the parade ground. Five hundred students stood in ten perfectly straight rows. When the drum beat, five hundred right boots struck the asphalt in a single concussive CRACK. To step out of line by even two inches resulted in three hours of detention.\"",
-    q: "What does the synchronized marching on the parade ground symbolize?",
-    options: [
-      "Preparation for an Olympic sports festival",
-      "Total military-style discipline and the complete suppression of personal freedom",
-      "The students' personal love for dancing",
-      "A fun morning game to wake up sleepy students"
-    ],
-    answer: 1,
-    exp: "Strict synchronized marching symbolizes that individuals exist only as tiny, obedient parts of a larger collective machine, with zero tolerance for stepping outside the line."
-  },
-  {
-    module: "Conformity",
-    extractTitle: "PASSAGE 18: ERASING THE VOCABULARY",
-    extract: "\"The Ministry of Education issued an updated dictionary with 200 fewer words than the previous year. Words like 'freedom', 'melancholy', and 'solitude' had been completely erased from the pages. The headmaster explained: 'If there is no word for a feeling, that feeling will soon cease to exist in human minds.'\"",
-    q: "How does removing words from the dictionary help the government maintain control?",
-    options: [
-      "It saves ink and paper when printing dictionaries",
-      "It limits what people are able to think and express, making it impossible to formulate ideas about rebellion or liberty",
-      "It makes English spelling much easier for Year 10 students",
-      "It encourages people to learn sign language"
-    ],
-    answer: 1,
-    exp: "This refers to linguistic determinism (like Orwell's Newspeak). If people don't have words for concepts like 'liberty' or 'loneliness', they cannot think or talk about them."
-  },
-  {
-    module: "Conformity",
-    extractTitle: "PASSAGE 19: BANNING PERSONAL ART",
-    extract: "\"Drawing or painting was strictly limited to official state posters depicting factories, harvest trucks, and glorious leaders. When Inspector Cole found a teenage girl sketching an imaginative picture of a flying dragon in her notebook, the sketch was confiscated and burned. 'Art must serve utility,' the inspector said coldly.\"",
-    q: "Why does the regime forbid personal, imaginative art?",
-    options: [
-      "Because paint brushes are expensive to import",
-      "Because imagination and creativity foster free thinking and independent self-expression, which threatens totalitarian conformity",
-      "Because dragons are scary for young children",
-      "Because the girl should have been doing her homework"
-    ],
-    answer: 1,
-    exp: "Imagination allows people to envision a different, better world. Authoritarian regimes fear personal art because it nurtures individuality and creative freedom."
-  },
+  let timerRunning = true;
+  let timerInterval = null;
+  let currentHighlightColor = 'hl-y';
 
-  // ================= INDIVIDUALITY & REBELLION (6) =================
-  {
-    module: "Rebellion",
-    extractTitle: "PASSAGE 20: THE HIDDEN FLOWER",
-    extract: "\"Deep in an abandoned subway tunnel where the surveillance cameras had broken years ago, Daniel found something miraculous: a single dandelion growing through a crack in the concrete. Its petals were bright golden yellow—a splash of real, living colour in a grey concrete world. Daniel crouched down and gently shielded it with his hands.\"",
-    q: "In this story, what does the golden dandelion symbolize?",
-    options: [
-      "A weed that needs to be sprayed with poison",
-      "Hope, resilience, and the persistence of nature and life against an oppressive system",
-      "That the subway station needs to be rebuilt",
-      "That Daniel wants to become a botanist"
-    ],
-    answer: 1,
-    exp: "A small, bright living flower growing in a dark concrete tunnel is a classic symbol of resilience, hope, and the human spirit surviving in a harsh world."
-  },
-  {
-    module: "Rebellion",
-    extractTitle: "PASSAGE 21: THE FORBIDDEN DIARY",
-    extract: "\"Underneath a loose floorboard in her bedroom, Elena kept an old wooden pencil and a small notebook with yellowed paper. Keeping a private diary was strictly outlawed. Each night, she wrote down her real thoughts: what she dreamed of, what she missed, and what she truly felt. As she wrote, her hand shook with fear, but she could not stop.\"",
-    q: "Why is writing in a private diary considered an act of rebellion in this dystopian society?",
-    options: [
-      "Because paper is too expensive to waste",
-      "Because writing personal thoughts proves that the citizen has an independent mind that the state cannot control",
-      "Because Elena has poor handwriting",
-      "Because students are only supposed to write at school"
-    ],
-    answer: 1,
-    exp: "Totalitarian regimes try to control what people think. Keeping a private diary is a direct act of mental freedom and defiance against conformity."
-  },
-  {
-    module: "Rebellion",
-    extractTitle: "PASSAGE 22: A FORGOTTEN SONG",
-    extract: "\"The old man at the back of the tram started humming a melody. It wasn't the loud marching hymn blasted from the city speakers; it was a gentle, slow lullaby about the ocean and the stars. A young woman nearby stopped typing on her phone and listened, her eyes filling with tears she couldn't explain.\"",
-    q: "What effect does the old man's song have on the people around him?",
-    options: [
-      "It annoys them because they want quiet to do their work",
-      "It awakens forgotten human emotions and a longing for beauty that the regime has tried to erase",
-      "It makes the passengers report him to the police immediately",
-      "It makes the tram driver lose concentration"
-    ],
-    answer: 1,
-    exp: "Art and music in dystopian stories often act as triggers that connect people back to their true human emotions and memories of a better past."
-  },
-  {
-    module: "Rebellion",
-    extractTitle: "PASSAGE 23: THE MOMENT OF CHOICE",
-    extract: "\"The guard looked at the boy standing before him. The boy was holding a forbidden silver compass he had found in the ruins. The protocol was simple: sound the alarm, arrest the boy, and receive a promotion. The guard looked into the boy's frightened eyes. Slowly, the guard lowered his radio, stepped aside, and whispered: 'Run. And never come back.'\"",
-    q: "What central human theme is highlighted in the guard's decision to let the boy go?",
-    options: [
-      "The guard was too lazy to do paperwork",
-      "Empathy and human compassion overcoming cold, blind obedience to an unjust system",
-      "The compass was not valuable enough to confiscate",
-      "The boy was faster at running than the guard"
-    ],
-    answer: 1,
-    exp: "This moment highlights moral choice: the guard chooses personal empathy and compassion over the cruel rules of the system."
-  },
-  {
-    module: "Rebellion",
-    extractTitle: "PASSAGE 24: THE BROKEN MIRROR SHARD",
-    extract: "\"Mirrors were banned across Sector 9 because seeing your own face was thought to encourage vanity and selfish thoughts. When Tomas stumbled upon a broken shard of polished glass in an alley, he saw his own reflection for the first time in ten years: the dark freckles on his nose, the brown eyes, the wavy hair. 'I am me,' he whispered. 'I am not just worker 402.'\"",
-    q: "What does looking into the mirror shard allow Tomas to reclaim?",
-    options: [
-      "He realizes his face is dirty and needs washing",
-      "His individual self-identity and human awareness, separating himself from the anonymous collective",
-      "He discovers that mirrors can be used as weapons",
-      "He realizes he wants to buy a new haircut"
-    ],
-    answer: 1,
-    exp: "The mirror symbolizes self-recognition and identity. Discovering his unique face helps Tomas break free from the feeling that he is just an anonymous worker number."
-  },
-  {
-    module: "Rebellion",
-    extractTitle: "PASSAGE 25: WHISPERED TRUTHS",
-    extract: "\"Beneath the deafening clatter of the factory machinery, where the microphones picked up only industrial noise, Maya leaned towards her co-worker and whispered five forbidden words: 'The sky used to be blue.' Her co-worker froze, looked around, and gave a tiny, almost invisible nod of understanding.\"",
-    q: "Why is whispering about what the sky used to look like a dangerous act in this society?",
-    options: [
-      "Because the factory is too loud to hear properly",
-      "Because sharing memories of the past challenges the regime's lie that life under their rule is the best it has ever been",
-      "Because talking during work hours slows down production slightly",
-      "Because blue paint is banned in the factory"
-    ],
-    answer: 1,
-    exp: "Dystopian regimes maintain control by claiming that life was terrible before they took power. Remembering that nature was once clean and beautiful exposes the regime's failures."
+  window.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash && papersState[hash]) {
+      currentPaperId = hash;
+      document.getElementById('paper-select').value = hash;
+    }
+
+    loadAllStorage();
+    renderCurrentPaper();
+    initTimer();
+  });
+
+  function switchPaper(paperId) {
+    if (!papersState[paperId]) return;
+    saveCurrentPaperStorage();
+    currentPaperId = paperId;
+    window.location.hash = paperId;
+    document.getElementById('paper-select').value = paperId;
+    renderCurrentPaper();
   }
-];
 
-let userAnswers = new Array(passages.length).fill(null);
+  function getActivePaperData() {
+    return EXAM_PAPERS.find(p => p.id === currentPaperId) || EXAM_PAPERS[0];
+  }
 
-function renderQuiz() {
-  const container = document.getElementById('quiz-container');
-  container.innerHTML = '';
+  function getActiveState() {
+    return papersState[currentPaperId];
+  }
 
-  passages.forEach((item, idx) => {
-    const card = document.createElement('div');
-    card.className = 'q-card';
-    card.dataset.module = item.module;
-    card.id = `q-${idx}`;
+  function renderCurrentPaper() {
+    const paper = getActivePaperData();
+    const pState = getActiveState();
 
-    const letters = ['A', 'B', 'C', 'D'];
-    let optionsHtml = '';
-    item.options.forEach((opt, optIdx) => {
-      optionsHtml += `
-        <button class="option-btn" onclick="selectOption(${idx}, ${optIdx})" id="opt-${idx}-${optIdx}">
-          <span class="option-letter">${letters[optIdx]}</span>
-          <span>${opt}</span>
-        </button>
+    document.getElementById('stat-paper-title').textContent = paper.storyTitle;
+    document.getElementById('stimulus-bar-label').textContent = paper.title + ' (20 Marks • 45 Mins)';
+
+    // Render Stimulus Story
+    const stimContainer = document.getElementById('stimulus-container');
+    let storyHtml = `
+      <header class="story-header">
+        <div class="story-kicker">${paper.storyKicker} &bull; 20 Marks &bull; 45 Minutes</div>
+        <h1 class="story-title">${paper.storyTitle}</h1>
+        <div class="story-meta">${paper.authorMeta}</div>
+      </header>
+      <div class="stimulus-intro-note">${paper.contextNote}</div>
+    `;
+
+    paper.paragraphs.forEach(p => {
+      storyHtml += `
+        <p class="story-p" id="${p.id}">
+          <span class="line-num-marker">${p.marker}</span>
+          ${p.text}
+        </p>
+      `;
+    });
+    stimContainer.innerHTML = storyHtml;
+
+    // Render Questions Container
+    const qContainer = document.getElementById('questions-container');
+    let qHtml = '';
+
+    // Part 1 Banner (5 MCQs, 5 Marks)
+    qHtml += `
+      <div class="section-banner" data-section="sec1">
+        <div class="section-banner-title">
+          <span>Part 1 &bull; Objective Analysis &amp; Language Evaluation</span>
+          <span class="section-banner-marks">5 Marks (1 mark each)</span>
+        </div>
+        <div class="section-banner-desc">
+          Evaluate the stimulus text and select the most precise analytical response for questions 1 to 5. All options are length-balanced to prevent guessing. Click <em>[Jump to Text]</em> to inspect relevant lines.
+        </div>
+      </div>
+    `;
+
+    paper.mcqs.forEach((mcq, idx) => {
+      const qNum = idx + 1;
+      const isFlagged = pState.flagged.has(qNum);
+      const selectedOpt = pState.mcqAnswers[qNum];
+
+      qHtml += `
+        <article class="question-card" id="q-card-${qNum}" data-qid="${qNum}" data-section="sec1">
+          <div class="q-top-bar">
+            <div class="q-badge-group">
+              <span class="q-index-pill">Question ${qNum}</span>
+              <span class="q-type-pill">${mcq.type}</span>
+              <span class="q-marks-pill">1 Mark</span>
+            </div>
+            <div class="q-tools-group">
+              <button class="jump-stimulus-btn" onclick="jumpToStimulus('${mcq.jumpId}')">📍 Jump to Text</button>
+              <button class="flag-btn ${isFlagged ? 'flagged' : ''}" onclick="toggleFlag(${qNum}, this)" title="Flag for review">⚑</button>
+            </div>
+          </div>
+          ${mcq.quote ? `<div class="q-stimulus-quote">${mcq.quote}</div>` : ''}
+          <div class="q-prompt">${mcq.prompt}</div>
+          <div class="mcq-options" id="mcq-opts-${qNum}">
+      `;
+
+      mcq.options.forEach((optText, optIdx) => {
+        const optLetter = ['A', 'B', 'C', 'D'][optIdx];
+        let optClass = 'mcq-opt';
+        if (selectedOpt !== undefined) {
+          if (optIdx === mcq.correct) optClass += ' correct-answer';
+          else if (optIdx === selectedOpt && selectedOpt !== mcq.correct) optClass += ' wrong-answer';
+        }
+        qHtml += `
+          <button class="${optClass}" onclick="selectMcqOption(${qNum}, ${optIdx}, this)">
+            <span class="opt-key">${optLetter}</span>
+            <span class="opt-text">${optText}</span>
+          </button>
+        `;
+      });
+
+      const showFeedback = selectedOpt !== undefined;
+      const isCorrect = (selectedOpt === mcq.correct);
+      qHtml += `
+          </div>
+          <div class="feedback-box ${showFeedback ? 'show ' + (isCorrect ? 'is-correct' : 'is-wrong') : ''}" id="feedback-${qNum}">
+            ${showFeedback ? `
+              <div class="feedback-title">${isCorrect ? '✓ Correct Analysis' : '✗ Incorrect Response'}</div>
+              <div>${mcq.exp}</div>
+            ` : ''}
+          </div>
+        </article>
       `;
     });
 
-    card.innerHTML = `
-      <div class="q-header">
-        <span class="q-num">Passage ${idx + 1} of 25</span>
-        <span class="q-module">${item.module}</span>
+    // Part 2 Banner (Short Answer Q6-9, 11 Marks)
+    qHtml += `
+      <div class="section-banner" data-section="sec2">
+        <div class="section-banner-title">
+          <span>Part 2 &bull; Analytical Short-Answer Responses</span>
+          <span class="section-banner-marks">11 Marks</span>
+        </div>
+        <div class="section-banner-desc">
+          Construct structured analytical paragraphs using the <strong>PETAL framework</strong> (Point, Evidence, Technique, Analysis, Link). Suggested time: ~20 minutes.
+        </div>
       </div>
-      <div class="extract-box">
-        <div class="extract-header">📖 ${item.extractTitle}</div>
-        <div>${item.extract}</div>
-      </div>
-      <div class="q-text">${item.q}</div>
-      <div class="options-grid">${optionsHtml}</div>
-      <div class="explanation-box" id="exp-${idx}"></div>
     `;
 
-    container.appendChild(card);
-  });
-}
+    // Q6 to Q9
+    paper.written.slice(0, 4).forEach(wq => {
+      const qNum = wq.id;
+      const isFlagged = pState.flagged.has(qNum);
+      const savedText = pState.responses[qNum] || '';
+      const savedMark = pState.selfMarks[qNum] || 0;
 
-function selectOption(qIdx, optIdx) {
-  if (userAnswers[qIdx] !== null) return;
+      qHtml += `
+        <article class="question-card" id="q-card-${qNum}" data-qid="${qNum}" data-section="sec2">
+          <div class="q-top-bar">
+            <div class="q-badge-group">
+              <span class="q-index-pill">Question ${qNum}</span>
+              <span class="q-type-pill">${wq.type}</span>
+              <span class="q-marks-pill">${wq.marks} Marks</span>
+            </div>
+            <div class="q-tools-group">
+              <button class="jump-stimulus-btn" onclick="jumpToStimulus('${wq.jumpId}')">📍 Jump to Text</button>
+              <button class="flag-btn ${isFlagged ? 'flagged' : ''}" onclick="toggleFlag(${qNum}, this)">⚑</button>
+            </div>
+          </div>
+          <div class="q-prompt">${wq.prompt}</div>
+          <div class="written-area">
+            <div class="petal-hint-bar">
+              <span>Required: Point &bull; Evidence &bull; Technique &bull; Analysis &bull; Link</span>
+              <div class="petal-tags">
+                <span class="petal-tag">P</span>
+                <span class="petal-tag">E</span>
+                <span class="petal-tag">T</span>
+                <span class="petal-tag">A</span>
+                <span class="petal-tag">L</span>
+              </div>
+            </div>
+            <textarea class="answer-textarea" id="response-q${qNum}" placeholder="Compose your analytical response here..." oninput="updateWordCount(${qNum}, this)">${savedText}</textarea>
+            <div class="written-meta">
+              <div class="word-counter">Word count: <span id="wc-${qNum}">0</span> words</div>
+            </div>
+          </div>
 
-  userAnswers[qIdx] = optIdx;
-  const item = passages[qIdx];
-  const isCorrect = (optIdx === item.answer);
+          <button class="exemplar-toggle-btn" onclick="toggleExemplar(${qNum})">
+            <span>📋</span> View Marking Rubric &amp; Exemplar
+          </button>
+          <div class="exemplar-drawer" id="exemplar-${qNum}">
+            <div class="exemplar-header">
+              <div class="exemplar-title">Marking Rubric &bull; Question ${qNum} (${wq.marks} Marks)</div>
+            </div>
+            <table class="rubric-table">
+              <thead><tr><th style="width:18%;">Marks</th><th>Performance Criteria</th></tr></thead>
+              <tbody>
+      `;
 
-  for (let i = 0; i < item.options.length; i++) {
-    const btn = document.getElementById(`opt-${qIdx}-${i}`);
-    btn.classList.add('disabled');
-    if (i === item.answer) {
-      btn.classList.add('reveal-correct');
+      wq.rubric.forEach(r => {
+        qHtml += `<tr><td><strong>${r.marks}</strong></td><td>${r.desc}</td></tr>`;
+      });
+
+      qHtml += `
+              </tbody>
+            </table>
+            <div class="exemplar-text">
+              <div class="exemplar-title" style="margin-bottom:6px; color:#60A5FA;">Model PETAL Exemplar (${wq.marks}/${wq.marks}):</div>
+              <p class="annotated-p">
+                <span class="p-tag">[Point]</span> ${wq.exemplar.point}
+                <span class="e-tag">[Evidence &amp; Technique]</span> ${wq.exemplar.evidence}
+                <span class="a-tag">[Analysis]</span> ${wq.exemplar.analysis}
+                <span class="l-tag">[Link]</span> ${wq.exemplar.link}
+              </p>
+            </div>
+            <div class="self-mark-container">
+              <span class="self-mark-label">Award Mark:</span>
+              <div class="mark-btn-group">
+      `;
+
+      for (let m = 0; m <= wq.marks; m++) {
+        qHtml += `<button class="mark-chip ${savedMark === m ? 'awarded' : ''}" onclick="setSelfMark(${qNum}, ${m}, this)">${m}</button>`;
+      }
+
+      qHtml += `
+              </div>
+            </div>
+          </div>
+        </article>
+      `;
+    });
+
+    // Part 3 Banner (Synthesised Extended Analytical Response Q10, 4 Marks)
+    const synQ = paper.written[4]; // Q10
+    const isSynFlagged = pState.flagged.has(10);
+    const savedSynText = pState.responses[10] || '';
+    const savedSynMark = pState.selfMarks[10] || 0;
+
+    qHtml += `
+      <div class="section-banner" data-section="sec3">
+        <div class="section-banner-title">
+          <span>Part 3 &bull; Synthesised Thematic Analysis</span>
+          <span class="section-banner-marks">4 Marks</span>
+        </div>
+        <div class="section-banner-desc">
+          Compose a sustained, synthesised analytical response (approx. 100–140 words) evaluating the text's central thematic conflict. Suggested time: ~10 minutes.
+        </div>
+      </div>
+
+      <article class="question-card" id="q-card-10" data-qid="10" data-section="sec3">
+        <div class="q-top-bar">
+          <div class="q-badge-group">
+            <span class="q-index-pill">Question 10</span>
+            <span class="q-type-pill">Synthesised Analysis</span>
+            <span class="q-marks-pill">4 Marks</span>
+          </div>
+          <div class="q-tools-group">
+            <button class="jump-stimulus-btn" onclick="jumpToStimulus('${synQ.jumpId}')">📍 Jump to Text</button>
+            <button class="flag-btn ${isSynFlagged ? 'flagged' : ''}" onclick="toggleFlag(10, this)">⚑</button>
+          </div>
+        </div>
+        <div class="q-prompt">${synQ.prompt}</div>
+        <div class="written-area">
+          <div class="petal-hint-bar">
+            <span>Synthesis Guide: Point &bull; Evidence &bull; Technique &bull; Analysis &bull; Thematic Link</span>
+            <div class="petal-tags">
+              <span class="petal-tag">Synthesis</span>
+              <span class="petal-tag">High-Impact Verbs</span>
+            </div>
+          </div>
+          <textarea class="answer-textarea extended" id="response-q10" placeholder="Compose your synthesised response here..." oninput="updateWordCount(10, this)">${savedSynText}</textarea>
+          <div class="written-meta">
+            <div class="word-counter">Word count: <span id="wc-10">0</span> words (Suggested: 100–140 words)</div>
+          </div>
+        </div>
+
+        <button class="exemplar-toggle-btn" onclick="toggleExemplar(10)">
+          <span>📋</span> View Marking Rubric &amp; Exemplar Response
+        </button>
+        <div class="exemplar-drawer" id="exemplar-10">
+          <div class="exemplar-header">
+            <div class="exemplar-title">Marking Rubric &bull; Question 10 (4 Marks)</div>
+          </div>
+          <table class="rubric-table">
+            <thead><tr><th style="width:18%;">Marks</th><th>Performance Criteria</th></tr></thead>
+            <tbody>
+    `;
+
+    synQ.rubric.forEach(r => {
+      qHtml += `<tr><td><strong>${r.marks}</strong></td><td>${r.desc}</td></tr>`;
+    });
+
+    qHtml += `
+            </tbody>
+          </table>
+          <div class="exemplar-text">
+            <div class="exemplar-title" style="margin-bottom:6px; color:#60A5FA;">Model Synthesised Response (4/4 Marks):</div>
+            <p class="annotated-p">
+              <span class="p-tag">[Point]</span> ${synQ.exemplar.point}
+              <span class="e-tag">[Evidence &amp; Technique]</span> ${synQ.exemplar.evidence}
+              <span class="a-tag">[Analysis]</span> ${synQ.exemplar.analysis}
+              <span class="l-tag">[Link]</span> ${synQ.exemplar.link}
+            </p>
+          </div>
+          <div class="self-mark-container">
+            <span class="self-mark-label">Award Mark:</span>
+            <div class="mark-btn-group">
+    `;
+
+    for (let m = 0; m <= synQ.marks; m++) {
+      qHtml += `<button class="mark-chip ${savedSynMark === m ? 'awarded' : ''}" onclick="setSelfMark(10, ${m}, this)">${m}</button>`;
+    }
+
+    qHtml += `
+            </div>
+          </div>
+        </div>
+      </article>
+    `;
+
+    qContainer.innerHTML = qHtml;
+
+    initRibbon();
+    for (let q = 6; q <= 10; q++) {
+      const ta = document.getElementById(`response-q${q}`);
+      if (ta) updateWordCount(q, ta);
+    }
+    updateTelemetry();
+  }
+
+  function initRibbon() {
+    const ribbon = document.getElementById('q-jump-ribbon');
+    ribbon.innerHTML = '';
+    const pState = getActiveState();
+
+    for (let i = 1; i <= 10; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'q-ribbon-btn';
+      btn.id = `ribbon-btn-${i}`;
+      btn.textContent = i;
+      btn.title = `Jump to Question ${i}`;
+
+      if (i <= 5 && pState.mcqAnswers[i] !== undefined) {
+        btn.classList.add('answered');
+      } else if (i > 5 && ((pState.responses[i] && pState.responses[i].length > 10) || pState.selfMarks[i])) {
+        btn.classList.add('answered');
+      }
+
+      if (pState.flagged.has(i)) {
+        btn.classList.add('flagged');
+      }
+
+      btn.onclick = () => scrollToQuestion(i);
+      ribbon.appendChild(btn);
     }
   }
 
-  const chosenBtn = document.getElementById(`opt-${qIdx}-${optIdx}`);
-  if (isCorrect) {
-    chosenBtn.classList.remove('reveal-correct');
-    chosenBtn.classList.add('selected-correct');
-  } else {
-    chosenBtn.classList.add('selected-wrong');
+  function scrollToQuestion(qid) {
+    const card = document.getElementById(`q-card-${qid}`);
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelectorAll('.q-ribbon-btn').forEach(b => b.classList.remove('active-q'));
+      document.getElementById(`ribbon-btn-${qid}`)?.classList.add('active-q');
+    }
   }
 
-  const expBox = document.getElementById(`exp-${qIdx}`);
-  expBox.className = `explanation-box show ${isCorrect ? 'correct' : 'wrong'}`;
-  expBox.innerHTML = `
-    <div class="exp-title">${isCorrect ? '✅ Well done! Analysis:' : '❌ Not quite. The correct answer is (' + ['A','B','C','D'][item.answer] + '):'}</div>
-    <div>${item.exp}</div>
-  `;
+  function selectMcqOption(qNum, optIdx, btnEl) {
+    const paper = getActivePaperData();
+    const pState = getActiveState();
+    const mcq = paper.mcqs[qNum - 1];
 
-  updateStats();
-}
+    pState.mcqAnswers[qNum] = optIdx;
 
-function updateStats() {
-  const answered = userAnswers.filter(a => a !== null).length;
-  let correct = 0;
-  userAnswers.forEach((ans, idx) => {
-    if (ans === passages[idx].answer) correct++;
-  });
+    const optsContainer = document.getElementById(`mcq-opts-${qNum}`);
+    const allOpts = optsContainer.querySelectorAll('.mcq-opt');
+    allOpts.forEach((btn, idx) => {
+      btn.classList.remove('selected', 'correct-answer', 'wrong-answer');
+      if (idx === mcq.correct) btn.classList.add('correct-answer');
+      else if (idx === optIdx && optIdx !== mcq.correct) btn.classList.add('wrong-answer');
+    });
 
-  document.getElementById('answered-count').innerText = answered;
-  document.getElementById('score-count').innerText = correct;
-  const pct = answered > 0 ? Math.round((correct / 25) * 100) : 0;
-  document.getElementById('score-pct').innerText = `${pct}%`;
+    const isCorrect = (optIdx === mcq.correct);
+    const fb = document.getElementById(`feedback-${qNum}`);
+    fb.className = `feedback-box show ${isCorrect ? 'is-correct' : 'is-wrong'}`;
+    fb.innerHTML = `
+      <div class="feedback-title">${isCorrect ? '✓ Correct Analysis' : '✗ Incorrect Response'}</div>
+      <div>${mcq.exp}</div>
+    `;
 
-  const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
-  document.getElementById('accuracy-pct').innerText = answered > 0 ? `${accuracy}%` : '--';
+    document.getElementById(`ribbon-btn-${qNum}`)?.classList.add('answered');
+    updateTelemetry();
+    saveCurrentPaperStorage();
+  }
 
-  const fill = document.getElementById('progress-fill');
-  fill.style.width = `${(answered / 25) * 100}%`;
-}
+  function updateWordCount(qNum, ta) {
+    const text = ta.value.trim();
+    const words = text ? text.split(/\s+/).length : 0;
+    const cEl = document.getElementById(`wc-${qNum}`);
+    if (cEl) cEl.textContent = words;
 
-function filterQuestions(mod, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+    const pState = getActiveState();
+    pState.responses[qNum] = ta.value;
 
-  const cards = document.querySelectorAll('.q-card');
-  cards.forEach(card => {
-    if (mod === 'all' || card.dataset.module === mod) {
-      card.style.display = 'block';
+    const rb = document.getElementById(`ribbon-btn-${qNum}`);
+    if (words > 5 && rb) rb.classList.add('answered');
+    else if (words === 0 && rb && !pState.selfMarks[qNum]) rb.classList.remove('answered');
+
+    if (qNum === 10) {
+      const sEl = document.getElementById('stat-synthesis-status');
+      if (words > 70) {
+        sEl.textContent = `${words} words (Complete)`;
+        sEl.style.color = '#34D399';
+      } else if (words > 0) {
+        sEl.textContent = `${words} words (Drafting)`;
+        sEl.style.color = '#F59E0B';
+      } else {
+        sEl.textContent = 'Drafting (Q10)';
+        sEl.style.color = 'var(--text-muted)';
+      }
+    }
+
+    updateTelemetry();
+    saveCurrentPaperStorage();
+  }
+
+  function setSelfMark(qNum, marks, btn) {
+    const pState = getActiveState();
+    pState.selfMarks[qNum] = marks;
+
+    btn.parentElement.querySelectorAll('.mark-chip').forEach(c => c.classList.remove('awarded'));
+    btn.classList.add('awarded');
+
+    document.getElementById(`ribbon-btn-${qNum}`)?.classList.add('answered');
+    updateTelemetry();
+    saveCurrentPaperStorage();
+  }
+
+  function toggleExemplar(qNum) {
+    document.getElementById(`exemplar-${qNum}`)?.classList.toggle('open');
+  }
+
+  function jumpToStimulus(targetId) {
+    const el = document.getElementById(targetId);
+    if (!el) return;
+    if (document.body.classList.contains('view-questions-only')) setLayout('split');
+
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el.classList.remove('target-highlight-flash');
+    void el.offsetWidth;
+    el.classList.add('target-highlight-flash');
+  }
+
+  function toggleFlag(qNum, btn) {
+    const pState = getActiveState();
+    if (pState.flagged.has(qNum)) {
+      pState.flagged.delete(qNum);
+      btn.classList.remove('flagged');
+      document.getElementById(`ribbon-btn-${qNum}`)?.classList.remove('flagged');
     } else {
-      card.style.display = 'none';
+      pState.flagged.add(qNum);
+      btn.classList.add('flagged');
+      document.getElementById(`ribbon-btn-${qNum}`)?.classList.add('flagged');
     }
-  });
-}
-
-function resetQuiz() {
-  if (confirm("Reset all 25 passages and score?")) {
-    userAnswers = new Array(passages.length).fill(null);
-    renderQuiz();
-    updateStats();
+    saveCurrentPaperStorage();
   }
-}
 
-renderQuiz();
-updateStats();
+  function setHighlightColor(cls, btn) {
+    currentHighlightColor = cls;
+    document.querySelectorAll('.hl-color-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  document.getElementById('stimulus-container').addEventListener('mouseup', () => {
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed || !sel.rangeCount) return;
+    const range = sel.getRangeAt(0);
+    const cont = document.getElementById('stimulus-container');
+    if (!cont.contains(range.commonAncestorContainer)) return;
+    const span = document.createElement('mark');
+    span.className = currentHighlightColor;
+    try {
+      range.surroundContents(span);
+      sel.removeAllRanges();
+    } catch(e) {}
+  });
+
+  function clearHighlights() {
+    document.querySelectorAll('#stimulus-container mark').forEach(m => {
+      const parent = m.parentNode;
+      while (m.firstChild) parent.insertBefore(m.firstChild, m);
+      parent.removeChild(m);
+    });
+  }
+
+  function filterSection(secId, btn) {
+    document.querySelectorAll('.section-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.question-card, .section-banner').forEach(card => {
+      const cSec = card.getAttribute('data-section');
+      card.style.display = (secId === 'all' || cSec === secId) ? '' : 'none';
+    });
+  }
+
+  function setLayout(mode) {
+    document.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
+    const pStim = document.getElementById('pane-stimulus');
+    const pQuest = document.getElementById('pane-questions');
+    document.body.classList.remove('view-questions-only', 'view-story-only');
+
+    if (mode === 'split') {
+      document.getElementById('layout-split-btn').classList.add('active');
+      pStim.style.display = 'flex';
+      pQuest.style.display = 'flex';
+      pStim.style.flex = '1';
+      pQuest.style.flex = '1.1';
+    } else if (mode === 'story-only') {
+      document.getElementById('layout-story-btn').classList.add('active');
+      document.body.classList.add('view-story-only');
+      pStim.style.display = 'flex';
+      pQuest.style.display = 'none';
+      pStim.style.flex = '1';
+    } else if (mode === 'questions-only') {
+      document.getElementById('layout-questions-btn').classList.add('active');
+      document.body.classList.add('view-questions-only');
+      pStim.style.display = 'none';
+      pQuest.style.display = 'flex';
+      pQuest.style.flex = '1';
+    }
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle('theme-parchment');
+    const isParch = document.body.classList.contains('theme-parchment');
+    document.getElementById('theme-icon').textContent = isParch ? '🌙' : '📜';
+    saveCurrentPaperStorage();
+  }
+
+  // Timer configured for 45 minutes
+  function initTimer() {
+    timerInterval = setInterval(() => {
+      if (!timerRunning) return;
+      const pState = getActiveState();
+      if (pState.timerSeconds > 0) {
+        pState.timerSeconds--;
+        updateTimerDisplay();
+      }
+    }, 1000);
+  }
+
+  function updateTimerDisplay() {
+    const pState = getActiveState();
+    const mins = Math.floor(pState.timerSeconds / 60);
+    const secs = pState.timerSeconds % 60;
+    const str = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    const d = document.getElementById('timer-display');
+    const pill = document.getElementById('exam-timer-pill');
+    if (d) d.textContent = str;
+    if (pill) {
+      if (pState.timerSeconds <= 300) pill.classList.add('urgent');
+      else pill.classList.remove('urgent');
+    }
+  }
+
+  function toggleTimer() {
+    timerRunning = !timerRunning;
+    document.getElementById('timer-toggle-btn').textContent = timerRunning ? '⏸' : '▶';
+  }
+
+  function resetTimer() {
+    const pState = getActiveState();
+    pState.timerSeconds = 45 * 60;
+    timerRunning = true;
+    document.getElementById('timer-toggle-btn').textContent = '⏸';
+    updateTimerDisplay();
+  }
+
+  function updateTelemetry() {
+    const paper = getActivePaperData();
+    const pState = getActiveState();
+
+    let mcqCorrect = 0;
+    let mcqAnsCount = 0;
+    paper.mcqs.forEach((mcq, idx) => {
+      const qNum = idx + 1;
+      if (pState.mcqAnswers[qNum] !== undefined) {
+        mcqAnsCount++;
+        if (pState.mcqAnswers[qNum] === mcq.correct) mcqCorrect++;
+      }
+    });
+    document.getElementById('stat-mcq-count').textContent = `${mcqAnsCount}/5 (${mcqCorrect} pts)`;
+
+    let wCount = 0;
+    let wSelfTotal = 0;
+    for (let q = 6; q <= 9; q++) {
+      if (pState.responses[q] && pState.responses[q].trim().length > 10) wCount++;
+      wSelfTotal += (pState.selfMarks[q] || 0);
+    }
+    document.getElementById('stat-written-count').textContent = `${wCount}/4 (${wSelfTotal}/11 pts)`;
+
+    const synMark = pState.selfMarks[10] || 0;
+    const grandTotal = mcqCorrect + wSelfTotal + synMark;
+    const pct = Math.round((grandTotal / 20) * 100);
+
+    document.getElementById('stat-total-marks').textContent = `${grandTotal} / 20 (${pct}%)`;
+
+    // Modal
+    document.getElementById('modal-paper-heading').textContent = `${paper.title} Scorecard`;
+    document.getElementById('modal-mcq-score').textContent = `${mcqCorrect} / 5`;
+    document.getElementById('modal-written-score').textContent = `${wSelfTotal} / 11`;
+    document.getElementById('modal-essay-score').textContent = `${synMark} / 4`;
+    document.getElementById('modal-total-agg').textContent = `${grandTotal} / 20 (${pct}%)`;
+
+    let bandDesc = "";
+    if (pct >= 85) bandDesc = "Band 6 (A Grade) &bull; Outstanding, perceptive textual comprehension and high-level analytical fluency.";
+    else if (pct >= 75) bandDesc = "Band 5 (B Grade) &bull; Strong textual understanding with well-developed analytical responses.";
+    else if (pct >= 60) bandDesc = "Band 4 (C Grade) &bull; Sound comprehension with emerging stylistic evaluation.";
+    else bandDesc = "Consult model exemplars and PETAL frameworks to strengthen textual evidence selection.";
+    document.getElementById('modal-feedback-summary').innerHTML = bandDesc;
+  }
+
+  function openExamSummary() {
+    updateTelemetry();
+    document.getElementById('summary-modal').classList.add('open');
+  }
+
+  function closeExamSummary() {
+    document.getElementById('summary-modal').classList.remove('open');
+  }
+
+  function saveCurrentPaperStorage() {
+    const payload = {
+      papersState: {
+        paper1: { ...papersState.paper1, flagged: Array.from(papersState.paper1.flagged) },
+        paper2: { ...papersState.paper2, flagged: Array.from(papersState.paper2.flagged) },
+        paper3: { ...papersState.paper3, flagged: Array.from(papersState.paper3.flagged) },
+      },
+      currentPaperId,
+      theme: document.body.classList.contains('theme-parchment') ? 'parchment' : 'dark'
+    };
+    try {
+      localStorage.setItem('stage5_english_exam_20m_45min', JSON.stringify(payload));
+    } catch(e) {}
+  }
+
+  function loadAllStorage() {
+    try {
+      const raw = localStorage.getItem('stage5_english_exam_20m_45min');
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      if (data.papersState) {
+        ['paper1', 'paper2', 'paper3'].forEach(pid => {
+          if (data.papersState[pid]) {
+            papersState[pid].mcqAnswers = data.papersState[pid].mcqAnswers || {};
+            papersState[pid].selfMarks = data.papersState[pid].selfMarks || {};
+            papersState[pid].responses = data.papersState[pid].responses || {};
+            papersState[pid].flagged = new Set(data.papersState[pid].flagged || []);
+            papersState[pid].timerSeconds = data.papersState[pid].timerSeconds || (45 * 60);
+          }
+        });
+      }
+      if (data.theme === 'parchment') {
+        document.body.classList.add('theme-parchment');
+        document.getElementById('theme-icon').textContent = '🌙';
+      }
+    } catch(e) {}
+  }
 </script>
+
 </body>
 </html>
